@@ -13,6 +13,7 @@ namespace XinTuo.Accounts {
         public int Create() {
             SchemaBuilder.CreateTable("RegionPartRecord", 
                 t => t.ContentPartRecord()
+                .Column<int>("RegionId")
                 .Column<int>("CityId")
                 .Column<int>("ProvinceId")
                 .Column<string>("CountyName",c=>c.WithLength(255))
@@ -34,7 +35,15 @@ namespace XinTuo.Accounts {
                 );
 
             ContentDefinitionManager.AlterPartDefinition("RegionPart",
-                part => part.Attachable());
+                part => part.Attachable(true));
+
+            ContentDefinitionManager.AlterPartDefinition("CompanyPart",
+                part=>part.Attachable(false));
+
+            ContentDefinitionManager.AlterTypeDefinition("Company",
+                type => type.WithPart("CompanyPart")
+                            .WithPart("RegionPart")
+                            .WithPart("UserPart"));
 
             return 1;
         }

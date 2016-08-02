@@ -97,15 +97,20 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Drivers\RegionPartDriver.cs" />
+    <Compile Include="Handlers\CompanyPartHandler.cs" />
     <Compile Include="Migrations.cs" />
     <Compile Include="Models\CompanyPart.cs" />
     <Compile Include="Models\CompanyPartRecord.cs" />
     <Compile Include="Models\RegionPart.cs" />
     <Compile Include="Models\RegionPartRecord.cs" />
+    <Compile Include="Services\IRegion.cs" />
+    <Compile Include="Services\Region.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Controllers\" />
-    <Folder Include="Views\" />
+    <Folder Include="Views\EditorTemplates\Parts\" />
+    <Folder Include="Views\Parts\" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

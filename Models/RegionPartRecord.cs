@@ -5,6 +5,7 @@ namespace XinTuo.Accounts.Models
 {
     public class RegionPartRecord : ContentPartRecord
     {
+        public virtual int RegionId { get; set; }
         public virtual int CityId { get; set; }
         public virtual int ProvinceId { get; set; }
         public virtual string CountyName { get; set; }
