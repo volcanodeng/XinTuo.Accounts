@@ -26,7 +26,7 @@ namespace XinTuo.Accounts.Drivers
         protected override DriverResult Display(RegionPart part, string displayType, dynamic shapeHelper)
         {
             return ContentShape("Parts_Region",()=>shapeHelper.Parts_Region(
-                
+                region:part
                 ));
         }
 
