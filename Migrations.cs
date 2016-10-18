@@ -44,7 +44,7 @@ namespace XinTuo.Accounts {
 
             //辅助核算
             SchemaBuilder.CreateTable("AccAuxiliaryRecord",
-                t => t.Column<int>("AId", column => column.PrimaryKey().Identity()) //主键
+                t => t.Column<int>("AuId", column => column.PrimaryKey().Identity()) //主键
                 .Column<int>("AccAuxiliaryTypeRecord_AtId")                         //辅助核算类型
                 .Column<string>("AuxCode", c => c.WithLength(50))                   //核算编码
                 .Column<string>("AuxName", c => c.WithLength(50))                   //核算名称
@@ -66,6 +66,34 @@ namespace XinTuo.Accounts {
                 .Column<DateTime>("CreateTime", c => c.WithDefault(DateTime.Now))   //创建时间
                 );
 
+            //科目类别
+            SchemaBuilder.CreateTable("AccountCategoryRecord",
+                t=>t.Column<int>("AcId",c=>c.PrimaryKey().Identity())               //类别主键
+                .Column<int>("ParentAcId",c=>c.Nullable())                          //类别父id
+                .Column<string>("CateName",c=>c.WithLength(50))                     //类别名称
+                );
+
+            //会计科目
+            SchemaBuilder.CreateTable("AccountRecord",
+                t=>t.Column<int>("AId",c=>c.PrimaryKey().Identity())                //科目主键
+                .Column<string>("AccCode",c=>c.WithLength(50))                      //科目编码
+                .Column<string>("ParentCode",c=>c.WithLength(50))                   //父编码
+                .Column<int>("AccountCategoryRecord_AcId")                          //科目类别（取第二级类别）
+                .Column<string>("AccName",c=>c.WithLength(50))                      //科目名称
+                .Column<string>("Direction",c=>c.WithLength(10))                    //余额方向
+                .Column<string>("AuxIds",c=>c.WithLength(100))                      //辅助核算id串（逗号分隔）
+                .Column<string>("AuxCodes",c=>c.WithLength(100))                    //辅助核算编号串（逗号分隔）
+                .Column<string>("AuxNames",c=>c.WithLength(150))                    //辅助核算名称串（逗号分隔）
+                .Column<string>("Unit",c=>c.WithLength(10))                         //数量核算的计量单位
+                .Column<decimal>("InitialQuantity",c=>c.WithScale(2))               //期初余额数量
+                .Column<decimal>("InitialBalance",c=>c.WithScale(2))                //期初余额
+                .Column<decimal>("YtdDebitQuantity", c=>c.WithScale(2))             //本年累积借方数量
+                .Column<decimal>("YtdDebit",c=>c.WithScale(2))                      //本年累积借方金额
+                .Column<decimal>("YtdCreditQuantity",c=>c.WithScale(2))             //本年累积贷方数量
+                .Column<decimal>("YtdCredit",c=>c.WithScale(2))                     //本年累积贷方金额
+                .Column<decimal>("YtdBeginBalanceQuantity",c=>c.WithScale(2))       //年初余额数量
+                .Column<decimal>("YtdBeginBalance",c=>c.WithScale(2))               //年初余额
+                );
 
             return 1;
         }
