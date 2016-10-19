@@ -93,6 +93,48 @@ namespace XinTuo.Accounts {
                 .Column<decimal>("YtdCredit",c=>c.WithScale(2))                     //本年累积贷方金额
                 .Column<decimal>("YtdBeginBalanceQuantity",c=>c.WithScale(2))       //年初余额数量
                 .Column<decimal>("YtdBeginBalance",c=>c.WithScale(2))               //年初余额
+                .Column<int>("AccState",c=>c.WithDefault(1))                        //科目状态：1 正常 0 禁用
+                .Column<int>("CompanyRecord_CId")                                   //科目所属公司
+                .Column<int>("Creator")
+                .Column<DateTime>("CreateTime")
+                .Column<int>("Updater")
+                .Column<DateTime>("UpdateTime")
+                );
+
+            //凭证摘要库(通过Creator关联获取数据)
+            SchemaBuilder.CreateTable("VouAbstractRecord",
+                t=>t.Column<int>("AbId",c=>c.PrimaryKey().Identity())
+                .Column<string>("Abstract",c=>c.WithLength(255))
+                .Column<int>("Creator")
+                .Column<DateTime>("CreateTime")
+                );
+
+            //凭证
+            SchemaBuilder.CreateTable("VoucherRecord",
+                t=>t.Column<int>("VId",c=>c.PrimaryKey().Identity())            //凭证主键
+                .Column<int>("AccCertificateWordRecord_CwId")                   //凭证字
+                .Column<int>("CertWordSN",c=>c.WithDefault(1))                  //凭证字流水号
+                .Column<DateTime>("Date",c=>c.Nullable())                       //日期
+                .Column<int>("InvoiceCount",c=>c.WithDefault(0))                //附加单据数量
+                .Column<int>("State",c=>c.WithDefault(1))                       //状态：1 正常 2 已审 -1 作废
+                .Column<int>("CompanyRecord_CId")
+                .Column<int>("Creator")
+                .Column<DateTime>("CreateTime")
+                .Column<int>("Review")
+                .Column<DateTime>("ReviewTime")
+                );
+
+            SchemaBuilder.CreateTable("VoucherDetailRecord",
+                t=>t.Column<int>("VdId",c=>c.PrimaryKey().Identity())
+                .Column<int>("VoucherRecord_VId")
+                .Column<string>("Abstract",c=>c.WithLength(255))
+                .Column<int>("AccountRecord_AId")
+                .Column<string>("AccountCode",c=>c.WithLength(100))
+                .Column<string>("AccountName",c=>c.WithLength(100))
+                .Column<decimal>("Quantity",c=>c.WithScale(2))
+                .Column<decimal>("Price",c=>c.WithScale(2))
+                .Column<decimal>("Debit",c=>c.WithScale(2))
+                .Column<decimal>("Credit",c=>c.WithScale(2))
                 );
 
             return 1;
