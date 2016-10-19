@@ -121,6 +121,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Drivers\RegionPartDriver.cs" />
     <Compile Include="Handlers\CompanyPartHandler.cs" />
     <Compile Include="Migrations.cs" />
@@ -132,16 +133,18 @@
     <Compile Include="Services\Region.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Controllers\" />
     <Folder Include="Views\Parts\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />
-    <Content Include="Views\EasyuiWrap.cshtml" />
+    <Content Include="Views\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\EditorTemplates\Parts\Company.cshtml" />
     <Content Include="Views\EditorTemplates\Parts\Region.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\web.config" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

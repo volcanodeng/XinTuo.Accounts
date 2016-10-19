@@ -117,24 +117,37 @@ namespace XinTuo.Accounts {
                 .Column<DateTime>("Date",c=>c.Nullable())                       //日期
                 .Column<int>("InvoiceCount",c=>c.WithDefault(0))                //附加单据数量
                 .Column<int>("State",c=>c.WithDefault(1))                       //状态：1 正常 2 已审 -1 作废
-                .Column<int>("CompanyRecord_CId")
-                .Column<int>("Creator")
-                .Column<DateTime>("CreateTime")
-                .Column<int>("Review")
-                .Column<DateTime>("ReviewTime")
+                .Column<int>("CompanyRecord_CId")                               //凭证所属公司
+                .Column<int>("Creator")                                         //经办人
+                .Column<DateTime>("CreateTime")                                 //创建时间
+                .Column<int>("Review")                                          //审核人
+                .Column<DateTime>("ReviewTime")                                 //审核时间
                 );
 
+            //凭证明细
             SchemaBuilder.CreateTable("VoucherDetailRecord",
-                t=>t.Column<int>("VdId",c=>c.PrimaryKey().Identity())
-                .Column<int>("VoucherRecord_VId")
-                .Column<string>("Abstract",c=>c.WithLength(255))
-                .Column<int>("AccountRecord_AId")
-                .Column<string>("AccountCode",c=>c.WithLength(100))
-                .Column<string>("AccountName",c=>c.WithLength(100))
-                .Column<decimal>("Quantity",c=>c.WithScale(2))
-                .Column<decimal>("Price",c=>c.WithScale(2))
-                .Column<decimal>("Debit",c=>c.WithScale(2))
-                .Column<decimal>("Credit",c=>c.WithScale(2))
+                t=>t.Column<int>("VdId",c=>c.PrimaryKey().Identity())           //明细主键
+                .Column<int>("VoucherRecord_VId")                               //凭证主表关联
+                .Column<string>("Abstract",c=>c.WithLength(255))                //摘要
+                .Column<int>("AccountRecord_AId")                               //科目（关联科目表）
+                .Column<string>("AccountCode",c=>c.WithLength(100))             //科目代码
+                .Column<string>("AccountName",c=>c.WithLength(100))             //科目名称（可生成扩展科目名称）
+                .Column<decimal>("Quantity",c=>c.WithScale(2))                  //数量（辅助核算选择数量）
+                .Column<decimal>("Price",c=>c.WithScale(2))                     //单价（辅助核算选择数量）
+                .Column<decimal>("Debit",c=>c.WithScale(2))                     //借方金额
+                .Column<decimal>("Credit",c=>c.WithScale(2))                    //贷方金额
+                );
+
+            //凭证模板
+            SchemaBuilder.CreateTable("VoucherDetailTemplateRecord",
+                t=>t.Column<int>("VdtId",c=>c.PrimaryKey().Identity())
+                .Column<string>("Abstract", c => c.WithLength(255))                //摘要
+                .Column<string>("AccountCode", c => c.WithLength(100))             //科目代码
+                .Column<string>("AccountName", c => c.WithLength(100))             //科目名称（可生成扩展科目名称）
+                .Column<decimal>("Quantity", c => c.WithScale(2))                  //数量（辅助核算选择数量）
+                .Column<decimal>("Price", c => c.WithScale(2))                     //单价（辅助核算选择数量）
+                .Column<decimal>("Debit", c => c.WithScale(2))                     //借方金额
+                .Column<decimal>("Credit", c => c.WithScale(2))                    //贷方金额
                 );
 
             return 1;
