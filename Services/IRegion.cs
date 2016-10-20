@@ -7,5 +7,7 @@ namespace XinTuo.Accounts.Services
     public interface IRegion : IDependency
     {
         List<RegionRecord> GetRegions(int? RegionId);
+
+        List<RegionRecord> test();
     }
 }

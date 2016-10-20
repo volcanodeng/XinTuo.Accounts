@@ -14,7 +14,8 @@ namespace XinTuo.Accounts {
         {
             //行政区域
             SchemaBuilder.CreateTable("RegionRecord",
-                t => t.Column<int>("RegionId",column=>column.PrimaryKey())      //区域编号
+                t => t.ContentPartRecord()
+                .Column<int>("RegionId")                                        //区域编号
                 .Column<int>("CityId")                                          //城市编号
                 .Column<int>("ProvinceId")                                      //省份编号
                 .Column<string>("CountyName", c => c.WithLength(50))           //区域
@@ -25,10 +26,10 @@ namespace XinTuo.Accounts {
 
             //用户公司
             SchemaBuilder.CreateTable("CompanyRecord",
-                t => t.Column<int>("CId", column => column.PrimaryKey().Identity()) //公司id
+                t => t.ContentPartRecord()                                          //公司id
                 .Column<string>("FullName", c => c.WithLength(100))                 //公司全称
                 .Column<string>("ShortName", c => c.WithLength(50))                 //公司简称
-                .Column<int>("RegionRecord_RegionId")                               //行政区码
+                .Column<int>("RegionRecord_Id")                               //行政区码
                 .Column<string>("Address", c => c.WithLength(200))                  //公司地址
                 .Column<string>("Tel", c => c.WithLength(20))                       //公司电话
                 .Column<string>("ContactName", c => c.WithLength(100))              //联系人名称
@@ -38,47 +39,47 @@ namespace XinTuo.Accounts {
 
             //辅助核算类型
             SchemaBuilder.CreateTable("AccAuxiliaryTypeRecord",
-                t=>t.Column<int>("AtId",column=>column.PrimaryKey().Identity())
+                t=>t.ContentPartRecord()
                 .Column<string>("AuxType",c=>c.WithLength(50))                      //辅助核算类型共8种
                 );
 
             //辅助核算
             SchemaBuilder.CreateTable("AccAuxiliaryRecord",
-                t => t.Column<int>("AuId", column => column.PrimaryKey().Identity()) //主键
-                .Column<int>("AccAuxiliaryTypeRecord_AtId")                         //辅助核算类型
+                t => t.ContentPartRecord()                                          //id
+                .Column<int>("AccAuxiliaryTypeRecord_Id")                         //辅助核算类型
                 .Column<string>("AuxCode", c => c.WithLength(50))                   //核算编码
                 .Column<string>("AuxName", c => c.WithLength(50))                   //核算名称
                 .Column<int>("AuxState", c => c.WithDefault(1))                     //状态：1 正常  0 禁用
-                .Column<int>("CompanyRecord_CId")                                   //核算所属公司
+                .Column<int>("CompanyRecord_Id")                                   //核算所属公司
                 .Column<int>("Creator")                                             //创建人
                 .Column<DateTime>("CreateTime", c => c.WithDefault(DateTime.Now))   //创建时间
                 );
 
             //凭证字
             SchemaBuilder.CreateTable("AccCertificateWordRecord",
-                t=>t.Column<int>("CwId",c=>c.PrimaryKey().Identity())               //凭证字主键
+                t=>t.ContentPartRecord()                                            //凭证字主键
                 .Column<string>("CertWord",c=>c.WithLength(50))                     //凭证字
                 .Column<string>("PrintTitle",c=>c.WithLength(50))                   //打印标题
                 .Column<int>("SortIndex",c=>c.WithDefault(1))                       //排序索引
                 .Column<bool>("IsDefault",c=>c.WithDefault(false))                  //是否默认凭证字
-                .Column<int>("CompanyRecord_CId")                                   //所属公司
+                .Column<int>("CompanyRecord_Id")                                   //所属公司
                 .Column<int>("Creator")                                             //创建人
                 .Column<DateTime>("CreateTime", c => c.WithDefault(DateTime.Now))   //创建时间
                 );
 
             //科目类别
             SchemaBuilder.CreateTable("AccountCategoryRecord",
-                t=>t.Column<int>("AcId",c=>c.PrimaryKey().Identity())               //类别主键
+                t=>t.ContentPartRecord()                                            //类别主键
                 .Column<int>("ParentAcId",c=>c.Nullable())                          //类别父id
                 .Column<string>("CateName",c=>c.WithLength(50))                     //类别名称
                 );
 
             //会计科目
             SchemaBuilder.CreateTable("AccountRecord",
-                t=>t.Column<int>("AId",c=>c.PrimaryKey().Identity())                //科目主键
+                t=>t.ContentPartRecord()                                            //科目主键
                 .Column<string>("AccCode",c=>c.WithLength(50))                      //科目编码
                 .Column<string>("ParentCode",c=>c.WithLength(50))                   //父编码
-                .Column<int>("AccountCategoryRecord_AcId")                          //科目类别（取第二级类别）
+                .Column<int>("AccountCategoryRecord_Id")                          //科目类别（取第二级类别）
                 .Column<string>("AccName",c=>c.WithLength(50))                      //科目名称
                 .Column<string>("Direction",c=>c.WithLength(10))                    //余额方向
                 .Column<string>("AuxIds",c=>c.WithLength(100))                      //辅助核算id串（逗号分隔）
@@ -94,7 +95,7 @@ namespace XinTuo.Accounts {
                 .Column<decimal>("YtdBeginBalanceQuantity",c=>c.WithScale(2))       //年初余额数量
                 .Column<decimal>("YtdBeginBalance",c=>c.WithScale(2))               //年初余额
                 .Column<int>("AccState",c=>c.WithDefault(1))                        //科目状态：1 正常 0 禁用
-                .Column<int>("CompanyRecord_CId")                                   //科目所属公司
+                .Column<int>("CompanyRecord_Id")                                   //科目所属公司
                 .Column<int>("Creator")
                 .Column<DateTime>("CreateTime")
                 .Column<int>("Updater")
@@ -103,7 +104,7 @@ namespace XinTuo.Accounts {
 
             //凭证摘要库(通过Creator关联获取数据)
             SchemaBuilder.CreateTable("VouAbstractRecord",
-                t=>t.Column<int>("AbId",c=>c.PrimaryKey().Identity())
+                t=>t.ContentPartRecord()
                 .Column<string>("Abstract",c=>c.WithLength(255))
                 .Column<int>("Creator")
                 .Column<DateTime>("CreateTime")
@@ -111,13 +112,13 @@ namespace XinTuo.Accounts {
 
             //凭证
             SchemaBuilder.CreateTable("VoucherRecord",
-                t=>t.Column<int>("VId",c=>c.PrimaryKey().Identity())            //凭证主键
+                t=>t.ContentPartRecord()                                        //凭证主键
                 .Column<int>("AccCertificateWordRecord_CwId")                   //凭证字
                 .Column<int>("CertWordSN",c=>c.WithDefault(1))                  //凭证字流水号
                 .Column<DateTime>("Date",c=>c.Nullable())                       //日期
                 .Column<int>("InvoiceCount",c=>c.WithDefault(0))                //附加单据数量
                 .Column<int>("State",c=>c.WithDefault(1))                       //状态：1 正常 2 已审 -1 作废
-                .Column<int>("CompanyRecord_CId")                               //凭证所属公司
+                .Column<int>("CompanyRecord_Id")                               //凭证所属公司
                 .Column<int>("Creator")                                         //经办人
                 .Column<DateTime>("CreateTime")                                 //创建时间
                 .Column<int>("Review")                                          //审核人
@@ -126,10 +127,10 @@ namespace XinTuo.Accounts {
 
             //凭证明细
             SchemaBuilder.CreateTable("VoucherDetailRecord",
-                t=>t.Column<int>("VdId",c=>c.PrimaryKey().Identity())           //明细主键
-                .Column<int>("VoucherRecord_VId")                               //凭证主表关联
+                t=>t.ContentPartRecord()                                        //明细主键
+                .Column<int>("VoucherRecord_Id")                               //凭证主表关联
                 .Column<string>("Abstract",c=>c.WithLength(255))                //摘要
-                .Column<int>("AccountRecord_AId")                               //科目（关联科目表）
+                .Column<int>("AccountRecord_Id")                               //科目（关联科目表）
                 .Column<string>("AccountCode",c=>c.WithLength(100))             //科目代码
                 .Column<string>("AccountName",c=>c.WithLength(100))             //科目名称（可生成扩展科目名称）
                 .Column<decimal>("Quantity",c=>c.WithScale(2))                  //数量（辅助核算选择数量）
@@ -140,7 +141,7 @@ namespace XinTuo.Accounts {
 
             //凭证模板
             SchemaBuilder.CreateTable("VoucherDetailTemplateRecord",
-                t=>t.Column<int>("VdtId",c=>c.PrimaryKey().Identity())
+                t=>t.ContentPartRecord()
                 .Column<string>("Abstract", c => c.WithLength(255))                //摘要
                 .Column<string>("AccountCode", c => c.WithLength(100))             //科目代码
                 .Column<string>("AccountName", c => c.WithLength(100))             //科目名称（可生成扩展科目名称）

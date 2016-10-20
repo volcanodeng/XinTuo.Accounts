@@ -125,9 +125,10 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Controllers\HomeController.cs" />
-    <Compile Include="Handlers\CompanyPartHandler.cs" />
+    <Compile Include="Handlers\RegionHandler.cs" />
     <Compile Include="Migrations.cs" />
     <Compile Include="Models\CompanyRecord.cs" />
+    <Compile Include="Models\MRegion.cs" />
     <Compile Include="Models\RegionRecord.cs" />
     <Compile Include="Services\IRegion.cs" />
     <Compile Include="Services\Region.cs" />

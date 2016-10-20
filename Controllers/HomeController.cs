@@ -26,7 +26,7 @@ namespace XinTuo.Accounts.Controllers
         [Themed]
         public ActionResult Index()
         {
-            List<RegionRecord> regions = _region.GetRegions(null);
+            List<RegionRecord> regions = _region.test();
             return new ShapeResult(this, _orchard.New.Index(regions:regions));
         }
     }
