@@ -6,6 +6,6 @@ namespace XinTuo.Accounts.Services
 {
     public interface IRegion : IDependency
     {
-        List<RegionPartRecord> GetRegions(int? RegionId);
+        List<RegionRecord> GetRegions(int? RegionId);
     }
 }

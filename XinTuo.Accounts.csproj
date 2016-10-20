@@ -53,6 +53,9 @@
       <HintPath>packages\Microsoft.Web.Infrastructure.1.0.0.0\lib\net40\Microsoft.Web.Infrastructure.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="Orchard.Localization">
+      <HintPath>..\Orchard.Localization\bin\Orchard.Localization.dll</HintPath>
+    </Reference>
     <Reference Include="Orchard.Users">
       <HintPath>..\Orchard.Users\bin\Orchard.Users.dll</HintPath>
     </Reference>
@@ -122,18 +125,15 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Controllers\HomeController.cs" />
-    <Compile Include="Drivers\RegionPartDriver.cs" />
     <Compile Include="Handlers\CompanyPartHandler.cs" />
     <Compile Include="Migrations.cs" />
-    <Compile Include="Models\CompanyPart.cs" />
-    <Compile Include="Models\CompanyPartRecord.cs" />
-    <Compile Include="Models\RegionPart.cs" />
-    <Compile Include="Models\RegionPartRecord.cs" />
+    <Compile Include="Models\CompanyRecord.cs" />
+    <Compile Include="Models\RegionRecord.cs" />
     <Compile Include="Services\IRegion.cs" />
     <Compile Include="Services\Region.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Views\Parts\" />
+    <Folder Include="Drivers\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />

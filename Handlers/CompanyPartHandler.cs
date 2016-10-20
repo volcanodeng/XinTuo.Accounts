@@ -7,10 +7,10 @@ namespace XinTuo.Accounts.Handlers
 {
     public class CompanyPartHandler : ContentHandler
     {
-        public CompanyPartHandler(IRepository<CompanyPartRecord> repository)
+        public CompanyPartHandler(IRepository<CompanyRecord> repository)
         {
-            Filters.Add(StorageFilter.For(repository));
-            Filters.Add(new ActivatingFilter<UserPart>("Company"));
+            //Filters.Add(StorageFilter.For(repository));
+            //Filters.Add(new ActivatingFilter<UserPart>("Company"));
         }
     }
 }

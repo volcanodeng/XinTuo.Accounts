@@ -3,7 +3,7 @@ using Orchard.ContentManagement.Records;
 
 namespace XinTuo.Accounts.Models
 {
-    public class RegionPartRecord : ContentPartRecord
+    public class RegionRecord 
     {
         public virtual int RegionId { get; set; }
         public virtual int CityId { get; set; }

@@ -8,21 +8,21 @@ namespace XinTuo.Accounts.Services
 {
     public class Region : IRegion
     {
-        private readonly IRepository<RegionPartRecord> _regionPartRecord;
+        private readonly IRepository<RegionRecord> _regionPartRecord;
 
-        public Region(IRepository<RegionPartRecord> regionPartRecord)
+        public Region(IRepository<RegionRecord> regionPartRecord)
         {
             _regionPartRecord = regionPartRecord;
         }
 
-        public List<RegionPartRecord> GetRegions(int? RegionId)
+        public List<RegionRecord> GetRegions(int? RegionId)
         {
             //id没有值则返回所有省份
             if (!RegionId.HasValue)
             {
                 return (from region in _regionPartRecord.Table
                         group region by new { region.ProvinceId, region.ProvinceName } into g
-                        select new RegionPartRecord() { ProvinceId = g.Key.ProvinceId, ProvinceName = g.Key.ProvinceName }).ToList();
+                        select new RegionRecord() { ProvinceId = g.Key.ProvinceId, ProvinceName = g.Key.ProvinceName }).ToList();
             }
 
             //值包含0000，说明是一个省份的id
@@ -32,7 +32,7 @@ namespace XinTuo.Accounts.Services
                 return (from region in _regionPartRecord.Table
                         where region.ProvinceId == RegionId.Value && region.CityId != RegionId.Value
                         group region by new { region.CityId, region.CityName } into g
-                        select new RegionPartRecord() { CityId = g.Key.CityId, CityName = g.Key.CityName }).ToList();
+                        select new RegionRecord() { CityId = g.Key.CityId, CityName = g.Key.CityName }).ToList();
             }
 
             //值以00结尾，说明是一个城市的id
@@ -42,7 +42,7 @@ namespace XinTuo.Accounts.Services
                 return (from region in _regionPartRecord.Table
                         where region.CityId == RegionId.Value && region.RegionId != RegionId.Value
                         group region by new { region.RegionId, region.CountyName } into g
-                        select new RegionPartRecord() { RegionId = g.Key.RegionId, CountyName = g.Key.CountyName }).ToList();
+                        select new RegionRecord() { RegionId = g.Key.RegionId, CountyName = g.Key.CountyName }).ToList();
             }
 
             return _regionPartRecord.Fetch(r => r.RegionId == RegionId.Value).ToList();
