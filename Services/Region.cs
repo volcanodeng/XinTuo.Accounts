@@ -26,31 +26,30 @@ namespace XinTuo.Accounts.Services
             if (!RegionId.HasValue)
             {
                 return (from region in _regionRecord.Table
-                        group region by new { region.ProvinceId, region.ProvinceName } into g
-                        select new RegionRecord() { ProvinceId = g.Key.ProvinceId, ProvinceName = g.Key.ProvinceName }).ToList();
+                        where region.Level == 1
+                        select new RegionRecord() { ProvinceId = region.ProvinceId, ProvinceName = region.ProvinceName }).ToList();
             }
 
-            //值包含0000，说明是一个省份的id
+            RegionRecord reg = _regionRecord.Fetch(r => r.RegionId == RegionId.Value).FirstOrDefault();
+
+            
             //返回该省份包含的城市
-            if (RegionId.HasValue && RegionId.Value.ToString().EndsWith("0000"))
+            if (reg != null && reg.Level == 1)
             {
                 return (from region in _regionRecord.Table
                         where region.ProvinceId == RegionId.Value && region.CityId != RegionId.Value
-                        group region by new { region.CityId, region.CityName } into g
-                        select new RegionRecord() { CityId = g.Key.CityId, CityName = g.Key.CityName }).ToList();
+                        select new RegionRecord() { CityId = region.CityId, CityName = region.CityName }).ToList();
             }
 
-            //值以00结尾，说明是一个城市的id
             //返回该城市包含的县/城区
-            if ( RegionId.HasValue && RegionId.Value.ToString().EndsWith("00"))
+            if (reg != null && reg.Level == 2)
             {
                 return (from region in _regionRecord.Table
                         where region.CityId == RegionId.Value && region.RegionId != RegionId.Value
-                        group region by new { region.RegionId, region.CountyName } into g
-                        select new RegionRecord() { RegionId = g.Key.RegionId, CountyName = g.Key.CountyName }).ToList();
+                        select new RegionRecord() { RegionId = region.RegionId, CountyName = region.CountyName }).ToList();
             }
 
-            return _regionRecord.Fetch(r => r.RegionId == RegionId.Value).ToList();
+            return new List<RegionRecord>() { reg};
         }
     }
 }

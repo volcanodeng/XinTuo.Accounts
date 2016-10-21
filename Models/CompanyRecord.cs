@@ -5,7 +5,7 @@ using Orchard.Users.Models;
 
 namespace XinTuo.Accounts.Models
 {
-    public class CompanyRecord 
+    public class CompanyRecord : ContentPartRecord
     {
         public virtual int CId { get; set; }
         public virtual string FullName { get; set; }

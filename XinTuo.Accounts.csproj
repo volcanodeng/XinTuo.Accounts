@@ -130,6 +130,7 @@
     <Compile Include="Models\CompanyRecord.cs" />
     <Compile Include="Models\MRegion.cs" />
     <Compile Include="Models\RegionRecord.cs" />
+    <Compile Include="Services\Company.cs" />
     <Compile Include="Services\FastPropertyComparer.cs" />
     <Compile Include="Services\IRegion.cs" />
     <Compile Include="Services\Region.cs" />

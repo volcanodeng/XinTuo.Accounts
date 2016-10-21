@@ -14,14 +14,15 @@ namespace XinTuo.Accounts {
         {
             //行政区域
             SchemaBuilder.CreateTable("RegionRecord",
-                t => t.ContentPartRecord()
+                t => t.Column<int>("Id",c=>c.PrimaryKey().Identity())
                 .Column<int>("RegionId")                                        //区域编号
                 .Column<int>("CityId")                                          //城市编号
                 .Column<int>("ProvinceId")                                      //省份编号
-                .Column<string>("CountyName", c => c.WithLength(50))           //区域
-                .Column<string>("CityName", c => c.WithLength(50))             //城市
-                .Column<string>("ProvinceName", c => c.WithLength(50))         //身份
+                .Column<string>("CountyName", c => c.WithLength(50))            //区域
+                .Column<string>("CityName", c => c.WithLength(50))              //城市
+                .Column<string>("ProvinceName", c => c.WithLength(50))          //身份
                 .Column<string>("Pinyin", c => c.WithLength(100))               //区域名称拼音
+                .Column<int>("Level")                                           //区域级别：1 省份  2 城市   3 县/区
                 );
 
             //用户公司
@@ -29,17 +30,23 @@ namespace XinTuo.Accounts {
                 t => t.ContentPartRecord()                                          //公司id
                 .Column<string>("FullName", c => c.WithLength(100))                 //公司全称
                 .Column<string>("ShortName", c => c.WithLength(50))                 //公司简称
-                .Column<int>("RegionRecord_Id")                               //行政区码
+                .Column<int>("RegionRecord_Id")                                     //行政区码
                 .Column<string>("Address", c => c.WithLength(200))                  //公司地址
                 .Column<string>("Tel", c => c.WithLength(20))                       //公司电话
                 .Column<string>("ContactName", c => c.WithLength(100))              //联系人名称
                 .Column<string>("ContactMobile", c => c.WithLength(30))             //联系人电话
                 .Column<string>("ContactEmail", c => c.WithLength(100))             //联系人邮件
                 );
+            //所属公司的用户
+            SchemaBuilder.CreateTable("CompanyUserRecord",
+                t => t.Column<int>("Id", c => c.PrimaryKey().Identity())
+                .Column<int>("CompanyRecord_Id")                                    //公司id
+                .Column<int>("UserPartRecord_Id")                                   //用户id(关联UserPart)
+                );
 
             //辅助核算类型
             SchemaBuilder.CreateTable("AccAuxiliaryTypeRecord",
-                t=>t.ContentPartRecord()
+                t=>t.Column<int>("Id",c=>c.PrimaryKey().Identity())
                 .Column<string>("AuxType",c=>c.WithLength(50))                      //辅助核算类型共8种
                 );
 
@@ -69,9 +76,9 @@ namespace XinTuo.Accounts {
 
             //科目类别
             SchemaBuilder.CreateTable("AccountCategoryRecord",
-                t=>t.ContentPartRecord()                                            //类别主键
-                .Column<int>("ParentAcId",c=>c.Nullable())                          //类别父id
-                .Column<string>("CateName",c=>c.WithLength(50))                     //类别名称
+                t => t.Column<int>("Id", c => c.PrimaryKey().Identity())               //类别主键
+                .Column<int>("ParentAcId", c => c.Nullable())                          //类别父id
+                .Column<string>("CateName", c => c.WithLength(50))                     //类别名称
                 );
 
             //会计科目
@@ -79,7 +86,7 @@ namespace XinTuo.Accounts {
                 t=>t.ContentPartRecord()                                            //科目主键
                 .Column<string>("AccCode",c=>c.WithLength(50))                      //科目编码
                 .Column<string>("ParentCode",c=>c.WithLength(50))                   //父编码
-                .Column<int>("AccountCategoryRecord_Id")                          //科目类别（取第二级类别）
+                .Column<int>("AccountCategoryRecord_Id")                            //科目类别（取第二级类别）
                 .Column<string>("AccName",c=>c.WithLength(50))                      //科目名称
                 .Column<string>("Direction",c=>c.WithLength(10))                    //余额方向
                 .Column<string>("AuxIds",c=>c.WithLength(100))                      //辅助核算id串（逗号分隔）
@@ -95,7 +102,7 @@ namespace XinTuo.Accounts {
                 .Column<decimal>("YtdBeginBalanceQuantity",c=>c.WithScale(2))       //年初余额数量
                 .Column<decimal>("YtdBeginBalance",c=>c.WithScale(2))               //年初余额
                 .Column<int>("AccState",c=>c.WithDefault(1))                        //科目状态：1 正常 0 禁用
-                .Column<int>("CompanyRecord_Id")                                   //科目所属公司
+                .Column<int>("CompanyRecord_Id")                                    //科目所属公司
                 .Column<int>("Creator")
                 .Column<DateTime>("CreateTime")
                 .Column<int>("Updater")
@@ -118,7 +125,7 @@ namespace XinTuo.Accounts {
                 .Column<DateTime>("Date",c=>c.Nullable())                       //日期
                 .Column<int>("InvoiceCount",c=>c.WithDefault(0))                //附加单据数量
                 .Column<int>("State",c=>c.WithDefault(1))                       //状态：1 正常 2 已审 -1 作废
-                .Column<int>("CompanyRecord_Id")                               //凭证所属公司
+                .Column<int>("CompanyRecord_Id")                                //凭证所属公司
                 .Column<int>("Creator")                                         //经办人
                 .Column<DateTime>("CreateTime")                                 //创建时间
                 .Column<int>("Review")                                          //审核人
@@ -128,9 +135,9 @@ namespace XinTuo.Accounts {
             //凭证明细
             SchemaBuilder.CreateTable("VoucherDetailRecord",
                 t=>t.ContentPartRecord()                                        //明细主键
-                .Column<int>("VoucherRecord_Id")                               //凭证主表关联
+                .Column<int>("VoucherRecord_Id")                                //凭证主表关联
                 .Column<string>("Abstract",c=>c.WithLength(255))                //摘要
-                .Column<int>("AccountRecord_Id")                               //科目（关联科目表）
+                .Column<int>("AccountRecord_Id")                                //科目（关联科目表）
                 .Column<string>("AccountCode",c=>c.WithLength(100))             //科目代码
                 .Column<string>("AccountName",c=>c.WithLength(100))             //科目名称（可生成扩展科目名称）
                 .Column<decimal>("Quantity",c=>c.WithScale(2))                  //数量（辅助核算选择数量）
@@ -153,5 +160,7 @@ namespace XinTuo.Accounts {
 
             return 1;
         }
+
+        
     }
 }

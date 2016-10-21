@@ -7,7 +7,7 @@ namespace XinTuo.Accounts.Handlers
 {
     public class RegionHandler : ContentHandler
     {
-        public RegionHandler(IRepository<RegionRecord> repository)
+        public RegionHandler(IRepository<CompanyRecord> repository)
         {
             Filters.Add(StorageFilter.For(repository));
         }
