@@ -8,6 +8,5 @@ namespace XinTuo.Accounts.Services
     {
         List<RegionRecord> GetRegions(int? RegionId);
 
-        List<RegionRecord> test();
     }
 }

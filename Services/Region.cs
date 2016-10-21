@@ -15,10 +15,6 @@ namespace XinTuo.Accounts.Services
             _regionRecord = regionRecord;
         }
 
-        public List<RegionRecord> test()
-        {
-            return _regionRecord.Table.Select(r=>new RegionRecord() { ProvinceId = r.ProvinceId, ProvinceName = r.ProvinceName }).ToList();
-        }
 
         public List<RegionRecord> GetRegions(int? RegionId)
         {

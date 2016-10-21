@@ -128,7 +128,7 @@
     <Compile Include="Handlers\RegionHandler.cs" />
     <Compile Include="Migrations.cs" />
     <Compile Include="Models\CompanyRecord.cs" />
-    <Compile Include="Models\MRegion.cs" />
+    <Compile Include="Models\CompanyUserRecord.cs" />
     <Compile Include="Models\RegionRecord.cs" />
     <Compile Include="Services\Company.cs" />
     <Compile Include="Services\FastPropertyComparer.cs" />
