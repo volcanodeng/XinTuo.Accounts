@@ -9,7 +9,7 @@ using Orchard.ContentManagement;
 
 namespace XinTuo.Accounts.Services
 {
-    public class Company
+    public class Company : ICompany
     {
         private readonly IAuthenticationService _authService;
         private readonly IRepository<CompanyUserRecord> _companyUser;

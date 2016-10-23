@@ -7,15 +7,16 @@ using Orchard.Themes;
 using Orchard.Mvc;
 using Orchard;
 using XinTuo.Accounts.Services;
+using XinTuo.Accounts.Models;
 
 namespace XinTuo.Accounts.Controllers
 {
-    public class CompanyControllercs : Controller
+    public class CompanyController : Controller
     {
         private readonly IOrchardServices _orchard;
         private readonly ICompany _company;
 
-        public CompanyControllercs(IOrchardServices orchard,ICompany company)
+        public CompanyController(IOrchardServices orchard,ICompany company)
         {
             _orchard = orchard;
             _company = company;
@@ -23,7 +24,12 @@ namespace XinTuo.Accounts.Controllers
 
         public ActionResult Register()
         {
-            return new ShapeResult(this,_orchard.New.Company());
+            CompanyPart com = _company.GetCurrentCompany();
+            if(com == null)
+            {
+                com = new CompanyPart();
+            }
+            return new ShapeResult(this,_orchard.New.Company(Company:com));
         }
     }
 }
