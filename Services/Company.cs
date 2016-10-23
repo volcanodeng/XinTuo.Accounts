@@ -11,21 +11,28 @@ namespace XinTuo.Accounts.Services
 {
     public class Company
     {
-        private readonly IRepository<CompanyRecord> _companyRecord;
         private readonly IAuthenticationService _authService;
+        private readonly IRepository<CompanyUserRecord> _companyUser;
+        private readonly IContentManager _contentManager;
 
-        public Company(IRepository<CompanyRecord> companyRecord, IAuthenticationService authService)
+        public Company(IAuthenticationService authService,
+            IRepository<CompanyUserRecord> companyUser,
+            IContentManager contentManager)
         {
-            _companyRecord = companyRecord;
             _authService = authService;
+            _companyUser = companyUser;
+            _contentManager = contentManager;
         }
 
-        public CompanyRecord GetCurrentCompany()
+        public CompanyPart GetCurrentCompany()
         {
             IUser CurUser = _authService.GetAuthenticatedUser();
             if (CurUser == null) return null;
 
-            return null;
+            CompanyUserRecord cuRecord = _companyUser.Fetch(cu => cu.UserPartRecord.Id == CurUser.Id).FirstOrDefault();
+            if (cuRecord == null) return null;
+
+            return _contentManager.Get<CompanyPart>(cuRecord.CompanyRecord.Id);
         }
     }
 }
