@@ -4,12 +4,12 @@
     <tr>
         <td class="form_lab">@T("公司全称")<span style="color:red;">*</span></td>
         <td>
-            <input class="easyui-textbox" id="ComFullName" data-options="prompt:'如：广西新拓财务科技公司...',required:true" value="@Model.Company.ComFullName" style="width:100%;height:32px">
+            <input class="easyui-textbox" id="ComFullName" data-options="prompt:'如：广西新拓财务科技公司...',required:true" value="@Model.Company.FullName" style="width:100%;height:32px">
         </td>
     </tr>
     <tr>
         <td class="form_lab">@T("公司简称")</td>
-        <td><input class="easyui-textbox" id="ComShortName" data-options="prompt:'如：“新拓”、“财务”...'" value="@Model.Company.ComShortName" style="width:100%;height:32px"></td>
+        <td><input class="easyui-textbox" id="ComShortName" data-options="prompt:'如：“新拓”、“财务”...'" value="@Model.Company.ShortName" style="width:100%;height:32px"></td>
     </tr>
     <tr>
         <td class="form_lab">@T("行政区划")<span style="color:red;">*</span></td>
@@ -21,15 +21,15 @@
     </tr>
     <tr>
         <td class="form_lab">@T("公司地址")<span style="color:red;">*</span></td>
-        <td><input class="easyui-textbox" id="ComAddress" data-options="prompt:'如：南山区科技园现代大厦6楼...',required:true" value="@Model.Company.ComAddress" style="width:100%;height:32px"></td>
+        <td><input class="easyui-textbox" id="ComAddress" data-options="prompt:'如：南山区科技园现代大厦6楼...',required:true" value="@Model.Company.Address" style="width:100%;height:32px"></td>
     </tr>
     <tr>
         <td class="form_lab">@T("公司电话")</td>
-        <td><input class="easyui-textbox" id="ComTel" data-options="prompt:'如：0771-7654321...',validType:'telNum'" value="@Model.Company.ComTel" style="width:100%;height:32px"></td>
+        <td><input class="easyui-textbox" id="ComTel" data-options="prompt:'如：0771-7654321...',validType:'telNum'" value="@Model.Company.Tel" style="width:100%;height:32px"></td>
     </tr>
     <tr>
         <td class="form_lab">@T("联系人姓名")<span style="color:red;">*</span></td>
-        <td><input class="easyui-textbox" id="ContactsName" data-options="prompt:'如：张小三...',required:true" value="@Model.Company.ContactsName" style="width:100%;height:32px"></td>
+        <td><input class="easyui-textbox" id="ContactsName" data-options="prompt:'如：张小三...',required:true" value="@Model.Company.ContractName" style="width:100%;height:32px"></td>
     </tr>
     <tr>
         <td class="form_lab">@T("联系人电话")<span style="color:red;">*</span></td>
@@ -41,7 +41,7 @@
     </tr>
     <tr>
         <td colspan="2">
-            <input type="hidden" value="@Model.Company.CompanyId" id="CompanyId" />
+            <input type="hidden" value="@Model.Company.Id" id="CompanyId" />
         </td>
     </tr>
     <tr>

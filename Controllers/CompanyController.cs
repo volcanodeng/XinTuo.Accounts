@@ -6,6 +6,7 @@ using System.Web.Mvc;
 using Orchard.Themes;
 using Orchard.Mvc;
 using Orchard;
+using Orchard.Localization;
 using XinTuo.Accounts.Services;
 using XinTuo.Accounts.Models;
 
@@ -27,9 +28,11 @@ namespace XinTuo.Accounts.Controllers
             CompanyPart com = _company.GetCurrentCompany();
             if(com == null)
             {
-                com = new CompanyPart();
+                return new ShapeResult(this, _orchard.New.Company());
             }
             return new ShapeResult(this,_orchard.New.Company(Company:com));
         }
+
+        public Localizer T { get; set; }
     }
 }
