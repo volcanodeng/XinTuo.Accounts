@@ -9,6 +9,7 @@ using Orchard;
 using Orchard.Localization;
 using XinTuo.Accounts.Services;
 using XinTuo.Accounts.Models;
+using Newtonsoft.Json;
 
 namespace XinTuo.Accounts.Controllers
 {
@@ -26,11 +27,13 @@ namespace XinTuo.Accounts.Controllers
         public ActionResult Register()
         {
             CompanyPart com = _company.GetCurrentCompany();
-            if(com == null)
+            string comJson = null;
+            if(com != null)
             {
-                return new ShapeResult(this, _orchard.New.Company());
+                comJson = JsonConvert.SerializeObject(com.Record);
             }
-            return new ShapeResult(this,_orchard.New.Company(Company:com));
+            
+            return new ShapeResult(this,_orchard.New.Company(Company: comJson));
         }
 
         public Localizer T { get; set; }
