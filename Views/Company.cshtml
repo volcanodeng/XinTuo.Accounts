@@ -42,7 +42,8 @@
         </tr>
         <tr>
             <td colspan="2">
-                <input type="hidden"  id="CompanyId" />
+                <input type="hidden"  id="companyId" name="companyId" />
+                <input type="hidden" id="__RequestVerificationToken" name="__RequestVerificationToken" value="@Html.AntiForgeryTokenValueOrchard()" />
             </td>
         </tr>
         <tr>
@@ -68,7 +69,8 @@
 
         var initData = JSON.parse("@Model.Company");
         if (initData) {
-            $("#comForm").form('load',{
+            $("#comForm").form('load', {
+                companyId: initData.Id,
                 fullName: initData.FullName,
                 shortName: initData.ShortName,
                 province: initData.Region.ProvinceId,
