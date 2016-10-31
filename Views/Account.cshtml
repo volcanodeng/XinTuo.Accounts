@@ -1,0 +1,23 @@
+﻿
+
+<table class="easyui-datagrid" id="accDatagrid"
+       data-options="singleSelect:true,toolbar: '#accToolbar',fit:true,idField:'AccCode'">
+    <thead>
+        <tr>
+            <th data-options="field:'AccCode'">@T("编码")</th>
+            <th data-options="field:'AccName'">@T("名称")</th>
+            <th data-options="field:'CateName'">@T("类别")</th>
+            <th data-options="field:'Direction'">@T("余额方向")</th>
+            <th data-options="field:'AuxNames'">@T("辅助核算")</th>
+            <th data-options="field:'Unit'">@T("数量单位")</th>
+            <th data-options="field:'AccState'">@T("状态")</th>
+        </tr>
+    </thead>
+</table>
+
+<div id="accToolbar">
+    <a href="javascript:void(0)" class="easyui-linkbutton" data-options="plain:true" onclick="append()">新增</a>
+    <a href="javascript:void(0)" class="easyui-linkbutton" data-options="plain:true" onclick="appendSub()">新增下级</a>
+    <a href="javascript:void(0)" class="easyui-linkbutton" data-options="plain:true" onclick="edit()">编辑</a>
+    <a href="javascript:void(0)" class="easyui-linkbutton" data-options="plain:true" onclick="remove()">删除</a>
+</div>

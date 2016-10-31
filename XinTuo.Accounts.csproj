@@ -129,6 +129,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Controllers\Account.cs" />
     <Compile Include="Controllers\CompanyController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Handlers\RegionHandler.cs" />
@@ -146,13 +147,16 @@
     <Compile Include="Models\VoucherDetailRecord.cs" />
     <Compile Include="Models\VoucherDetailTemplateRecord.cs" />
     <Compile Include="Models\VoucherRecord.cs" />
+    <Compile Include="Services\Account.cs" />
     <Compile Include="Services\Company.cs" />
     <Compile Include="Services\FastPropertyComparer.cs" />
+    <Compile Include="Services\IAccountcs.cs" />
     <Compile Include="Services\ICompany.cs" />
     <Compile Include="Services\IRegion.cs" />
     <Compile Include="Services\Region.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="Controllers\Api\" />
     <Folder Include="Drivers\" />
   </ItemGroup>
   <ItemGroup>
@@ -168,6 +172,9 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\Company.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Account.cshtml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
