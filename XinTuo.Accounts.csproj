@@ -136,6 +136,7 @@
     <Compile Include="Migrations.cs" />
     <Compile Include="Models\AbstractRecord.cs" />
     <Compile Include="Models\AccountCategoryRecord.cs" />
+    <Compile Include="Models\AccountPart.cs" />
     <Compile Include="Models\AccountRecord.cs" />
     <Compile Include="Models\AuxiliaryRecord.cs" />
     <Compile Include="Models\AuxiliaryTypeRecord.cs" />

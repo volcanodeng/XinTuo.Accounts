@@ -19,5 +19,7 @@ namespace XinTuo.Accounts.Services
             _contentManager = contentManager;
             _accountRecord = accountRecord;
         }
+
+        
     }
 }
