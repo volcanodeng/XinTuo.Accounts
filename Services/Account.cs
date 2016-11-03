@@ -5,6 +5,7 @@ using System.Web;
 using XinTuo.Accounts.Models;
 using Orchard.Data;
 using Orchard.Security;
+using Orchard.Services;
 using Orchard.ContentManagement;
 
 namespace XinTuo.Accounts.Services
@@ -20,6 +21,9 @@ namespace XinTuo.Accounts.Services
             _accountRecord = accountRecord;
         }
 
-        
+        public AccountPart GetAccount(int id)
+        {
+            return _contentManager.Query<AccountPart, AccountRecord>().Where(c => c.Id == id).List().FirstOrDefault();
+        }
     }
 }
