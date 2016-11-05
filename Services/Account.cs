@@ -25,5 +25,10 @@ namespace XinTuo.Accounts.Services
         {
             return _contentManager.Query<AccountPart, AccountRecord>().Where(c => c.Id == id).List().FirstOrDefault();
         }
+
+        public AccountPart SaveAccount()
+        {
+
+        }
     }
 }
