@@ -7,6 +7,7 @@ using Orchard.Data;
 using Orchard.Security;
 using Orchard.Services;
 using Orchard.ContentManagement;
+using XinTuo.Accounts.ViewModels;
 
 namespace XinTuo.Accounts.Services
 {
@@ -26,9 +27,9 @@ namespace XinTuo.Accounts.Services
             return _contentManager.Query<AccountPart, AccountRecord>().Where(c => c.Id == id).List().FirstOrDefault();
         }
 
-        public AccountPart SaveAccount()
+        public AccountPart SaveAccount(VMAccount account)
         {
-
+            return _contentManager.New("Account").As<AccountPart>();
         }
     }
 }

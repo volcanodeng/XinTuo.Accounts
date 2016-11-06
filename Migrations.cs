@@ -161,6 +161,30 @@ namespace XinTuo.Accounts {
             return 1;
         }
 
-        
+        public int UpdateFrom1()
+        {
+            ContentDefinitionManager.AlterPartDefinition("CompanyPart", part => part.Attachable(false));
+
+            ContentDefinitionManager.AlterPartDefinition("AuxiliaryPart", part => part.Attachable());
+
+            ContentDefinitionManager.AlterPartDefinition("CertificateWordPart", part => part.Attachable());
+
+            ContentDefinitionManager.AlterPartDefinition("AccountPart",part=>part.Attachable());
+
+            ContentDefinitionManager.AlterPartDefinition("AbstractPart",part=>part.Attachable());
+
+            ContentDefinitionManager.AlterPartDefinition("VoucherPart",part=>part.Attachable(false));
+
+            ContentDefinitionManager.AlterPartDefinition("VoucherDetailPart",part=>part.Attachable());
+
+            ContentDefinitionManager.AlterPartDefinition("VoucherDetailTemplatePart",part=>part.Attachable());
+
+
+            ContentDefinitionManager.AlterTypeDefinition("Company", type => type.WithPart("CompanyPart"));
+
+            //ContentDefinitionManager.AlterTypeDefinition("");
+
+            return 2;
+        }
     }
 }

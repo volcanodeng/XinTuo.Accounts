@@ -129,7 +129,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Controllers\Account.cs" />
+    <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\CompanyController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Handlers\RegionHandler.cs" />
@@ -155,6 +155,7 @@
     <Compile Include="Services\ICompany.cs" />
     <Compile Include="Services\IRegion.cs" />
     <Compile Include="Services\Region.cs" />
+    <Compile Include="ViewModels\VMAccount.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Controllers\Api\" />
