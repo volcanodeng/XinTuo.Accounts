@@ -6,6 +6,8 @@ using Orchard.ContentManagement.MetaData;
 using Orchard.ContentManagement.MetaData.Builders;
 using Orchard.Core.Contents.Extensions;
 using Orchard.Data.Migration;
+using XinTuo.Accounts.Models;
+using Orchard.Users.Models;
 
 namespace XinTuo.Accounts {
     public class Migrations : DataMigrationImpl {
@@ -163,26 +165,37 @@ namespace XinTuo.Accounts {
 
         public int UpdateFrom1()
         {
-            ContentDefinitionManager.AlterPartDefinition("CompanyPart", part => part.Attachable(false));
+            ContentDefinitionManager.AlterPartDefinition(typeof(CompanyPart).Name, part => part.Attachable(false));
 
-            ContentDefinitionManager.AlterPartDefinition("AuxiliaryPart", part => part.Attachable());
+            ContentDefinitionManager.AlterPartDefinition(typeof(AuxiliaryPart).Name, part => part.Attachable());
 
-            ContentDefinitionManager.AlterPartDefinition("CertificateWordPart", part => part.Attachable());
+            ContentDefinitionManager.AlterPartDefinition(typeof(CertificateWordPart).Name, part => part.Attachable());
 
-            ContentDefinitionManager.AlterPartDefinition("AccountPart",part=>part.Attachable());
+            ContentDefinitionManager.AlterPartDefinition(typeof(AccountPart).Name,part=>part.Attachable());
 
-            ContentDefinitionManager.AlterPartDefinition("AbstractPart",part=>part.Attachable());
+            ContentDefinitionManager.AlterPartDefinition(typeof(AbstractPart).Name,part=>part.Attachable());
 
-            ContentDefinitionManager.AlterPartDefinition("VoucherPart",part=>part.Attachable(false));
+            ContentDefinitionManager.AlterPartDefinition(typeof(VoucherPart).Name,part=>part.Attachable(false));
 
-            ContentDefinitionManager.AlterPartDefinition("VoucherDetailPart",part=>part.Attachable());
+            ContentDefinitionManager.AlterPartDefinition(typeof(VoucherDetailPart).Name,part=>part.Attachable());
 
-            ContentDefinitionManager.AlterPartDefinition("VoucherDetailTemplatePart",part=>part.Attachable());
+            ContentDefinitionManager.AlterPartDefinition(typeof(VoucherDetailTemplatePart).Name,part=>part.Attachable());
 
 
-            ContentDefinitionManager.AlterTypeDefinition("Company", type => type.WithPart("CompanyPart"));
+            ContentDefinitionManager.AlterTypeDefinition("Company", type => type
+                                                                    .WithPart(typeof(CompanyPart).Name)
+                                                                    .WithPart(typeof(UserPart).Name));
 
-            //ContentDefinitionManager.AlterTypeDefinition("");
+            ContentDefinitionManager.AlterTypeDefinition("Account", type => type
+                                                                     .WithPart(typeof(AuxiliaryPart).Name)
+                                                                     .WithPart(typeof(CertificateWordPart).Name)
+                                                                     .WithPart(typeof(AccountPart).Name)
+                                                                     .WithPart(typeof(AbstractPart).Name));
+
+            ContentDefinitionManager.AlterTypeDefinition("Voucher", type => type
+                                                                     .WithPart(typeof(VoucherPart).Name)
+                                                                     .WithPart(typeof(VoucherDetailPart).Name)
+                                                                     .WithPart(typeof(VoucherDetailTemplatePart).Name));
 
             return 2;
         }
