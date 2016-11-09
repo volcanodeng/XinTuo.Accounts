@@ -14,12 +14,12 @@ namespace XinTuo.Accounts.Services
     public class Account : IAccountcs
     {
         private readonly IContentManager _contentManager;
-        private readonly IRepository<AccountRecord> _accountRecord;
+        private readonly IRepository<AccountCategoryRecord> _accCategoryRepository;
 
-        public Account(IContentManager contentManager,IRepository<AccountRecord> accountRecord)
+        public Account(IContentManager contentManager,IRepository<AccountCategoryRecord> accCategory)
         {
             _contentManager = contentManager;
-            _accountRecord = accountRecord;
+            _accCategoryRepository = accCategory;
         }
 
         public AccountPart GetAccount(int id)
@@ -32,6 +32,7 @@ namespace XinTuo.Accounts.Services
             AccountPart newAccount = _contentManager.New("Account").As<AccountPart>();
             newAccount.AccCode = account.AccCode;
             newAccount.ParentCode = account.ParentCode;
+            newAccount.AccountCategory = _accCategoryRepository.Get(account.CateId);
 
 
             return newAccount;

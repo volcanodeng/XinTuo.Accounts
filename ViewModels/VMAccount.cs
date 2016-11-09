@@ -17,7 +17,7 @@ namespace XinTuo.Accounts.ViewModels
             get;set;
         }
 
-        public string CateId
+        public int CateId
         {
             get;set;
         }
