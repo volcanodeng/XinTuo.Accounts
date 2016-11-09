@@ -29,7 +29,12 @@ namespace XinTuo.Accounts.Services
 
         public AccountPart SaveAccount(VMAccount account)
         {
-            return _contentManager.New("Account").As<AccountPart>();
+            AccountPart newAccount = _contentManager.New("Account").As<AccountPart>();
+            newAccount.AccCode = account.AccCode;
+            newAccount.ParentCode = account.ParentCode;
+
+
+            return newAccount;
         }
     }
 }
