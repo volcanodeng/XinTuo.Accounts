@@ -3,9 +3,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using XinTuo.Accounts.Models;
+using XinTuo.Accounts.ViewModels;
 using Orchard.Data;
 using Orchard.Security;
 using Orchard.ContentManagement;
+using AutoMapper;
+using Orchard.Users.Models;
 
 namespace XinTuo.Accounts.Services
 {
@@ -14,14 +17,20 @@ namespace XinTuo.Accounts.Services
         private readonly IAuthenticationService _authService;
         private readonly IRepository<CompanyUserRecord> _companyUser;
         private readonly IContentManager _contentManager;
+        private readonly IMapper _mapper;
+        private readonly IMembershipService _membership;
 
         public Company(IAuthenticationService authService,
             IRepository<CompanyUserRecord> companyUser,
-            IContentManager contentManager)
+            IContentManager contentManager,
+            IMapper mapper,
+            IMembershipService membership)
         {
             _authService = authService;
             _companyUser = companyUser;
             _contentManager = contentManager;
+            _mapper = mapper;
+            _membership = membership;
         }
 
         public CompanyPart GetCurrentCompany()
@@ -33,6 +42,29 @@ namespace XinTuo.Accounts.Services
             if (cuRecord == null) return null;
 
             return _contentManager.Get<CompanyPart>(cuRecord.CompanyRecord.Id);
+        }
+
+        public CompanyPart CreateCompany(VMCompany company)
+        {
+            var newCom = _contentManager.New("Company");
+            CompanyPart newCompany = newCom.As<CompanyPart>();
+            UserPart newUser = newCom.As<UserPart>();
+
+            newCompany = _mapper.Map<VMCompany, CompanyPart>(company,newCompany);
+
+            newUser.UserName = company.ContractName;
+            newUser.Email = company.ContractEmail;
+            newUser.Record.PasswordFormat = System.Web.Security.MembershipPasswordFormat.Clear;
+            newUser.Record.RegistrationStatus = UserStatus.Approved;
+            newUser.Record.EmailStatus = UserStatus.Approved;
+
+            _membership.SetPassword(newUser,"123456");
+
+            _contentManager.Create(newCom);
+
+            _companyUser.Create(new CompanyUserRecord() { CompanyRecord = newCompany.Record, UserPartRecord = newUser.Record });
+
+            return newCompany;
         }
     }
 }

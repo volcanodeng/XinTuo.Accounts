@@ -8,6 +8,7 @@ using Orchard.Security;
 using Orchard.Services;
 using Orchard.ContentManagement;
 using XinTuo.Accounts.ViewModels;
+using AutoMapper;
 
 namespace XinTuo.Accounts.Services
 {
@@ -15,11 +16,15 @@ namespace XinTuo.Accounts.Services
     {
         private readonly IContentManager _contentManager;
         private readonly IRepository<AccountCategoryRecord> _accCategoryRepository;
+        private readonly IMapper _mapper;
 
-        public Account(IContentManager contentManager,IRepository<AccountCategoryRecord> accCategory)
+        public Account(IContentManager contentManager,
+                       IRepository<AccountCategoryRecord> accCategory,
+                       IMapper mapper)
         {
             _contentManager = contentManager;
             _accCategoryRepository = accCategory;
+            _mapper = mapper;
         }
 
         public AccountPart GetAccount(int id)
@@ -30,9 +35,10 @@ namespace XinTuo.Accounts.Services
         public AccountPart SaveAccount(VMAccount account)
         {
             AccountPart newAccount = _contentManager.New("Account").As<AccountPart>();
-            newAccount.AccCode = account.AccCode;
-            newAccount.ParentCode = account.ParentCode;
+
+            newAccount = _mapper.Map<VMAccount,AccountPart>(account,newAccount);
             newAccount.AccountCategory = _accCategoryRepository.Get(account.CateId);
+
 
 
             return newAccount;
