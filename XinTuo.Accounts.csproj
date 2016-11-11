@@ -52,9 +52,8 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\bin\Autofac.dll</HintPath>
     </Reference>
-    <Reference Include="AutoMapper, Version=5.1.1.0, Culture=neutral, PublicKeyToken=be96cd2c38ef1005, processorArchitecture=MSIL">
+    <Reference Include="AutoMapper">
       <HintPath>packages\AutoMapper.5.1.1\lib\net45\AutoMapper.dll</HintPath>
-      <Private>True</Private>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="Microsoft.Web.Infrastructure">
@@ -149,6 +148,7 @@
     <Compile Include="AutoMapperProfiles\AccountProfile.cs" />
     <Compile Include="AutoMapperProfiles\CompanyProfile.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\Api\CompanyApiController.cs" />
     <Compile Include="Controllers\CompanyController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Handlers\RegionHandler.cs" />
@@ -185,7 +185,6 @@
     <Compile Include="ViewModels\VMUser.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Controllers\Api\" />
     <Folder Include="Drivers\" />
   </ItemGroup>
   <ItemGroup>

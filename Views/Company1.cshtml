@@ -1,0 +1,97 @@
+﻿
+
+<form id="comForm" method="post">
+    <table>
+        <tr>
+            <td class="form_lab">@T("公司全称")<span style="color:red;">*</span></td>
+            <td>
+                <input class="easyui-textbox" id="fullName" name="fullName" data-options="prompt:'如：广西新拓财务科技公司...',required:true"  style="width:100%;height:32px">
+            </td>
+        </tr>
+        <tr>
+            <td class="form_lab">@T("公司简称")</td>
+            <td><input class="easyui-textbox" id="shortName" name="shortName" data-options="prompt:'如：“新拓”、“财务”...'"  style="width:100%;height:32px"></td>
+        </tr>
+        <tr>
+            <td class="form_lab">@T("行政区划")<span style="color:red;">*</span></td>
+            <td>
+                <select id="province" name="province" class="easyui-combobox" style="width:150px;height:30px;" data-options="valueField:'provinceId',textField:'provinceName',url:'/api/c/GetProvinces',method:'GET',onChange:onProvinceSelected,required:true,editable:false"></select>
+                <select id="city" name="city" class="easyui-combobox" style="width:100px;height:30px;" data-options="required:true,editable:false"></select>
+                <select id="county" name="county" class="easyui-combobox" style="width:100px;height:30px;" data-options="required:true,editable:false"></select>
+            </td>
+        </tr>
+        <tr>
+            <td class="form_lab">@T("公司地址")<span style="color:red;">*</span></td>
+            <td><input class="easyui-textbox" id="address" name="address" data-options="prompt:'如：南山区科技园现代大厦6楼...',required:true"  style="width:100%;height:32px"></td>
+        </tr>
+        <tr>
+            <td class="form_lab">@T("公司电话")</td>
+            <td><input class="easyui-textbox" id="tel" name="tel" data-options="prompt:'如：0771-7654321...',validType:'telNum'"  style="width:100%;height:32px"></td>
+        </tr>
+        <tr>
+            <td class="form_lab">@T("联系人姓名")<span style="color:red;">*</span></td>
+            <td><input class="easyui-textbox" id="contactsName" name="contactsName" data-options="prompt:'如：张小三...',required:true"  style="width:100%;height:32px"></td>
+        </tr>
+        <tr>
+            <td class="form_lab">@T("联系人电话")<span style="color:red;">*</span></td>
+            <td><input class="easyui-textbox" id="contactsMobile" name="contactsMobile" data-options="prompt:'如：13907881234...',required:true"  style="width:100%;height:32px"></td>
+        </tr>
+        <tr>
+            <td class="form_lab">@T("联系人邮箱")<span style="color:red;">*</span></td>
+            <td><input class="easyui-textbox" id="contactsEmail" name="contactsEmail" data-options="prompt:'如：1234567@qq.com...',required:true,validType:'email'"  style="width:100%;height:32px"></td>
+        </tr>
+        <tr>
+            <td colspan="2">
+                <input type="hidden"  id="companyId" name="companyId" />
+                <input type="hidden" id="__RequestVerificationToken" name="__RequestVerificationToken" value="@Html.AntiForgeryTokenValueOrchard()" />
+            </td>
+        </tr>
+        <tr>
+            <td colspan="2" style="text-align:right;">
+                <button class="primaryAction" onclick="save()">保存</button>
+            </td>
+        </tr>
+
+    </table>
+</form>
+
+<script type="text/javascript">
+    $(function () {
+        init();
+    });
+
+    function init() {
+        $("#comForm").form({
+            url: "",
+            onSubmit: formOnSubmit,
+            success: formSuccess
+        });
+
+        var initData = JSON.parse("@Model.Company");
+        if (initData) {
+            $("#comForm").form('load', {
+                companyId: initData.Id,
+                fullName: initData.FullName,
+                shortName: initData.ShortName,
+                province: initData.Region.ProvinceId,
+                city: initData.Region.CityId,
+                county: initData.Region.RegionId,
+                address: initData.Address,
+                tel: initData.Tel,
+                contactsName: initData.ContractName,
+                contactsMobile: initData.ContractMobile,
+                contactsEmail: initData.ContractEmail
+            });
+        }
+    }
+
+    function formOnSubmit()
+    {
+
+    }
+
+    function formSuccess()
+    {
+
+    }
+</script>

@@ -16,7 +16,7 @@ namespace XinTuo.Accounts
                     Priority=0,
                     RouteTemplate="api/c/{action}/{id}",
                     Defaults=new {
-                        area="XinTuo.Finance",
+                        area="XinTuo.Accounts",
                         controller="CompanyApi",
                         id=RouteParameter.Optional
                     }
@@ -26,7 +26,7 @@ namespace XinTuo.Accounts
                     Priority=0,
                     RouteTemplate="api/s/{action}/{id}",
                     Defaults=new {
-                        area="XinTuo.Finance",
+                        area="XinTuo.Accounts",
                         controller="SubjectApi",
                         id=RouteParameter.Optional
                     }
@@ -36,7 +36,7 @@ namespace XinTuo.Accounts
                     Priority=0,
                     RouteTemplate="api/v/{action}/{id}",
                     Defaults=new {
-                        area="XinTuo.Finance",
+                        area="XinTuo.Accounts",
                         controller="VoucherApi",
                         id=RouteParameter.Optional
                     }

@@ -20,7 +20,7 @@ namespace XinTuo.Accounts.Controllers
             _company = company;
         }
 
-        [Themed]
+
         public ActionResult Register()
         {
             CompanyPart com = _company.GetCurrentCompany();

@@ -1,97 +1,107 @@
 ﻿
+<div class="easyui-panel"  style="padding:30px 60px;">
+    <form id="comForm" method="post">
+        <div>
+            <input class="easyui-textbox" id="fullName" name="fullName" data-options="label:'@T("公司全称")',prompt:'如：广西新拓财务科技公司...',required:true" style="width:100%;height:32px">
+        </div>
 
-<form id="comForm" method="post">
-    <table>
-        <tr>
-            <td class="form_lab">@T("公司全称")<span style="color:red;">*</span></td>
-            <td>
-                <input class="easyui-textbox" id="fullName" name="fullName" data-options="prompt:'如：广西新拓财务科技公司...',required:true"  style="width:100%;height:32px">
-            </td>
-        </tr>
-        <tr>
-            <td class="form_lab">@T("公司简称")</td>
-            <td><input class="easyui-textbox" id="shortName" name="shortName" data-options="prompt:'如：“新拓”、“财务”...'"  style="width:100%;height:32px"></td>
-        </tr>
-        <tr>
-            <td class="form_lab">@T("行政区划")<span style="color:red;">*</span></td>
-            <td>
-                <select id="province" name="province" class="easyui-combobox" style="width:150px;height:30px;" data-options="valueField:'provinceId',textField:'provinceName',url:'/api/c/GetProvinces',method:'GET',onChange:onProvinceSelected,required:true,editable:false"></select>
-                <select id="city" name="city" class="easyui-combobox" style="width:100px;height:30px;" data-options="required:true,editable:false"></select>
-                <select id="county" name="county" class="easyui-combobox" style="width:100px;height:30px;" data-options="required:true,editable:false"></select>
-            </td>
-        </tr>
-        <tr>
-            <td class="form_lab">@T("公司地址")<span style="color:red;">*</span></td>
-            <td><input class="easyui-textbox" id="address" name="address" data-options="prompt:'如：南山区科技园现代大厦6楼...',required:true"  style="width:100%;height:32px"></td>
-        </tr>
-        <tr>
-            <td class="form_lab">@T("公司电话")</td>
-            <td><input class="easyui-textbox" id="tel" name="tel" data-options="prompt:'如：0771-7654321...',validType:'telNum'"  style="width:100%;height:32px"></td>
-        </tr>
-        <tr>
-            <td class="form_lab">@T("联系人姓名")<span style="color:red;">*</span></td>
-            <td><input class="easyui-textbox" id="contactsName" name="contactsName" data-options="prompt:'如：张小三...',required:true"  style="width:100%;height:32px"></td>
-        </tr>
-        <tr>
-            <td class="form_lab">@T("联系人电话")<span style="color:red;">*</span></td>
-            <td><input class="easyui-textbox" id="contactsMobile" name="contactsMobile" data-options="prompt:'如：13907881234...',required:true"  style="width:100%;height:32px"></td>
-        </tr>
-        <tr>
-            <td class="form_lab">@T("联系人邮箱")<span style="color:red;">*</span></td>
-            <td><input class="easyui-textbox" id="contactsEmail" name="contactsEmail" data-options="prompt:'如：1234567@qq.com...',required:true,validType:'email'"  style="width:100%;height:32px"></td>
-        </tr>
-        <tr>
-            <td colspan="2">
-                <input type="hidden"  id="companyId" name="companyId" />
-                <input type="hidden" id="__RequestVerificationToken" name="__RequestVerificationToken" value="@Html.AntiForgeryTokenValueOrchard()" />
-            </td>
-        </tr>
-        <tr>
-            <td colspan="2" style="text-align:right;">
-                <button class="primaryAction" onclick="save()">保存</button>
-            </td>
-        </tr>
+        <div>
+            <input class="easyui-textbox" id="shortName" name="shortName" data-options="label:'@T("公司简称")',prompt:'如：“新拓”、“财务”...'" style="width:100%;height:32px">
+        </div>
 
-    </table>
-</form>
+        <div>
+            <select id="province" name="province" class="easyui-combobox" style="width:150px;height:30px;" label="@T("行政区划")" data-options="valueField:'provinceId',textField:'provinceName',url:'/api/c/GetProvinces',method:'GET',onChange:onProvinceSelected,required:true,editable:false"></select>
+            <select id="city" name="city" class="easyui-combobox" style="width:100px;height:30px;" data-options="required:true,editable:false"></select>
+            <select id="county" name="county" class="easyui-combobox" style="width:100px;height:30px;" data-options="required:true,editable:false"></select>
+        </div>
 
-<script type="text/javascript">
-    $(function () {
-        init();
-    });
+        <div>
+            <input class="easyui-textbox" id="address" name="address" data-options="label:'@T("公司地址")',prompt:'如：安吉光辉大厦1312号...',required:true" style="width:100%;height:32px">
+        </div>
 
-    function init() {
-        $("#comForm").form({
-            url: "",
-            onSubmit: formOnSubmit,
-            success: formSuccess
+        <div>
+            <input class="easyui-textbox" id="tel" name="tel" data-options="label:'@T("公司电话")',prompt:'如：0771-7654321...',validType:'telNum'" style="width:100%;height:32px">
+        </div>
+
+        <div>
+            <input class="easyui-textbox" id="contactsName" name="contactsName" data-options="label:'@T("联系人姓名")',prompt:'如：张小三...',required:true" style="width:100%;height:32px">
+        </div>
+
+        <div>
+            <input class="easyui-textbox" id="contactsMobile" name="contactsMobile" data-options="label:'@T("联系人电话")',prompt:'如：13907881234...',required:true" style="width:100%;height:32px">
+        </div>
+
+        <div>
+            <input class="easyui-textbox" id="contactsEmail" name="contactsEmail" data-options="label:'@T("联系人邮箱")',prompt:'如：1234567@qq.com...',required:true,validType:'email'" style="width:100%;height:32px">
+        </div>
+
+        <div>
+            <input type="hidden" id="companyId" name="companyId" />
+            <input type="hidden" id="__RequestVerificationToken" name="__RequestVerificationToken" value="@Html.AntiForgeryTokenValueOrchard()" />
+
+            <a href="javascript:void(0)" class="easyui-linkbutton" onclick="save()" style="width:80px">保存</a>
+            <a href="javascript:void(0)" class="easyui-linkbutton" onclick="reset()" style="width:80px">重置</a>
+        </div>
+    </form>
+
+    </div>
+
+    <script type="text/javascript">
+        $(function () {
+            init();
         });
 
-        var initData = JSON.parse("@Model.Company");
-        if (initData) {
-            $("#comForm").form('load', {
-                companyId: initData.Id,
-                fullName: initData.FullName,
-                shortName: initData.ShortName,
-                province: initData.Region.ProvinceId,
-                city: initData.Region.CityId,
-                county: initData.Region.RegionId,
-                address: initData.Address,
-                tel: initData.Tel,
-                contactsName: initData.ContractName,
-                contactsMobile: initData.ContractMobile,
-                contactsEmail: initData.ContractEmail
+        function init() {
+            $("#comForm").form({
+                url: "",
+                onSubmit: formOnSubmit,
+                success: formSuccess
+            });
+
+            var initData = JSON.parse("@Model.Company");
+            if (initData) {
+                $("#comForm").form('load', {
+                    companyId: initData.Id,
+                    fullName: initData.FullName,
+                    shortName: initData.ShortName,
+                    province: initData.Region.ProvinceId,
+                    city: initData.Region.CityId,
+                    county: initData.Region.RegionId,
+                    address: initData.Address,
+                    tel: initData.Tel,
+                    contactsName: initData.ContractName,
+                    contactsMobile: initData.ContractMobile,
+                    contactsEmail: initData.ContractEmail
+                });
+            }
+        }
+
+        function formOnSubmit() {
+
+        }
+
+        function formSuccess() {
+
+        }
+
+        function save() {
+            $("#comForm").submit();
+        }
+        function reset()
+        {
+            $("#comForm").form("reset");
+        }
+
+        function onProvinceSelected(newValue, oldValue) {
+            $("#county").combobox("clear");
+            $("#city").combobox({
+                url: '/api/c/GetRegion/' + newValue, valueField: 'cityId', textField: 'cityName', onChange: onCitySelected, method: 'GET'
             });
         }
-    }
 
-    function formOnSubmit()
-    {
-
-    }
-
-    function formSuccess()
-    {
-
-    }
-</script>
+        function onCitySelected(newValue, oldValue) {
+            $("#county").combobox({
+                url: '/api/c/GetRegion/' + newValue, valueField: 'regionId', textField: 'countyName', method: 'GET'
+            });
+        }
+    </script>
