@@ -10,7 +10,7 @@
         </div>
 
         <div>
-            <select id="province" name="province" class="easyui-combobox" style="width:150px;height:30px;" label="@T("行政区划")" data-options="valueField:'provinceId',textField:'provinceName',url:'/api/c/GetProvinces',method:'GET',onChange:onProvinceSelected,required:true,editable:false"></select>
+            <select id="province" name="province" class="easyui-combobox" style="width:150px;height:30px;" data-options="valueField: 'provinceId',textField: 'provinceName',url: '/api/c/GetProvinces',method: 'GET',onChange: onProvinceSelected,required: true,editable: false,label:'@T("行政区划")'" ></select>
             <select id="city" name="city" class="easyui-combobox" style="width:100px;height:30px;" data-options="required:true,editable:false"></select>
             <select id="county" name="county" class="easyui-combobox" style="width:100px;height:30px;" data-options="required:true,editable:false"></select>
         </div>
@@ -53,12 +53,15 @@
 
         function init() {
             $("#comForm").form({
-                url: "",
+                url: "/api/c/Save/",
                 onSubmit: formOnSubmit,
                 success: formSuccess
             });
+            
+            var com = "@Model.Company";
+            if (com == null || com == "") return;
 
-            var initData = JSON.parse("@Model.Company");
+            var initData = JSON.parse(com);
             if (initData) {
                 $("#comForm").form('load', {
                     companyId: initData.Id,
