@@ -42,7 +42,11 @@ namespace XinTuo.Accounts.Controllers.API
         [HttpPost]
         public IHttpActionResult Save([FromBody]VMCompany com)
         {
-            if (com == null) return BadRequest("不能保存空内容");
+            if(!ModelState.IsValid)
+            {
+                string err = string.Join("", ModelState.Values.Select(v=>v.Errors.Select(e=>string.Join("",e.ErrorMessage))));
+                return BadRequest(err);
+            }
             
             return Ok(_company.CreateCompany(com));
         }

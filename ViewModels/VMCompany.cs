@@ -5,6 +5,8 @@ namespace XinTuo.Accounts.ViewModels
 {
     public class VMCompany
     {
+        public int Id { get; set; }
+
         [Required,Display(Name = "公司全称")]
         public string FullName
         {
@@ -22,8 +24,16 @@ namespace XinTuo.Accounts.ViewModels
             get;set;
         }
 
+        public int CityId { get; set; }
+
+        public int ProvinceId { get; set; }
+
+        public string CityName { get; set; }
+
+        public string ProvinceName { get; set; }
+
         [Display(Name = "行政区划")]
-        public string RegionName
+        public string CountyName
         {
             get;set;
         }

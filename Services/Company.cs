@@ -46,6 +46,7 @@ namespace XinTuo.Accounts.Services
 
         public CompanyPart CreateCompany(VMCompany company)
         {
+
             var newCom = _contentManager.New("Company");
             CompanyPart newCompany = newCom.As<CompanyPart>();
             UserPart newUser = newCom.As<UserPart>();
@@ -53,7 +54,9 @@ namespace XinTuo.Accounts.Services
             newCompany = _mapper.Map<VMCompany, CompanyPart>(company,newCompany);
 
             newUser.UserName = company.ContractName;
+            newUser.NormalizedUserName = company.ContractName;
             newUser.Email = company.ContractEmail;
+            newUser.HashAlgorithm = "SHA1";
             newUser.PasswordFormat = System.Web.Security.MembershipPasswordFormat.Clear;
             newUser.Record.PasswordFormat = System.Web.Security.MembershipPasswordFormat.Clear;
             newUser.Record.RegistrationStatus = UserStatus.Approved;

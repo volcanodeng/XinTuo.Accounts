@@ -1,6 +1,6 @@
 ﻿@using XinTuo.Accounts.ViewModels;
 @{ 
-    var com = Model.Company;
+    VMCompany com = Model.Company;
 }
 
 
@@ -62,26 +62,22 @@
                 onSubmit: formOnSubmit,
                 success: formSuccess
             });
-            
-            var com = "@Model.Company";
-            if (com == null || com == "") return;
 
-            var initData = JSON.parse(com);
-            if (initData) {
-                $("#comForm").form('load', {
-                    companyId: initData.Id,
-                    fullName: initData.FullName,
-                    shortName: initData.ShortName,
-                    province: initData.Region.ProvinceId,
-                    city: initData.Region.CityId,
-                    county: initData.Region.RegionId,
-                    address: initData.Address,
-                    tel: initData.Tel,
-                    contactsName: initData.ContractName,
-                    contactsMobile: initData.ContractMobile,
-                    contactsEmail: initData.ContractEmail
-                });
-            }
+
+            $("#comForm").form('load', {
+            companyId: @com.Id,
+                fullName: "@com.FullName",
+                shortName: "@com.ShortName",
+                province: @com.ProvinceId,
+                city: @com.CityId,
+                county: @com.RegionId,
+                address: "@com.Address",
+                tel: "@com.Tel",
+                contactsName: "@com.ContractName",
+                contactsMobile: "@com.ContractMobile",
+                contactsEmail: "@com.ContractEmail"
+            });
+
         }
 
         function formOnSubmit() {

@@ -5,7 +5,9 @@ using Orchard;
 using Orchard.Localization;
 using XinTuo.Accounts.Services;
 using XinTuo.Accounts.Models;
+using XinTuo.Accounts.ViewModels;
 using Newtonsoft.Json;
+using AutoMapper;
 
 namespace XinTuo.Accounts.Controllers
 {
@@ -13,24 +15,26 @@ namespace XinTuo.Accounts.Controllers
     {
         private readonly IOrchardServices _orchard;
         private readonly ICompany _company;
+        private readonly IMapper _mapper;
 
-        public CompanyController(IOrchardServices orchard,ICompany company)
+        public CompanyController(IOrchardServices orchard,ICompany company,IMapper mapper)
         {
             _orchard = orchard;
             _company = company;
+            _mapper = mapper;
         }
 
 
         public ActionResult Register()
         {
             CompanyPart com = _company.GetCurrentCompany();
-            string comJson = null;
+            VMCompany company = new VMCompany();
             if(com != null)
             {
-                comJson = JsonConvert.SerializeObject(com.Record);
+                company = _mapper.Map<CompanyPart, VMCompany>(com);
             }
             
-            return new ShapeResult(this,_orchard.New.Company(Company: comJson));
+            return new ShapeResult(this,_orchard.New.Company(Company: company));
         }
 
         public Localizer T { get; set; }
