@@ -38,12 +38,12 @@ namespace XinTuo.Accounts.Models
         {
             get
             {
-                return Record.Region;
+                return Record.RegionRecord;
             }
 
             set
             {
-                Record.Region = value;
+                Record.RegionRecord = value;
             }
         }
 
