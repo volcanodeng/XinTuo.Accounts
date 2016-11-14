@@ -33,7 +33,7 @@ namespace XinTuo.Accounts.Services
             if (reg != null && reg.Level == 1)
             {
                 return (from region in _regionRecord.Table
-                        where region.ProvinceId == RegionId.Value && region.CityId != RegionId.Value
+                        where region.ProvinceId == RegionId.Value && region.CityId != RegionId.Value && region.Level==2
                         select new RegionRecord() { CityId = region.CityId, CityName = region.CityName }).ToList();
             }
 
@@ -41,7 +41,7 @@ namespace XinTuo.Accounts.Services
             if (reg != null && reg.Level == 2)
             {
                 return (from region in _regionRecord.Table
-                        where region.CityId == RegionId.Value && region.RegionId != RegionId.Value
+                        where region.CityId == RegionId.Value && region.RegionId != RegionId.Value && region.Level == 3
                         select new RegionRecord() { RegionId = region.RegionId, CountyName = region.CountyName }).ToList();
             }
 

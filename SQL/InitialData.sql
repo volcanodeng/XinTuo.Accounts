@@ -1,3 +1,6 @@
+
+
+
 SET IDENTITY_INSERT C9_XinTuo_Accounts_AccountCategoryRecord ON
 
 INSERT INTO [C9_XinTuo_Accounts_AccountCategoryRecord]([Id],[ParentAcId],[CateName]) values (1,NULL,N'×Ê²ú')
