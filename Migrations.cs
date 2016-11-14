@@ -165,21 +165,21 @@ namespace XinTuo.Accounts {
 
         public int UpdateFrom1()
         {
-            ContentDefinitionManager.AlterPartDefinition(typeof(CompanyPart).Name, part => part.Attachable(false));
+            ContentDefinitionManager.AlterPartDefinition(typeof(CompanyPart).Name, part => part.Attachable(false).WithDescription("用于注册公司信息"));
 
-            ContentDefinitionManager.AlterPartDefinition(typeof(AuxiliaryPart).Name, part => part.Attachable());
+            ContentDefinitionManager.AlterPartDefinition(typeof(AuxiliaryPart).Name, part => part.Attachable().WithDescription("修改辅助核算项目"));
 
-            ContentDefinitionManager.AlterPartDefinition(typeof(CertificateWordPart).Name, part => part.Attachable());
+            ContentDefinitionManager.AlterPartDefinition(typeof(CertificateWordPart).Name, part => part.Attachable().WithDescription("编辑凭证字"));
 
-            ContentDefinitionManager.AlterPartDefinition(typeof(AccountPart).Name,part=>part.Attachable());
+            ContentDefinitionManager.AlterPartDefinition(typeof(AccountPart).Name,part=>part.Attachable().WithDescription("科目维护"));
 
-            ContentDefinitionManager.AlterPartDefinition(typeof(AbstractPart).Name,part=>part.Attachable());
+            ContentDefinitionManager.AlterPartDefinition(typeof(AbstractPart).Name,part=>part.Attachable().WithDescription("历史摘要信息维护"));
 
-            ContentDefinitionManager.AlterPartDefinition(typeof(VoucherPart).Name,part=>part.Attachable(false));
+            ContentDefinitionManager.AlterPartDefinition(typeof(VoucherPart).Name,part=>part.Attachable(false).WithDescription("凭证录入"));
 
-            ContentDefinitionManager.AlterPartDefinition(typeof(VoucherDetailPart).Name,part=>part.Attachable());
+            ContentDefinitionManager.AlterPartDefinition(typeof(VoucherDetailPart).Name,part=>part.Attachable().WithDescription("凭证明细表"));
 
-            ContentDefinitionManager.AlterPartDefinition(typeof(VoucherDetailTemplatePart).Name,part=>part.Attachable());
+            ContentDefinitionManager.AlterPartDefinition(typeof(VoucherDetailTemplatePart).Name,part=>part.Attachable().WithDescription("凭证模板维护"));
 
 
             ContentDefinitionManager.AlterTypeDefinition("Company", type => type

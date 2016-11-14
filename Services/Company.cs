@@ -54,11 +54,12 @@ namespace XinTuo.Accounts.Services
 
             newUser.UserName = company.ContractName;
             newUser.Email = company.ContractEmail;
+            newUser.PasswordFormat = System.Web.Security.MembershipPasswordFormat.Clear;
             newUser.Record.PasswordFormat = System.Web.Security.MembershipPasswordFormat.Clear;
             newUser.Record.RegistrationStatus = UserStatus.Approved;
             newUser.Record.EmailStatus = UserStatus.Approved;
 
-            _membership.SetPassword(newUser,"123456");
+            _membership.SetPassword(newUser, company.ContractName);
 
             _contentManager.Create(newCom);
 

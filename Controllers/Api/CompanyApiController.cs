@@ -15,6 +15,8 @@ namespace XinTuo.Accounts.Controllers.API
         private readonly ICompany _company;
         private readonly IRegion _region;
 
+        
+
         public CompanyApiController(ICompany company,IRegion region)
         {
             _company = company;

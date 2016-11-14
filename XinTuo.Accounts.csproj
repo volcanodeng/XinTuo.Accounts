@@ -151,6 +151,7 @@
     <Compile Include="Controllers\Api\CompanyApiController.cs" />
     <Compile Include="Controllers\CompanyController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Handlers\CompanyHandler.cs" />
     <Compile Include="Handlers\RegionHandler.cs" />
     <Compile Include="Migrations.cs" />
     <Compile Include="Models\AbstractPart.cs" />
