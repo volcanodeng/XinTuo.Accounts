@@ -19,13 +19,16 @@ namespace XinTuo.Accounts.ViewModels
             get;set;
         }
 
+        [Required,Display(Name ="区域-区/县")]
         public int RegionId
         {
             get;set;
         }
 
+        [Required,Display(Name ="区域-城市")]
         public int CityId { get; set; }
 
+        [Required,Display(Name ="区域-省份")]
         public int ProvinceId { get; set; }
 
         public string CityName { get; set; }

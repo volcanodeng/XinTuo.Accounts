@@ -44,11 +44,20 @@ namespace XinTuo.Accounts.Controllers.API
         {
             if(!ModelState.IsValid)
             {
-                string err = string.Join("", ModelState.Values.Select(v=>v.Errors.Select(e=>string.Join("",e.ErrorMessage))));
+                string err = "";
+                foreach(var s in ModelState)
+                {
+                    foreach(var e in s.Value.Errors)
+                    {
+                        err += e.ErrorMessage;
+                    }
+                }
                 return BadRequest(err);
             }
-            
-            return Ok(_company.CreateCompany(com));
+
+            var comPart = _company.CreateCompany(com);
+
+            return Ok(comPart.Id);
         }
     }
 }

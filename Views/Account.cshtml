@@ -22,6 +22,19 @@
     <a href="javascript:void(0)" class="easyui-linkbutton" data-options="plain:true" onclick="remove()">删除</a>
 </div>
 
-<script type="text/javascript">
+<div id="editDialog" class="easyui-dialog" title="编辑科目" style="width:450px;height:600px;" data-options="resizable:false,modal:true,closed: true">
+    <form id="accForm" method="post">
 
+        <div>
+            <input class="easyui-textbox" id="FullName" name="FullName" data-options="label:'@T("科目编码")',required:true" style="width:100%;height:32px">
+        </div>
+
+    </form>
+</div>
+
+<script type="text/javascript">
+    function append()
+    {
+        $("#editDialog").dialog('open');
+    }
 </script>

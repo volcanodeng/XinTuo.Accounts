@@ -15,7 +15,7 @@
         </div>
 
         <div>
-            <select id="ProvinceId" name="ProvinceId" class="easyui-combobox" style="width:230px;height:30px;" data-options="valueField: 'provinceId',textField: 'provinceName',url: '/api/c/GetProvinces',method: 'GET',onChange: onProvinceSelected,required: true,editable: false,label:'@T("行政区划")',onLoadSuccess:cbOnLoadSuccess" ></select>
+            <select id="ProvinceId" name="ProvinceId" class="easyui-combobox" style="width:250px;height:30px;" data-options="valueField: 'provinceId',textField: 'provinceName',url: '/api/c/GetProvinces',method: 'GET',onChange: onProvinceSelected,required: true,editable: false,label:'@T("行政区划")',onLoadSuccess:cbOnLoadSuccess" ></select>
             <select id="CityId" name="CityId" class="easyui-combobox" style="width:100px;height:30px;" data-options="required:true,editable:false"></select>
             <select id="RegionId" name="RegionId" class="easyui-combobox" style="width:100px;height:30px;" data-options="required:true,editable:false"></select>
         </div>
@@ -51,6 +51,16 @@
 
     </div>
 
+<style type="text/css">
+    #comForm div {
+        padding:10px;
+    }
+
+    #comForm input {
+        font-size:14pt;
+    }
+</style>
+
     <script type="text/javascript">
         $(function () {
             init();
@@ -78,11 +88,21 @@
         }
 
         function formOnSubmit() {
-
+            return $(this).form('validate');
         }
 
-        function formSuccess() {
+        function formSuccess(data) {
+            if(data == null)return;
+            var data = JSON.parse(data);
 
+            if(data.message != null){
+                $.messager.alert("保存",data.message,"warning");
+                return;
+            }
+            else
+            {
+                $.messager.show({title:"保存",msg:"保存成功"});
+            }
         }
 
         function save() {
