@@ -9,6 +9,7 @@ namespace XinTuo.Accounts.Models
 {
     public class CompanyPart : ContentPart<CompanyRecord>
     {
+        
         public string FullName
         {
             get

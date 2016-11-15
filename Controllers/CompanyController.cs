@@ -32,6 +32,7 @@ namespace XinTuo.Accounts.Controllers
             if(com != null)
             {
                 company = _mapper.Map<CompanyPart, VMCompany>(com);
+                company = _mapper.Map<RegionRecord, VMCompany>(com.Region,company);
             }
             
             return new ShapeResult(this,_orchard.New.Company(Company: company));

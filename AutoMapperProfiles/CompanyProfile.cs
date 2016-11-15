@@ -16,7 +16,9 @@ namespace XinTuo.Accounts.AutoMapperProfiles
         public CompanyProfile()
         {
             CreateMap<VMCompany, CompanyPart>();
-            
+            CreateMap<CompanyPart, VMCompany>();
+            CreateMap<RegionRecord, VMCompany>();
+            CreateMap<VMCompany, RegionRecord>();
         }
     }
 }

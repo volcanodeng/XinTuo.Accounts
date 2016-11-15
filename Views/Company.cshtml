@@ -15,9 +15,9 @@
         </div>
 
         <div>
-            <select id="province" name="province" class="easyui-combobox" style="width:150px;height:30px;" data-options="valueField: 'provinceId',textField: 'provinceName',url: '/api/c/GetProvinces',method: 'GET',onChange: onProvinceSelected,required: true,editable: false,label:'@T("行政区划")'" ></select>
-            <select id="city" name="city" class="easyui-combobox" style="width:100px;height:30px;" data-options="required:true,editable:false"></select>
-            <select id="county" name="county" class="easyui-combobox" style="width:100px;height:30px;" data-options="required:true,editable:false"></select>
+            <select id="ProvinceId" name="ProvinceId" class="easyui-combobox" style="width:230px;height:30px;" data-options="valueField: 'provinceId',textField: 'provinceName',url: '/api/c/GetProvinces',method: 'GET',onChange: onProvinceSelected,required: true,editable: false,label:'@T("行政区划")',onLoadSuccess:cbOnLoadSuccess" ></select>
+            <select id="CityId" name="CityId" class="easyui-combobox" style="width:100px;height:30px;" data-options="required:true,editable:false"></select>
+            <select id="RegionId" name="RegionId" class="easyui-combobox" style="width:100px;height:30px;" data-options="required:true,editable:false"></select>
         </div>
 
         <div>
@@ -65,17 +65,14 @@
 
 
             $("#comForm").form('load', {
-            companyId: @com.Id,
-                fullName: "@com.FullName",
-                shortName: "@com.ShortName",
-                province: @com.ProvinceId,
-                city: @com.CityId,
-                county: @com.RegionId,
-                address: "@com.Address",
-                tel: "@com.Tel",
-                contactsName: "@com.ContractName",
-                contactsMobile: "@com.ContractMobile",
-                contactsEmail: "@com.ContractEmail"
+                companyId: @com.Id,
+                FullName: "@com.FullName",
+                ShortName: "@com.ShortName",
+                Address: "@com.Address",
+                Tel: "@com.Tel",
+                ContractName: "@com.ContractName",
+                ContractMobile: "@com.ContractMobile",
+                ContractEmail: "@com.ContractEmail"
             });
 
         }
@@ -97,15 +94,22 @@
         }
 
         function onProvinceSelected(newValue, oldValue) {
-            $("#county").combobox("clear");
-            $("#city").combobox({
+            $("#RegionId").combobox("clear");
+            $("#CityId").combobox({
                 url: '/api/c/GetRegion/' + newValue, valueField: 'cityId', textField: 'cityName', onChange: onCitySelected, method: 'GET'
             });
         }
 
         function onCitySelected(newValue, oldValue) {
-            $("#county").combobox({
+            $("#RegionId").combobox({
                 url: '/api/c/GetRegion/' + newValue, valueField: 'regionId', textField: 'countyName', method: 'GET'
             });
+        }
+
+        function cbOnLoadSuccess()
+        {
+            $("#ProvinceId").combobox("setValue","@com.ProvinceName");
+            $("#CityId").combobox("setValue","@com.CityName");
+            $("#RegionId").combobox("setValue","@com.CountyName");
         }
     </script>
