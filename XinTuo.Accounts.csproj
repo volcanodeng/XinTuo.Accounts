@@ -148,6 +148,7 @@
     <Compile Include="AutoMapperProfiles\AccountProfile.cs" />
     <Compile Include="AutoMapperProfiles\CompanyProfile.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\Api\AccountApiController.cs" />
     <Compile Include="Controllers\Api\CompanyApiController.cs" />
     <Compile Include="Controllers\CompanyController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
@@ -174,8 +175,10 @@
     <Compile Include="Models\VoucherPart.cs" />
     <Compile Include="Models\VoucherRecord.cs" />
     <Compile Include="Services\Account.cs" />
+    <Compile Include="Services\AccountCategory.cs" />
     <Compile Include="Services\Company.cs" />
     <Compile Include="Services\FastPropertyComparer.cs" />
+    <Compile Include="Services\IAccountCategory.cs" />
     <Compile Include="Services\IAccountcs.cs" />
     <Compile Include="Services\ICompany.cs" />
     <Compile Include="Services\IRegion.cs" />

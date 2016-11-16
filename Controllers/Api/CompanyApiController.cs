@@ -1,11 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using System.Web.Http;
-using System.Net.Http;
+﻿using System.Web.Http;
 using XinTuo.Accounts.Services;
-using XinTuo.Accounts.Models;
 using XinTuo.Accounts.ViewModels;
 
 namespace XinTuo.Accounts.Controllers.API

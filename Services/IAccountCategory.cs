@@ -3,14 +3,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using XinTuo.Accounts.Models;
-using XinTuo.Accounts.ViewModels;
 
 namespace XinTuo.Accounts.Services
 {
-    public interface IAccount
+    public interface IAccountCategory
     {
-        AccountPart GetAccount(int id);
+        List<AccountCategoryRecord> GetMainAccountCategory();
 
-        AccountPart SaveAccount(VMAccount account);
+        List<AccountCategoryRecord> GetSubCategory(int cid);
     }
 }

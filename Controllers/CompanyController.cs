@@ -28,11 +28,15 @@ namespace XinTuo.Accounts.Controllers
         public ActionResult Register()
         {
             CompanyPart com = _company.GetCurrentCompany();
-            VMCompany company = new VMCompany();
+            VMCompany company = null;
             if(com != null)
             {
                 company = _mapper.Map<CompanyPart, VMCompany>(com);
                 company = _mapper.Map<RegionRecord, VMCompany>(com.Region,company);
+            }
+            if(company == null)
+            {
+                company = new VMCompany();
             }
             
             return new ShapeResult(this,_orchard.New.Company(Company: company));

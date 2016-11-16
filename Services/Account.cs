@@ -1,18 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
+﻿using System.Linq;
 using XinTuo.Accounts.Models;
 using Orchard.Data;
-using Orchard.Security;
-using Orchard.Services;
 using Orchard.ContentManagement;
 using XinTuo.Accounts.ViewModels;
 using AutoMapper;
 
 namespace XinTuo.Accounts.Services
 {
-    public class Account : IAccountcs
+    public class Account : IAccount
     {
         private readonly IContentManager _contentManager;
         private readonly IRepository<AccountCategoryRecord> _accCategoryRepository;
@@ -43,5 +38,6 @@ namespace XinTuo.Accounts.Services
 
             return newAccount;
         }
+
     }
 }
