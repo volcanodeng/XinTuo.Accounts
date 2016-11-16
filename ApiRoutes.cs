@@ -22,12 +22,12 @@ namespace XinTuo.Accounts
                     }
                 },
                 new HttpRouteDescriptor {
-                    Name="Subject Setting Api",
+                    Name="Account Api",
                     Priority=0,
-                    RouteTemplate="api/s/{action}/{id}",
+                    RouteTemplate="api/a/{action}/{id}",
                     Defaults=new {
                         area="XinTuo.Accounts",
-                        controller="SubjectApi",
+                        controller="AccountApi",
                         id=RouteParameter.Optional
                     }
                 },

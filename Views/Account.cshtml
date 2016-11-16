@@ -1,9 +1,17 @@
 ﻿
-<div class="easyui-layout" data-options="fit:true">
-    <div data-options="region:'north',split:false" style="height:50px">
-        
+@using XinTuo.Accounts.Models;
+@{ 
+    List<AccountCategoryRecord> cates = Model.Category;
+}
+
+<div class="easyui-layout" data-options="fit:true" >
+    <div data-options="region:'north',split:false" style="height:100px;padding:10px;">
+        @foreach (AccountCategoryRecord c in cates)
+        {
+            <a href="#" id="cate_@c.Id" class="easyui-linkbutton" data-options="iconCls:'icon-large-picture',size:'large',iconAlign:'top',toggle:true,group:'g1'" onclick="varObject.mainCate=@c.Id">@c.CateName</a>
+        }
     </div>
-    <div data-options="region:'center'">
+    <div data-options="region:'center'" style="padding:10px;">
         <table class="easyui-datagrid" id="accDatagrid"
                data-options="singleSelect:true,toolbar: '#accToolbar',fit:true,idField:'AccCode'">
             <thead>
@@ -28,7 +36,7 @@
     </div>
 </div>
 
-<div id="editDialog" class="easyui-dialog" title="编辑科目" style="width:450px;height:600px;" data-options="resizable:false,modal:true,closed: true">
+<div id="editDialog" class="easyui-dialog" title="编辑科目" style="width:450px;height:600px;" data-options="resizable:false,modal:true,closed: true,onBeforeOpen:editOnBeforeOpen">
     <form id="accForm" method="post">
 
         <div>
@@ -44,15 +52,29 @@
         </div>
 
         <div>
-            <input class="easyui-combobox" id="CateId" name="CateId" data-options="label:'@T("科目类别")',required:true,valueField:'id',textField:'text',url:'get_data.php'" style="width:100%;height:32px">
+            <input class="easyui-combobox" id="CateId" name="CateId" data-options="label:'@T("科目类别")',required:true,valueField:'id',textField:'cateName',method: 'GET'" style="width:100%;height:32px">
         </div>
 
     </form>
 </div>
 
 <script type="text/javascript">
+
+    var varObject = {
+        mainCate:-1
+    };
+
+    $(function () {
+        
+    });
+
     function append()
     {
         $("#editDialog").dialog('open');
+    }
+
+    function editOnBeforeOpen()
+    {
+        $("#CateId").combobox('reload', '/api/a/GetSubAccCate?cid=' + varObject.mainCate);
     }
 </script>

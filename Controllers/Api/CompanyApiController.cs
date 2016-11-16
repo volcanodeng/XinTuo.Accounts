@@ -34,6 +34,7 @@ namespace XinTuo.Accounts.Controllers.API
       
 
         [HttpPost]
+        [System.Web.Mvc.ValidateAntiForgeryToken]
         public IHttpActionResult Save([FromBody]VMCompany com)
         {
             if(!ModelState.IsValid)

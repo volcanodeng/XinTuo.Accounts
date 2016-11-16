@@ -179,7 +179,7 @@
     <Compile Include="Services\Company.cs" />
     <Compile Include="Services\FastPropertyComparer.cs" />
     <Compile Include="Services\IAccountCategory.cs" />
-    <Compile Include="Services\IAccountcs.cs" />
+    <Compile Include="Services\IAccount.cs" />
     <Compile Include="Services\ICompany.cs" />
     <Compile Include="Services\IRegion.cs" />
     <Compile Include="Services\Region.cs" />
