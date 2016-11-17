@@ -1,0 +1,14 @@
+﻿
+@using XinTuo.Accounts.Models;
+@{ 
+    List<AuxiliaryTypeRecord> auxTypes = Model.AuxiliaryType;
+}
+
+<div>
+    <ul>
+        @foreach(AuxiliaryTypeRecord aux in auxTypes)
+        {
+            <li></li>
+        }
+    </ul>
+</div>
