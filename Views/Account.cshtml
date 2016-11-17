@@ -8,7 +8,7 @@
     <div data-options="region:'north',split:false" style="height:100px;padding:10px;">
         @foreach (AccountCategoryRecord c in cates)
         {
-            <a href="#" id="cate_@c.Id" class="easyui-linkbutton" data-options="iconCls:'icon-large-picture',size:'large',iconAlign:'top',toggle:true,group:'g1'" onclick="varObject.mainCate=@c.Id">@c.CateName</a>
+            <a href="javascript:void(0)" id="cate_@c.Id" class="easyui-linkbutton" data-options="iconCls:'icon-large-picture',size:'large',iconAlign:'top',toggle:true,group:'g1'" onclick="varObject.mainCate=@c.Id">@c.CateName</a>
         }
     </div>
     <div data-options="region:'center'" style="padding:10px;">
@@ -55,8 +55,34 @@
             <input class="easyui-combobox" id="CateId" name="CateId" data-options="label:'@T("科目类别")',required:true,valueField:'id',textField:'cateName',method: 'GET'" style="width:100%;height:32px">
         </div>
 
+        <div>
+            <label for="dirGroup" style="display:inline-block;" class="textbox-label textbox-label-before">余额方向</label>
+            <fieldset id="dirGroup" style="display:inline;">
+                <input type="radio" id="dirDebit" name="dir" value="debit" /><label for="dirDebit" style="display:inline;font-size:14pt;font-weight:bold;margin-right:10px;">借</label> 
+                <input type="radio" id="dirCredit" name="dir" value="credit" /><label for="dirCredit" style="display:inline;font-size:14pt;font-weight:bold;">贷</label>
+            </fieldset>
+        </div>
+
+        <div>
+            <input type="checkbox" id="aux" name="aux" /><label for="aux">辅助核算</label>
+            <div id="auxItems">
+
+            </div>
+        </div>
+
+        <div style="text-align:right;">
+            <a href="javascript:void(0)" class="easyui-linkbutton" onclick="save()" style="width:80px">确 定</a>
+            <a href="javascript:void(0)" class="easyui-linkbutton" onclick="cancel()" style="width:80px">取 消</a>
+        </div>
+
     </form>
 </div>
+
+<style type="text/css">
+    #accForm div{
+        padding:20px;
+    }
+</style>
 
 <script type="text/javascript">
 
@@ -76,5 +102,12 @@
     function editOnBeforeOpen()
     {
         $("#CateId").combobox('reload', '/api/a/GetSubAccCate?cid=' + varObject.mainCate);
+    }
+
+
+    function cancel()
+    {
+        $('#accForm').form('clear');
+        $("#editDialog").dialog('close');
     }
 </script>

@@ -176,10 +176,12 @@
     <Compile Include="Models\VoucherRecord.cs" />
     <Compile Include="Services\Account.cs" />
     <Compile Include="Services\AccountCategory.cs" />
+    <Compile Include="Services\Auxiliary.cs" />
     <Compile Include="Services\Company.cs" />
     <Compile Include="Services\FastPropertyComparer.cs" />
     <Compile Include="Services\IAccountCategory.cs" />
     <Compile Include="Services\IAccount.cs" />
+    <Compile Include="Services\IAuxiliary.cs" />
     <Compile Include="Services\ICompany.cs" />
     <Compile Include="Services\IRegion.cs" />
     <Compile Include="Services\Region.cs" />
