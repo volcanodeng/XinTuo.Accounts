@@ -12,11 +12,13 @@ namespace XinTuo.Accounts.Services
     {
         private readonly IRepository<AuxiliaryTypeRecord> _auxType;
         private readonly IContentManager _contentManager;
+        private readonly ICompany _company;
 
-        public Auxiliary(IRepository<AuxiliaryTypeRecord> auxType,IContentManager contentManager)
+        public Auxiliary(IRepository<AuxiliaryTypeRecord> auxType,IContentManager contentManager,ICompany company)
         {
             _auxType = auxType;
             _contentManager = contentManager;
+            _company = company;
         }
 
         public List<AuxiliaryTypeRecord> GetBaseAuxType()
@@ -24,6 +26,22 @@ namespace XinTuo.Accounts.Services
             return _auxType.Table.ToList();
         }
 
+        public AuxiliaryTypeRecord SaveAuxType(AuxiliaryTypeRecord customType)
+        {
+            CompanyPart cp = _company.GetCurrentCompany();
+            if(cp != null)
+            {
+                customType.CompanyRecord = cp.Record;
+            }
+            else
+            {
+                return null;
+            }
+
+            _auxType.Create(customType);
+
+            return customType;
+        }
         
     }
 }

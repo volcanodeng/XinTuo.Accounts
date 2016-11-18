@@ -47,13 +47,14 @@ namespace XinTuo.Accounts {
                 );
 
             //辅助核算类型
-            SchemaBuilder.CreateTable("AccAuxiliaryTypeRecord",
+            SchemaBuilder.CreateTable("AuxiliaryTypeRecord",
                 t=>t.Column<int>("Id",c=>c.PrimaryKey().Identity())
-                .Column<string>("AuxType",c=>c.WithLength(50))                      //辅助核算类型共8种
+                .Column<string>("AuxType",c=>c.WithLength(50))                      //基础辅助核算类型共6种
+                .Column<int>("CompanyRecord_Id")                                    //自定义辅助核算必须与公司关联
                 );
 
             //辅助核算
-            SchemaBuilder.CreateTable("AccAuxiliaryRecord",
+            SchemaBuilder.CreateTable("AuxiliaryRecord",
                 t => t.ContentPartRecord()                                          //id
                 .Column<int>("AccAuxiliaryTypeRecord_Id")                         //辅助核算类型
                 .Column<string>("AuxCode", c => c.WithLength(50))                   //核算编码
@@ -65,7 +66,7 @@ namespace XinTuo.Accounts {
                 );
 
             //凭证字
-            SchemaBuilder.CreateTable("AccCertificateWordRecord",
+            SchemaBuilder.CreateTable("CertificateWordRecord",
                 t=>t.ContentPartRecord()                                            //凭证字主键
                 .Column<string>("CertWord",c=>c.WithLength(50))                     //凭证字
                 .Column<string>("PrintTitle",c=>c.WithLength(50))                   //打印标题

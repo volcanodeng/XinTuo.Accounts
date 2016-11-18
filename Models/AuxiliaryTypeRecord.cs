@@ -11,5 +11,7 @@ namespace XinTuo.Accounts.Models
 
         public virtual string AuxType { get; set; }
 
+        public CompanyRecord CompanyRecord { get; set; }
+
     }
 }
