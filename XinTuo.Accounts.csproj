@@ -121,7 +121,7 @@
   <ItemGroup>
     <Content Include="Assets.json" />
     <Content Include="Assets\Styles.less" />
-    <Content Include="Content\images\page_spr_icons.png" />
+    <Content Include="Styles\Images\page_spr_icons.png" />
     <Content Include="Scripts\Common.js" />
     <Content Include="Styles\Styles.css" />
     <Content Include="Styles\Styles.min.css" />
@@ -191,9 +191,7 @@
     <Compile Include="ViewModels\VMCompany.cs" />
     <Compile Include="ViewModels\VMUser.cs" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Drivers\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <Content Include="packages.config" />
     <Content Include="Views\Index.cshtml" />
@@ -211,7 +209,7 @@
     <Content Include="Views\AuxiliaryType.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Content\Web.config" />
+    <None Include="bundleconfig.json" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
