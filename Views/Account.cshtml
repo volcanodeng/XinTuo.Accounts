@@ -2,6 +2,7 @@
 @using XinTuo.Accounts.Models;
 @{ 
     List<AccountCategoryRecord> cates = Model.Category;
+    List<AuxiliaryTypeRecord> auxTypes = Model.AuxiliaryType;
 }
 
 <div class="easyui-layout" data-options="fit:true" >
@@ -65,8 +66,18 @@
 
         <div>
             <input type="checkbox" id="aux" name="aux" /><label for="aux" style="display:inline;margin-left:5px;">辅助核算</label>
-            <div id="auxItems">
+            <div id="auxItems" style="display:inline-block;">
+                @foreach (AuxiliaryTypeRecord aux in auxTypes)
+                {
+                    <input type="checkbox" id="aux_@aux.Id" name="aux_@aux.Id" /><label for="aux_@aux.Id" style="display:inline;margin-left:5px;">@aux.AuxType</label>
+                }
+            </div>
+        </div>
 
+        <div>
+            <input type="checkbox" id="quantity" name="quantity" /><label for="quantity" style="display:inline;margin-left:5px;">数量核算</label>
+            <div id="qtyUnit" style="display:inline-block;">
+                <input class="easyui-textbox" id="Unit" name="Unit" data-options="label:'@T("计量单位")'" style="width:80px;height:32px">
             </div>
         </div>
 
@@ -80,7 +91,7 @@
 
 <style type="text/css">
     #accForm div{
-        padding:20px;
+        padding:10px;
     }
 </style>
 
@@ -91,8 +102,33 @@
     };
 
     $(function () {
-        
+        init();
     });
+
+    function init()
+    {
+        $("#aux").change(function () {
+            if($(this).is(":checked"))
+            {
+                $("#auxItems").show();
+            }
+            else
+            {
+                $("#auxItems").hide();
+            }
+        });
+        $("#auxItems").hide();
+
+        $("#quantity").change(function () {
+            if ($(this).is(":checked")) {
+                $("#qtyUnit").show();
+            }
+            else {
+                $("#qtyUnit").hide();
+            }
+        });
+        $("#qtyUnit").hide();
+    }
 
     function append()
     {
