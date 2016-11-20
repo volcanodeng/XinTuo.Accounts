@@ -6,7 +6,7 @@
 }
 
 <div class="easyui-layout" data-options="fit:true" >
-    <div data-options="region:'north',split:false" style="height:100px;padding:10px;">
+    <div data-options="region:'north',split:false" style="height:90px;padding:10px;">
         @foreach (AccountCategoryRecord c in cates)
         {
             <a href="javascript:void(0)" id="cate_@c.Id" class="easyui-linkbutton" data-options="iconCls:'icon-large-picture',size:'large',iconAlign:'top',toggle:true,group:'g1'" onclick="varObject.mainCate=@c.Id">@c.CateName</a>
@@ -93,6 +93,10 @@
     #accForm div{
         padding:10px;
     }
+
+    #accForm input {
+        font-size:14pt;
+    }
 </style>
 
 <script type="text/javascript">
@@ -107,6 +111,12 @@
 
     function init()
     {
+        $("#comForm").form({
+            url: "/api/a/Save/",
+            onSubmit: formOnSubmit,
+            success: formSuccess
+        });
+
         $("#aux").change(function () {
             if($(this).is(":checked"))
             {
@@ -128,6 +138,8 @@
             }
         });
         $("#qtyUnit").hide();
+
+        $("#cate_1").click();
     }
 
     function append()
@@ -140,6 +152,28 @@
         $("#CateId").combobox('reload', '/api/a/GetSubAccCate?cid=' + varObject.mainCate);
     }
 
+    function save()
+    {
+
+    }
+
+    function formOnSubmit() {
+        return $(this).form('validate');
+    }
+
+    function formSuccess(data) {
+        if(data == null)return;
+        var data = JSON.parse(data);
+
+        if(data.message != null){
+            $.messager.alert("保存",data.message,"warning");
+            return;
+        }
+        else
+        {
+            $.messager.show({title:"保存",msg:"保存成功"});
+        }
+    }
 
     function cancel()
     {

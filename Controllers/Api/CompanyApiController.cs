@@ -2,7 +2,7 @@
 using XinTuo.Accounts.Services;
 using XinTuo.Accounts.ViewModels;
 
-namespace XinTuo.Accounts.Controllers.API
+namespace XinTuo.Accounts.Controllers.Api
 {
     public class CompanyApiController : ApiController
     {
@@ -37,16 +37,9 @@ namespace XinTuo.Accounts.Controllers.API
         [System.Web.Mvc.ValidateAntiForgeryToken]
         public IHttpActionResult Save([FromBody]VMCompany com)
         {
-            if(!ModelState.IsValid)
+            string err;
+            if(!ModelValidHelper.ModelValid(ModelState,out err))
             {
-                string err = "";
-                foreach(var s in ModelState)
-                {
-                    foreach(var e in s.Value.Errors)
-                    {
-                        err += e.ErrorMessage;
-                    }
-                }
                 return BadRequest(err);
             }
 
