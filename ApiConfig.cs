@@ -44,7 +44,8 @@ namespace XinTuo.Accounts
         private void ConfigAutomapper(ContainerBuilder builder)
         {
             builder.RegisterType(typeof(AutoMapperProfiles.CompanyProfile)).As<Profile>();
-            
+            builder.RegisterType(typeof(AutoMapperProfiles.AccountProfile)).As<Profile>();
+
             builder.Register(context =>
             {
                 //读取所有已注册的automapper profile

@@ -84,6 +84,7 @@
         <div style="text-align:right;">
             <a href="javascript:void(0)" class="easyui-linkbutton" onclick="save()" style="width:80px">确 定</a>
             <a href="javascript:void(0)" class="easyui-linkbutton" onclick="cancel()" style="width:80px">取 消</a>
+            <input type="hidden" id="__RequestVerificationToken" name="__RequestVerificationToken" value="@Html.AntiForgeryTokenValueOrchard()" />
         </div>
 
     </form>
@@ -111,7 +112,7 @@
 
     function init()
     {
-        $("#comForm").form({
+        $("#accForm").form({
             url: "/api/a/Save/",
             onSubmit: formOnSubmit,
             success: formSuccess
@@ -154,7 +155,7 @@
 
     function save()
     {
-
+        $("#accForm").submit();
     }
 
     function formOnSubmit() {
