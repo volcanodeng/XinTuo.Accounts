@@ -28,5 +28,11 @@ namespace XinTuo.Accounts.Controllers
             List<AuxiliaryTypeRecord> auxType = _auxiliary.GetBaseAuxType();
             return new ShapeResult(this, _orchard.New.AuxiliaryType(AuxiliaryType: auxType));
         }
+
+        public ActionResult AuxiliaryTypeEdit()
+        {
+            List<AuxiliaryTypeRecord> auxType = _auxiliary.GetBaseAuxType();
+            return new ShapeResult(this, _orchard.New.AuxiliaryTypeEdit(AuxiliaryType: auxType));
+        }
     }
 }

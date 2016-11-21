@@ -3729,3 +3729,15 @@ INSERT INTO [XinTuo_Accounts_AccountRecord] ([Id],[AccCode],[ParentCode],[Accoun
 INSERT INTO [XinTuo_Accounts_AccountRecord] ([Id],[AccCode],[ParentCode],[AccountCategoryRecord_Id],[AccName],[Direction],[AuxIds],[AuxCodes],[AuxNames],[Unit],[InitialQuantity],[InitialBalance],[YtdDebitQuantity],[YtdDebit],[YtdCreditQuantity],[YtdCredit],[YtdBeginBalanceQuantity],[YtdBeginBalance],[AccState],[CompanyRecord_Id],[Creator],[CreateTime],[Updater],[UpdateTime]) values (181,N'22210107',N'222101',5,N'出口退税',N'贷',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,NULL,NULL,NULL)
 INSERT INTO [XinTuo_Accounts_AccountRecord] ([Id],[AccCode],[ParentCode],[AccountCategoryRecord_Id],[AccName],[Direction],[AuxIds],[AuxCodes],[AuxNames],[Unit],[InitialQuantity],[InitialBalance],[YtdDebitQuantity],[YtdDebit],[YtdCreditQuantity],[YtdCredit],[YtdBeginBalanceQuantity],[YtdBeginBalance],[AccState],[CompanyRecord_Id],[Creator],[CreateTime],[Updater],[UpdateTime]) values (182,N'22210108',N'222101',5,N'进项税额转出',N'贷',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,NULL,NULL,NULL)
 INSERT INTO [XinTuo_Accounts_AccountRecord] ([Id],[AccCode],[ParentCode],[AccountCategoryRecord_Id],[AccName],[Direction],[AuxIds],[AuxCodes],[AuxNames],[Unit],[InitialQuantity],[InitialBalance],[YtdDebitQuantity],[YtdDebit],[YtdCreditQuantity],[YtdCredit],[YtdBeginBalanceQuantity],[YtdBeginBalance],[AccState],[CompanyRecord_Id],[Creator],[CreateTime],[Updater],[UpdateTime]) values (183,N'22210109',N'222101',5,N'转出多交增值税',N'贷',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,NULL,NULL,NULL)
+
+
+SET IDENTITY_INSERT XinTuo_Accounts_AuxiliaryTypeRecord ON
+INSERT INTO [XinTuo_Accounts_AuxiliaryTypeRecord] ([Id],[AuxType],[CompanyRecord_Id]) values (1,N'客户',NULL)
+INSERT INTO [XinTuo_Accounts_AuxiliaryTypeRecord] ([Id],[AuxType],[CompanyRecord_Id]) values (2,N'供应商',NULL)
+INSERT INTO [XinTuo_Accounts_AuxiliaryTypeRecord] ([Id],[AuxType],[CompanyRecord_Id]) values (3,N'职员',NULL)
+INSERT INTO [XinTuo_Accounts_AuxiliaryTypeRecord] ([Id],[AuxType],[CompanyRecord_Id]) values (4,N'项目',NULL)
+INSERT INTO [XinTuo_Accounts_AuxiliaryTypeRecord] ([Id],[AuxType],[CompanyRecord_Id]) values (5,N'部门',NULL)
+INSERT INTO [XinTuo_Accounts_AuxiliaryTypeRecord] ([Id],[AuxType],[CompanyRecord_Id]) values (6,N'存货',NULL)
+SET IDENTITY_INSERT XinTuo_Accounts_AuxiliaryTypeRecord OFF
+
+

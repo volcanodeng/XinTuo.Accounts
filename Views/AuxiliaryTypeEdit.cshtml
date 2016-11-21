@@ -1,0 +1,48 @@
+﻿@using XinTuo.Accounts.Models;
+@{
+    List<AuxiliaryTypeRecord> auxTypes = Model.AuxiliaryType;
+}
+
+<div class="easyui-layout" data-options="fit:true">
+    <div data-options="region:'north',split:false,border:false" style="height:80px;padding:10px;">
+        @foreach (AuxiliaryTypeRecord aux in auxTypes)
+        {
+            <a href="javascript:void(0)" id="auxType_@aux.Id" class="easyui-linkbutton"
+               data-options="toggle:true,group:'g1'"
+               onclick="varObject.auxTypeId=@aux.Id">@aux.AuxType</a>
+        }
+
+    </div>
+
+    <div data-options="region:'center',border:false" style="padding:10px;">
+        <table class="easyui-datagrid" id="auxDatagrid"
+               data-options="singleSelect:true,toolbar: '#auxToolbar',fit:true,idField:'AccCode'">
+            <thead>
+                <tr>
+                    <th data-options="field:'AuxCode'">@T("编码")</th>
+                    <th data-options="field:'AuxName'">@T("名称")</th>
+                    <th data-options="field:'AuxState'">@T("状态")</th>
+                </tr>
+            </thead>
+        </table>
+
+        <div id="auxToolbar">
+            <a href="javascript:void(0)" class="easyui-linkbutton" data-options="plain:true" onclick="append()">新增</a>
+            <a href="javascript:void(0)" class="easyui-linkbutton" data-options="plain:true" onclick="edit()">编辑</a>
+            <a href="javascript:void(0)" class="easyui-linkbutton" data-options="plain:true" onclick="remove()">删除</a>
+        </div>
+    </div>
+
+</div>
+
+<div id="editDialog" class="easyui-dialog" title="编辑科目" style="width:450px;height:600px;font-size:14pt;" data-options="resizable:false,modal:true,closed: true,onBeforeOpen:editOnBeforeOpen">
+</div>
+
+
+<script type="text/javascript">
+
+    var varObject = {
+        auxTypeId: -1
+    };
+
+</script>
