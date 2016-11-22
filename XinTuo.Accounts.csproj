@@ -178,6 +178,7 @@
     <Compile Include="Models\VoucherDetailTemplateRecord.cs" />
     <Compile Include="Models\VoucherPart.cs" />
     <Compile Include="Models\VoucherRecord.cs" />
+    <Compile Include="Routes.cs" />
     <Compile Include="Services\Account.cs" />
     <Compile Include="Services\AccountCategory.cs" />
     <Compile Include="Services\Auxiliary.cs" />

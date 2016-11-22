@@ -1,8 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Web.Routing;
+﻿using System.Collections.Generic;
 using System.Web.Http;
-using System.Web.Mvc;
 using Orchard.Mvc.Routes;
 using Orchard.WebApi.Routes;
 
@@ -43,7 +40,6 @@ namespace XinTuo.Accounts
                         id=RouteParameter.Optional
                     }
                 }
-                //,new RouteDescriptor {Route=new Route("acct/{controller}/{action}/{id}",new RouteValueDictionary { { "area" , "XinTuo.Accounts" }},new MvcRouteHandler()) }
             };
         }
 
