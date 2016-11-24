@@ -1,15 +1,18 @@
 ﻿@using XinTuo.Accounts.Models;
 @{
-    List<AuxiliaryTypeRecord> auxTypes = Model.AuxiliaryType;
+    AuxiliaryTypeRecord auxType = Model.AuxType;
+    List<AuxiliaryTypeRecord> BaseAuxTypes = Model.BaseAuxTypes;
 }
 
 <div class="easyui-layout" data-options="fit:true">
     <div data-options="region:'north',split:false,border:false" style="height:80px;padding:10px;">
-        @foreach (AuxiliaryTypeRecord aux in auxTypes)
+        @foreach (AuxiliaryTypeRecord aux in BaseAuxTypes)
         {
             <a href="javascript:void(0)" id="auxType_@aux.Id" class="easyui-linkbutton"
-               data-options="toggle:true,group:'g1'"
-               onclick="varObject.auxTypeId=@aux.Id">@aux.AuxType</a>
+               @if (aux.Id == auxType.Id)
+               { <text> data-options="toggle:true,group:'g1',selected:true" </text>}
+               else { <text> data-options="toggle:true,group:'g1'" </text>}
+               onclick="auxTypeClick(@aux.Id)" style="width:80px;">@aux.AuxType</a>
         }
 
     </div>
@@ -35,14 +38,93 @@
 
 </div>
 
-<div id="editDialog" class="easyui-dialog" title="编辑科目" style="width:450px;height:600px;font-size:14pt;" data-options="resizable:false,modal:true,closed: true,onBeforeOpen:editOnBeforeOpen">
+<div id="editDialog" class="easyui-dialog" title="编辑科目" style="width:450px;height:200px;font-size:14pt;" data-options="resizable:false,modal:true,closed: true">
+    <form id="auxForm" method="post">
+        <div>
+            <input class="easyui-textbox" id="atCode" name="atCode" data-options="label:'@T("编码")'" style="width:90%;height:32px">
+        </div>
+        <div>
+            <input class="easyui-textbox" id="atName" name="atName" data-options="label:'@T("名称")'" style="width:90%;height:32px">
+        </div>
+        <div style="float:right;">
+            <a href="javascript:void(0)" class="easyui-linkbutton" onclick="save()" style="width:80px">保存</a>
+            <a href="javascript:void(0)" class="easyui-linkbutton" onclick="diaClose()" style="width:80px">关闭</a>
+        </div>
+    </form>
 </div>
 
+<style type="text/css">
+    #auxForm div {
+        padding: 10px;
+    }
+
+    #auxForm input {
+        font-size: 14pt;
+    }
+</style>
 
 <script type="text/javascript">
 
     var varObject = {
         auxTypeId: -1
     };
+
+    $(function () {
+        init();
+    });
+
+    function init()
+    {
+        varObject.auxTypeId = @auxType.Id;
+
+        $("#auxForm").form({
+            url: "/api/a/Save/",
+            onSubmit: formOnSubmit,
+            success: formSuccess
+        });
+    }
+
+    function auxTypeClick(auxType)
+    {
+        varObject.auxTypeId = auxType;
+    }
+
+    function append()
+    {
+        $("#editDialog").dialog("open");
+    }
+
+    function edit()
+    {
+        $("#editDialog").dialog("open");
+    }
+
+    function save()
+    {
+        $("#auxForm").submit();
+    }
+
+    function diaClose()
+    {
+        $("#editDialog").dialog("close");
+    }
+
+    function formOnSubmit() {
+        return $(this).form('validate');
+    }
+
+    function formSuccess(data) {
+        if(data == null)return;
+        var data = JSON.parse(data);
+
+        if(data.message != null){
+            $.messager.alert("保存",data.message,"warning");
+            return;
+        }
+        else
+        {
+            $.messager.show({title:"保存",msg:"保存成功"});
+        }
+    }
 
 </script>

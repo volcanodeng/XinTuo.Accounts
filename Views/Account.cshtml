@@ -9,7 +9,7 @@
     <div data-options="region:'north',split:false,border:false" style="height:80px;padding:10px;">
         @foreach (AccountCategoryRecord c in cates)
         {
-            <a href="javascript:void(0)" id="cate_@c.Id" class="easyui-linkbutton" data-options="iconCls:'icon-large-picture',size:'large',iconAlign:'top',toggle:true,group:'g1'" onclick="varObject.mainCate=@c.Id">@c.CateName</a>
+            <a href="javascript:void(0)" id="cate_@c.Id" class="easyui-linkbutton" data-options="iconCls:'icon-large-picture',size:'large',iconAlign:'top',toggle:true,group:'g1'" onclick="varObject.mainCate=@c.Id" style="width:80px;">@c.CateName</a>
         }
     </div>
     <div data-options="region:'center',border:false" style="padding:10px;">

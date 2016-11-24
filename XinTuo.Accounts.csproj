@@ -150,6 +150,7 @@
     <Compile Include="AutoMapperProfiles\CompanyProfile.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\Api\AccountApiController.cs" />
+    <Compile Include="Controllers\Api\AuxiliaryApiController.cs" />
     <Compile Include="Controllers\Api\CompanyApiController.cs" />
     <Compile Include="Controllers\Api\ModelValidHelper.cs" />
     <Compile Include="Controllers\AuxiliaryController.cs" />
@@ -191,6 +192,7 @@
     <Compile Include="Services\IRegion.cs" />
     <Compile Include="Services\Region.cs" />
     <Compile Include="ViewModels\VMAccount.cs" />
+    <Compile Include="ViewModels\VMAuxiliary.cs" />
     <Compile Include="ViewModels\VMCompany.cs" />
     <Compile Include="ViewModels\VMUser.cs" />
   </ItemGroup>
