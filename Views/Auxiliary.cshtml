@@ -45,6 +45,7 @@
         </div>
         <div>
             <input class="easyui-textbox" id="atName" name="atName" data-options="label:'@T("名称")'" style="width:90%;height:32px">
+            <input type="hidden" id="AuxTypeId" name="AuxTypeId" />
         </div>
         <div style="float:right;">
             <a href="javascript:void(0)" class="easyui-linkbutton" onclick="save()" style="width:80px">保存</a>
@@ -75,10 +76,10 @@
 
     function init()
     {
-        varObject.auxTypeId = @auxType.Id;
+        $("#AuxTypeId").val(@auxType.Id);
 
         $("#auxForm").form({
-            url: "/api/a/Save/",
+            url: "/api/aux/Save/",
             onSubmit: formOnSubmit,
             success: formSuccess
         });
@@ -86,7 +87,7 @@
 
     function auxTypeClick(auxType)
     {
-        varObject.auxTypeId = auxType;
+        $("#AuxTypeId").val(auxType);
     }
 
     function append()
@@ -101,6 +102,7 @@
 
     function save()
     {
+
         $("#auxForm").submit();
     }
 

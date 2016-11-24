@@ -31,12 +31,12 @@ namespace XinTuo.Accounts
                     }
                 },
                 new HttpRouteDescriptor {
-                    Name="Voucher Api",
+                    Name="Auxiliary Api",
                     Priority=0,
-                    RouteTemplate="api/v/{action}/{id}",
+                    RouteTemplate="api/aux/{action}/{id}",
                     Defaults=new {
                         area="XinTuo.Accounts",
-                        controller="VoucherApi",
+                        controller="AuxiliaryApi",
                         id=RouteParameter.Optional
                     }
                 }

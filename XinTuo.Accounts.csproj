@@ -215,7 +215,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="bundleconfig.json" />
-    <Content Include="Views\AuxiliaryTypeEdit.cshtml" />
+    <Content Include="Views\Auxiliary.cshtml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
