@@ -22,7 +22,7 @@ namespace XinTuo.Accounts
                 },
                 new HttpRouteDescriptor {
                     Name="Account Api",
-                    Priority=0,
+                    Priority=1,
                     RouteTemplate="api/a/{action}/{id}",
                     Defaults=new {
                         area="XinTuo.Accounts",
@@ -32,8 +32,8 @@ namespace XinTuo.Accounts
                 },
                 new HttpRouteDescriptor {
                     Name="Auxiliary Api",
-                    Priority=0,
-                    RouteTemplate="api/aux/{action}/{id}",
+                    Priority=2,
+                    RouteTemplate="api/x/{action}/{id}",
                     Defaults=new {
                         area="XinTuo.Accounts",
                         controller="AuxiliaryApi",

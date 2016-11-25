@@ -5,7 +5,7 @@ using Orchard.Mvc.Routes;
 
 namespace XinTuo.Accounts
 {
-    public class Routes : IRouteProvider
+    public class MvcRoutes : IRouteProvider
     {
         public void GetRoutes(ICollection<RouteDescriptor> routes)
         {
@@ -18,7 +18,7 @@ namespace XinTuo.Accounts
             return new[] {
                 new RouteDescriptor {
                     Priority = 5,
-                    Route =new Route("accounting/a/{action}/{id}",
+                    Route =new Route("web/acct/{action}/{id}",
                                         new RouteValueDictionary {
                                             {"area", "XinTuo.Accounts"},
                                             {"controller", "Account"}

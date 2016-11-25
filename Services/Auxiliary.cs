@@ -57,9 +57,11 @@ namespace XinTuo.Accounts.Services
             return customType;
         }
 
-        public AuxiliaryRecord SaveAuxiliary(VMAuxiliary aux)
+        public AuxiliaryPart SaveAuxiliary(VMAuxiliary aux)
         {
-            AuxiliaryRecord newAux = _mapper.Map<VMAuxiliary, AuxiliaryRecord>(aux);
+            var auxPart = _contentManager.New<AuxiliaryPart>("Account");
+
+            AuxiliaryPart newAux = _mapper.Map<VMAuxiliary, AuxiliaryPart>(aux, auxPart);
             newAux.AuxiliaryType = _auxType.Get(aux.AuxTypeId);
             newAux.CreateTime = DateTime.Now;
 
@@ -67,16 +69,9 @@ namespace XinTuo.Accounts.Services
             if (user != null) newAux.Creator = user.Id;
 
             CompanyPart cp = _company.GetCurrentCompany();
-            if (cp != null)
-            {
-                newAux.Company = cp.Record;
-            }
-            else
-            {
-                return null;
-            }
+            if (cp != null) newAux.Company = cp.Record;
 
-            _auxiliary.Create(newAux);
+            _contentManager.Create(newAux);
             return newAux;
         }
         
