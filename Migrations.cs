@@ -56,7 +56,7 @@ namespace XinTuo.Accounts {
             //辅助核算
             SchemaBuilder.CreateTable("AuxiliaryRecord",
                 t => t.ContentPartRecord()                                          //id
-                .Column<int>("AccAuxiliaryTypeRecord_Id")                         //辅助核算类型
+                .Column<int>("AuxiliaryTypeRecord_Id")                         //辅助核算类型
                 .Column<string>("AuxCode", c => c.WithLength(50))                   //核算编码
                 .Column<string>("AuxName", c => c.WithLength(50))                   //核算名称
                 .Column<int>("AuxState", c => c.WithDefault(1))                     //状态：1 正常  0 禁用
@@ -186,6 +186,9 @@ namespace XinTuo.Accounts {
             ContentDefinitionManager.AlterTypeDefinition("Company", type => type
                                                                     .WithPart(typeof(CompanyPart).Name)
                                                                     .WithPart(typeof(UserPart).Name));
+
+            ContentDefinitionManager.AlterTypeDefinition("Auxiliary", type => type
+                                                                    .WithPart(typeof(AuxiliaryPart).Name));
 
             ContentDefinitionManager.AlterTypeDefinition("Account", type => type
                                                                      .WithPart(typeof(AuxiliaryPart).Name)

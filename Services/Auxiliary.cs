@@ -59,7 +59,7 @@ namespace XinTuo.Accounts.Services
 
         public AuxiliaryPart SaveAuxiliary(VMAuxiliary aux)
         {
-            var auxPart = _contentManager.New<AuxiliaryPart>("Account");
+            var auxPart = _contentManager.New<AuxiliaryPart>("Auxiliary");
 
             AuxiliaryPart newAux = _mapper.Map<VMAuxiliary, AuxiliaryPart>(aux, auxPart);
             newAux.AuxiliaryType = _auxType.Get(aux.AuxTypeId);
@@ -74,6 +74,8 @@ namespace XinTuo.Accounts.Services
             _contentManager.Create(newAux);
             return newAux;
         }
-        
+
+
+
     }
 }

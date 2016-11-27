@@ -14,6 +14,7 @@ namespace XinTuo.Accounts.Handlers
         {
             Filters.Add(StorageFilter.For(repository));
             Filters.Add(new ActivatingFilter<AuxiliaryPart>("Account"));
+            Filters.Add(new ActivatingFilter<AuxiliaryPart>("Auxiliary"));
         }
     }
 }

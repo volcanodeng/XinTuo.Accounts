@@ -12,11 +12,11 @@ namespace XinTuo.Accounts.Models
         {
             get
             {
-                return Record.AuxiliaryType;
+                return Record.AuxiliaryTypeRecord;
             }
             set
             {
-                Record.AuxiliaryType = value;
+                Record.AuxiliaryTypeRecord = value;
             }
         }
 
@@ -60,11 +60,11 @@ namespace XinTuo.Accounts.Models
         {
             get
             {
-                return Record.Company;
+                return Record.CompanyRecord;
             }
             set
             {
-                Record.Company = value;
+                Record.CompanyRecord = value;
             }
         }
         public int Creator

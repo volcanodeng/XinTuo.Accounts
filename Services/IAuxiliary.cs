@@ -12,5 +12,6 @@ namespace XinTuo.Accounts.Services
         AuxiliaryTypeRecord SaveAuxType(AuxiliaryTypeRecord customType);
 
         AuxiliaryPart SaveAuxiliary(VMAuxiliary aux);
+
     }
 }

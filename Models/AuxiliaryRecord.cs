@@ -8,7 +8,7 @@ namespace XinTuo.Accounts.Models
 {
     public class AuxiliaryRecord : ContentPartRecord
     {
-        public virtual AuxiliaryTypeRecord AuxiliaryType { get; set; }
+        public virtual AuxiliaryTypeRecord AuxiliaryTypeRecord { get; set; }
 
         public virtual string AuxCode { get; set; }
 
@@ -16,7 +16,7 @@ namespace XinTuo.Accounts.Models
 
         public virtual int AuxState { get; set; }
 
-        public virtual CompanyRecord Company { get; set; }
+        public virtual CompanyRecord CompanyRecord { get; set; }
 
         public virtual int Creator { get; set; }
 
