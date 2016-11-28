@@ -92,27 +92,27 @@ namespace XinTuo.Accounts.ViewModels
             get;set;
         }
 
-        public int CompanyId
-        {
-            get;set;
-        }
+        //public int CompanyId
+        //{
+        //    get;set;
+        //}
 
-        public string CompanyName
-        {
-            get;set;
-        }
+        //public string CompanyName
+        //{
+        //    get;set;
+        //}
 
-        public string CreatorName
-        {
-            get;
-            set;
-        }
+        //public string CreatorName
+        //{
+        //    get;
+        //    set;
+        //}
 
-        public DateTime CreateTime
-        {
-            get;
-            set;
-        }
+        //public DateTime CreateTime
+        //{
+        //    get;
+        //    set;
+        //}
 
     }
 }

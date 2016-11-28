@@ -8,6 +8,7 @@ using XinTuo.Accounts.Services;
 using XinTuo.Accounts.ViewModels;
 using System.Text;
 using Orchard.Security;
+using Orchard;
 
 namespace XinTuo.Accounts.Controllers.Api
 {
@@ -15,14 +16,17 @@ namespace XinTuo.Accounts.Controllers.Api
     {
         private readonly IAuxiliary _aux;
         private readonly IAuthenticationService _authService;
+        private readonly IOrchardServices _orchard;
 
-        public AuxiliaryApiController(IAuxiliary aux, IAuthenticationService authService)
+        public AuxiliaryApiController(IAuxiliary aux, IAuthenticationService authService, IOrchardServices orchard)
         {
             _aux = aux;
             _authService = authService;
+            _orchard = orchard;
         }
 
         [HttpPost]
+        [System.Web.Mvc.Authorize]
         [System.Web.Mvc.ValidateAntiForgeryToken]
         public IHttpActionResult Save([FromBody]VMAuxiliary aux)
         {
@@ -32,9 +36,9 @@ namespace XinTuo.Accounts.Controllers.Api
                 return BadRequest(err);
             }
 
-            if(_authService.GetAuthenticatedUser() == null)                                                                                                                           
+            if (!_orchard.Authorizer.Authorize(Permissions.CreateAuxiliary))
             {
-                var msg = new ApiResponse("未登录", System.Net.HttpStatusCode.Unauthorized);
+                var msg = new ApiResponse("未授权访问", System.Net.HttpStatusCode.Unauthorized);
                 throw new HttpResponseException(msg);
             }
 

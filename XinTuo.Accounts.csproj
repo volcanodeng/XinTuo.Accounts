@@ -182,6 +182,7 @@
     <Compile Include="Models\VoucherPart.cs" />
     <Compile Include="Models\VoucherRecord.cs" />
     <Compile Include="MvcRoutes.cs" />
+    <Compile Include="Permissions.cs" />
     <Compile Include="Services\Account.cs" />
     <Compile Include="Services\AccountCategory.cs" />
     <Compile Include="Services\Auxiliary.cs" />

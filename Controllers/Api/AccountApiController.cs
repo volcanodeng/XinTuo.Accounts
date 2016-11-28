@@ -1,10 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using System.Web.Http;
+﻿using System.Web.Http;
 using XinTuo.Accounts.Services;
 using XinTuo.Accounts.ViewModels;
+using Orchard;
+using Orchard.Localization;
 
 
 namespace XinTuo.Accounts.Controllers.Api
@@ -13,11 +11,13 @@ namespace XinTuo.Accounts.Controllers.Api
     {
         private readonly IAccount _account;
         private readonly IAccountCategory _accCategory;
+        private readonly IOrchardServices _orchard;
 
-        public AccountApiController(IAccount account,IAccountCategory accCategory)
+        public AccountApiController(IAccount account,IAccountCategory accCategory,IOrchardServices orchard)
         {
             _account = account;
             _accCategory = accCategory;
+            _orchard = orchard;
         }
 
         [HttpGet]
@@ -45,7 +45,15 @@ namespace XinTuo.Accounts.Controllers.Api
                 return BadRequest(err);
             }
 
+            if(!_orchard.Authorizer.Authorize(Permissions.CreateAccount))
+            {
+                var msg = new ApiResponse("未授权访问", System.Net.HttpStatusCode.Unauthorized);
+                throw new HttpResponseException(msg);
+            }
+
             return Ok(_account.SaveAccount(account));
         }
+
+        
     }
 }

@@ -2,8 +2,10 @@
 using XinTuo.Accounts.Models;
 using Orchard.Data;
 using Orchard.ContentManagement;
+using Orchard.Security;
 using XinTuo.Accounts.ViewModels;
 using AutoMapper;
+using System;
 
 namespace XinTuo.Accounts.Services
 {
@@ -12,14 +14,20 @@ namespace XinTuo.Accounts.Services
         private readonly IContentManager _contentManager;
         private readonly IRepository<AccountCategoryRecord> _accCategoryRepository;
         private readonly IMapper _mapper;
+        private readonly ICompany _company;
+        private readonly IAuthenticationService _authService;
 
         public Account(IContentManager contentManager,
                        IRepository<AccountCategoryRecord> accCategory,
-                       IMapper mapper)
+                       IMapper mapper,
+                       ICompany company,
+                       IAuthenticationService authService)
         {
             _contentManager = contentManager;
             _accCategoryRepository = accCategory;
             _mapper = mapper;
+            _company = company;
+            _authService = authService;
         }
 
         public AccountPart GetAccount(int id)
@@ -33,8 +41,11 @@ namespace XinTuo.Accounts.Services
 
             newAccount = _mapper.Map<VMAccount,AccountPart>(account,newAccount);
             newAccount.AccountCategory = _accCategoryRepository.Get(account.CateId);
-
-
+            newAccount.Company = _company.GetCurrentCompany().Record;
+            newAccount.Creator = _authService.GetAuthenticatedUser().Id;
+            newAccount.CreateTime = DateTime.Now;
+            newAccount.Updater = _authService.GetAuthenticatedUser().Id;
+            newAccount.UpdateTime = DateTime.Now;
 
             return newAccount;
         }
