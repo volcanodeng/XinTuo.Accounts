@@ -9,6 +9,9 @@ using Orchard.Security;
 using Orchard.ContentManagement;
 using AutoMapper;
 using Orchard.Users.Models;
+using Orchard.Roles.Services;
+using Orchard.Roles.Models;
+
 
 namespace XinTuo.Accounts.Services
 {
@@ -20,10 +23,14 @@ namespace XinTuo.Accounts.Services
         private readonly IContentManager _contentManager;
         private readonly IMapper _mapper;
         private readonly IMembershipService _membership;
+        private readonly IRepository<UserRolesPartRecord> _userRole;
+        private readonly IRoleService _role;
 
         public Company(IAuthenticationService authService,
             IRepository<CompanyUserRecord> companyUser,
             IRepository<RegionRecord> region,
+            IRepository<UserRolesPartRecord> userRolesRepository,
+            IRoleService roleService,
             IContentManager contentManager,
             IMapper mapper,
             IMembershipService membership)
@@ -34,6 +41,8 @@ namespace XinTuo.Accounts.Services
             _contentManager = contentManager;
             _mapper = mapper;
             _membership = membership;
+            _userRole = userRolesRepository;
+            _role = roleService;
         }
 
         public CompanyPart GetCurrentCompany()
@@ -67,11 +76,15 @@ namespace XinTuo.Accounts.Services
             newUser.Record.EmailStatus = UserStatus.Approved;
             newUser.CreatedUtc = DateTime.Now;
 
+
             _membership.SetPassword(newUser, company.ContractName);
 
             _contentManager.Create(newCom);
 
             _companyUser.Create(new CompanyUserRecord() { CompanyRecord = newCompany.Record, UserPartRecord = newUser.Record });
+
+            var accountant = _role.GetRoleByName("Accountant");
+            if (accountant != null) _userRole.Create(new UserRolesPartRecord() { UserId = newUser.Id, Role = accountant });
 
             return newCompany;
         }

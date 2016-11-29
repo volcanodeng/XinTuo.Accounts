@@ -30,8 +30,8 @@ namespace XinTuo.Accounts
                     Permissions = GetPermissions()
                 },
                 new PermissionStereotype {
-                    Name = "Author",
-                    Permissions = new[] { CreateAccount }
+                    Name="Accountant",
+                    Permissions=new[] { CreateAccount , CreateAuxiliary }
                 }
             };
         }

@@ -26,7 +26,6 @@ namespace XinTuo.Accounts.Controllers.Api
         }
 
         [HttpPost]
-        [System.Web.Mvc.Authorize]
         [System.Web.Mvc.ValidateAntiForgeryToken]
         public IHttpActionResult Save([FromBody]VMAuxiliary aux)
         {

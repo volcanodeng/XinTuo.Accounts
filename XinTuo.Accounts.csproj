@@ -66,6 +66,9 @@
     <Reference Include="Orchard.Localization">
       <HintPath>..\Orchard.Localization\bin\Orchard.Localization.dll</HintPath>
     </Reference>
+    <Reference Include="Orchard.Roles">
+      <HintPath>..\Orchard.Roles\bin\Orchard.Roles.dll</HintPath>
+    </Reference>
     <Reference Include="Orchard.Users">
       <HintPath>..\Orchard.Users\bin\Orchard.Users.dll</HintPath>
     </Reference>
