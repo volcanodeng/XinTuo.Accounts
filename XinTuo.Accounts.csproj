@@ -160,6 +160,7 @@
     <Compile Include="Controllers\CompanyController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Handlers\AuxiliaryHandler.cs" />
+    <Compile Include="Handlers\UserRolesPartHandler.cs" />
     <Compile Include="Helpers\ApiResponse.cs" />
     <Compile Include="Handlers\AccountHandler.cs" />
     <Compile Include="Handlers\CompanyHandler.cs" />

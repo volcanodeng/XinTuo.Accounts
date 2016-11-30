@@ -1,6 +1,11 @@
 ﻿
-<div class="easyui-tabs" id="tab_wrapper">
-    <div title="测试页">
+@{ 
+    var Permissions = Model.obj;
+}
 
-    </div>
-</div>
+@foreach(var p in Permissions)
+{
+    <p>@p</p>
+}
+
+<hr />

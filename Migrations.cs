@@ -8,6 +8,7 @@ using Orchard.Core.Contents.Extensions;
 using Orchard.Data.Migration;
 using XinTuo.Accounts.Models;
 using Orchard.Users.Models;
+using Orchard.Roles.Models;
 
 namespace XinTuo.Accounts {
     public class Migrations : DataMigrationImpl {
@@ -185,7 +186,8 @@ namespace XinTuo.Accounts {
 
             ContentDefinitionManager.AlterTypeDefinition("Company", type => type
                                                                     .WithPart(typeof(CompanyPart).Name)
-                                                                    .WithPart(typeof(UserPart).Name));
+                                                                    .WithPart(typeof(UserPart).Name)
+                                                                    .WithPart(typeof(UserRolesPart).Name));
 
             ContentDefinitionManager.AlterTypeDefinition("Auxiliary", type => type
                                                                     .WithPart(typeof(AuxiliaryPart).Name));
@@ -202,6 +204,15 @@ namespace XinTuo.Accounts {
                                                                      .WithPart(typeof(VoucherDetailTemplatePart).Name));
 
             return 2;
+        }
+
+        public int UpdateFrom2()
+        {
+            ContentDefinitionManager.AlterTypeDefinition("Company", type => type
+                                                                    .WithPart(typeof(CompanyPart).Name)
+                                                                    .WithPart(typeof(UserPart).Name)
+                                                                    .WithPart(typeof(UserRolesPart).Name));
+            return 3;
         }
     }
 }
