@@ -12,9 +12,7 @@ namespace Orchard.Roles.Handlers {
             _userRolesRepository = userRolesRepository;
 
             Filters.Add(new ActivatingFilter<UserRolesPart>("Company"));
-            OnInitialized<UserRolesPart>((context, userRoles) => userRoles.Roles.Concat(_userRolesRepository
-                .Fetch(x => x.UserId == context.ContentItem.Id)
-                .Select(x => x.Role.Name).ToList()));
+            
         }
     }
 }

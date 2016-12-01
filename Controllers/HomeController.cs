@@ -23,7 +23,7 @@ namespace XinTuo.Accounts.Controllers
         
         public ActionResult Index()
         {
-            var roles = _orchard.WorkContext.CurrentUser.As<UserRolesPart>().Roles;
+            var roles = ((ContentItem)_orchard.WorkContext.CurrentUser.ContentItem).As<UserRolesPart>().Roles;
             var p = _role.GetPermissionsForRole(9);
             return new ShapeResult(this, _orchard.New.Index(obj:roles));
         }

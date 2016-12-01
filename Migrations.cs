@@ -206,13 +206,6 @@ namespace XinTuo.Accounts {
             return 2;
         }
 
-        public int UpdateFrom2()
-        {
-            ContentDefinitionManager.AlterTypeDefinition("Company", type => type
-                                                                    .WithPart(typeof(CompanyPart).Name)
-                                                                    .WithPart(typeof(UserPart).Name)
-                                                                    .WithPart(typeof(UserRolesPart).Name));
-            return 3;
-        }
+        
     }
 }

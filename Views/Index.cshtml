@@ -1,11 +1,15 @@
-﻿
+﻿@using Orchard.ContentManagement;
 @{ 
     var Permissions = Model.obj;
+
+    var roles = WorkContext.CurrentUser.As<Orchard.Roles.Models.UserRolesPart>().Roles;
 }
 
-@foreach(var p in Permissions)
+@foreach (var p in roles)
 {
     <p>@p</p>
 }
 
 <hr />
+
+

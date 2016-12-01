@@ -77,7 +77,6 @@ namespace XinTuo.Accounts.Services
             newUser.Record.EmailStatus = UserStatus.Approved;
             newUser.CreatedUtc = DateTime.Now;
 
-            userRole.Roles.Add("Accountant");
 
             _membership.SetPassword(newUser, company.ContractName);
 
@@ -85,8 +84,8 @@ namespace XinTuo.Accounts.Services
 
             _companyUser.Create(new CompanyUserRecord() { CompanyRecord = newCompany.Record, UserPartRecord = newUser.Record });
 
-            //var accountant = _role.GetRoleByName("Accountant");
-            //if (accountant != null) _userRole.Create(new UserRolesPartRecord() { UserId = newUser.Id, Role = accountant });
+            var accountant = _role.GetRoleByName("Accountant");
+            if (accountant != null) _userRole.Create(new UserRolesPartRecord() { UserId = newUser.Id, Role = accountant });
 
             return newCompany;
         }
