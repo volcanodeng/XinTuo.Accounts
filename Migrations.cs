@@ -9,9 +9,17 @@ using Orchard.Data.Migration;
 using XinTuo.Accounts.Models;
 using Orchard.Users.Models;
 using Orchard.Roles.Models;
+using Orchard.Roles.Services;
 
 namespace XinTuo.Accounts {
     public class Migrations : DataMigrationImpl {
+
+        private readonly IRoleService _role;
+
+        public Migrations(IRoleService role)
+        {
+            _role = role;
+        }
 
         public int Create()
         {
@@ -206,6 +214,19 @@ namespace XinTuo.Accounts {
             return 2;
         }
 
-        
+        public int UpdateFrom2()
+        {
+            //ContentDefinitionManager.AlterTypeDefinition("Company", type => type
+            //                                                        .WithPart(typeof(CompanyPart).Name)
+            //                                                        .WithPart(typeof(UserPart).Name)
+            //                                                        .WithPart(typeof(UserRolesPart).Name));
+
+            _role.CreateRole("Accountant");
+
+            _role.CreatePermissionForRole("Accountant", Permissions.CreateAccount.Name);
+            _role.CreatePermissionForRole("Accountant", Permissions.CreateAuxiliary.Name);
+
+            return 3;
+        }
     }
 }
