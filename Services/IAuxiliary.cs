@@ -13,5 +13,8 @@ namespace XinTuo.Accounts.Services
 
         AuxiliaryPart SaveAuxiliary(VMAuxiliary aux);
 
+        IEnumerable<AuxiliaryPart> GetAuxiliary(int companyId, int auxTypeId);
+
+        List<VMAuxiliary> GetAuxiliaryForCom(int auxTypeId);
     }
 }

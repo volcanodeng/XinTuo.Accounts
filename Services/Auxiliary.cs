@@ -75,7 +75,18 @@ namespace XinTuo.Accounts.Services
             return newAux;
         }
 
+        public IEnumerable<AuxiliaryPart> GetAuxiliary(int companyId,int auxTypeId)
+        {
+            return _contentManager.Query<AuxiliaryPart, AuxiliaryRecord>().Where(a=>a.CompanyRecord.Id== companyId && a.AuxiliaryTypeRecord.Id == auxTypeId).List();
+        }
 
+        public List<VMAuxiliary> GetAuxiliaryForCom(int auxTypeId)
+        {
+            var curCom = _company.GetCurrentCompany();
+            var auxList = GetAuxiliary(curCom.Id, auxTypeId).ToList();
+
+            return _mapper.Map<List<AuxiliaryPart>, List<VMAuxiliary>>(auxList);
+        }
 
     }
 }

@@ -47,5 +47,18 @@ namespace XinTuo.Accounts.Controllers.Api
 
             return Ok(auxiliary.Id);
         }
+
+        [HttpGet]
+        [HttpPost]
+        public IHttpActionResult GetAuxiliary(int auxTypeId)
+        {
+            if (_orchard.WorkContext.CurrentUser == null)
+            {
+                var msg = new ApiResponse("未授权访问", System.Net.HttpStatusCode.Unauthorized);
+                throw new HttpResponseException(msg);
+            }
+
+            return Ok(_aux.GetAuxiliaryForCom(auxTypeId));
+        }
     }
 }

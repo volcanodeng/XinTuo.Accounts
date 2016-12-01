@@ -22,9 +22,9 @@
                data-options="singleSelect:true,toolbar: '#auxToolbar',fit:true,idField:'AccCode'">
             <thead>
                 <tr>
-                    <th data-options="field:'AuxCode'">@T("编码")</th>
-                    <th data-options="field:'AuxName'">@T("名称")</th>
-                    <th data-options="field:'AuxState'">@T("状态")</th>
+                    <th data-options="field:'auxCode'">@T("编码")</th>
+                    <th data-options="field:'auxName'">@T("名称")</th>
+                    <th data-options="field:'auxState'">@T("状态")</th>
                 </tr>
             </thead>
         </table>
@@ -55,6 +55,8 @@
         <input type="hidden" id="__RequestVerificationToken" name="__RequestVerificationToken" value="@Html.AntiForgeryTokenValueOrchard()" />
     </form>
 </div>
+
+<div id="dataCache"></div>
 
 <style type="text/css">
     #auxForm div {
@@ -90,6 +92,18 @@
     function auxTypeClick(auxType)
     {
         $("#AuxTypeId").val(auxType);
+
+        var dgCache = $("#dataCache").data("aux" + auxType);
+
+        if (dgCache == undefined) {
+            $.get("/api/x/GetAuxiliary/", { auxTypeId: auxType }, function (data) {
+                $("#auxDatagrid").datagrid("loadData", data);
+                $("#dataCache").data("aux" + auxType, data);
+            });
+        }
+        else {
+            $("#auxDatagrid").datagrid("loadData", dgCache);
+        }
     }
 
     function append()
@@ -118,17 +132,7 @@
     }
 
     function formSuccess(data) {
-        if(data == null)return;
-        var data = JSON.parse(data);
-
-        if(data.message != null){
-            $.messager.alert("保存",data.message,"warning");
-            return;
-        }
-        else
-        {
-            $.messager.show({title:"保存",msg:"保存成功"});
-        }
+        formSuccessHandle(data);
     }
 
 </script>
