@@ -9,7 +9,7 @@ namespace XinTuo.Accounts.Services
     {
         List<AuxiliaryTypeRecord> GetBaseAuxType();
 
-        AuxiliaryTypeRecord SaveAuxType(AuxiliaryTypeRecord customType);
+        AuxiliaryTypeRecord SaveAuxType(string auxTypeName);
 
         AuxiliaryPart SaveAuxiliary(VMAuxiliary aux);
 

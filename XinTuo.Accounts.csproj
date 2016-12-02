@@ -200,6 +200,7 @@
     <Compile Include="Services\Region.cs" />
     <Compile Include="ViewModels\VMAccount.cs" />
     <Compile Include="ViewModels\VMAuxiliary.cs" />
+    <Compile Include="ViewModels\VMAuxiliaryType.cs" />
     <Compile Include="ViewModels\VMCompany.cs" />
     <Compile Include="ViewModels\VMUser.cs" />
   </ItemGroup>

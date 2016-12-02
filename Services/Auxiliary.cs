@@ -40,8 +40,11 @@ namespace XinTuo.Accounts.Services
             return _auxType.Table.ToList();
         }
 
-        public AuxiliaryTypeRecord SaveAuxType(AuxiliaryTypeRecord customType)
+        public AuxiliaryTypeRecord SaveAuxType(string auxTypeName)
         {
+            AuxiliaryTypeRecord customType = new AuxiliaryTypeRecord();
+            customType.AuxType = auxTypeName;
+
             CompanyPart cp = _company.GetCurrentCompany();
             if(cp != null)
             {

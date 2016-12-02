@@ -48,6 +48,31 @@ namespace XinTuo.Accounts.Controllers.Api
             return Ok(auxiliary.Id);
         }
 
+        [HttpPost]
+        [System.Web.Mvc.ValidateAntiForgeryToken]
+        public IHttpActionResult SaveAuxType([FromBody]VMAuxiliaryType auxType)
+        {
+            string err;
+            if (!ModelValidHelper.ModelValid(ModelState, out err))
+            {
+                return BadRequest(err);
+            }
+
+            if (!_orchard.Authorizer.Authorize(Permissions.CreateAuxiliary))
+            {
+                var msg = new ApiResponse("未授权访问", System.Net.HttpStatusCode.Unauthorized);
+                throw new HttpResponseException(msg);
+            }
+
+            if(string.IsNullOrWhiteSpace(auxType.auxTypeName))
+            {
+                return BadRequest("核算类型名称不能为空");
+            }
+
+            var newAuxType = _aux.SaveAuxType(auxType.auxTypeName);
+            return Ok(newAuxType.Id);
+        }
+
         [HttpGet]
         [HttpPost]
         public IHttpActionResult GetAuxiliary(int auxTypeId)

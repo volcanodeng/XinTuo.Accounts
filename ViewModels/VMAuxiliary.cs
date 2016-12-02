@@ -32,5 +32,6 @@ namespace XinTuo.Accounts.ViewModels
         {
             get;set;
         }
+
     }
 }

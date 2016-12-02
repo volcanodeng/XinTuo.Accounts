@@ -11,6 +11,7 @@ namespace XinTuo.Accounts
     {
         public static readonly Permission CreateAccount = new Permission { Name= "CreateAccount", Description="创建新科目"};
         public static readonly Permission CreateAuxiliary = new Permission { Name= "CreateAuxiliary", Description="创建新的辅助核算内容"};
+        public static readonly Permission CreateAuxiliaryType = new Permission { Name = "CreateAuxiliaryType", Description = "创建辅助核算类型" };
 
         public virtual Feature Feature { get; set; }
 
@@ -18,7 +19,8 @@ namespace XinTuo.Accounts
         {
             return new[] {
                 CreateAccount,
-                CreateAuxiliary
+                CreateAuxiliary,
+                CreateAuxiliaryType
             };
         }
 

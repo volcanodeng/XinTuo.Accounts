@@ -5,7 +5,7 @@
 }
 
 <div class="easyui-layout" data-options="fit:true">
-    <div data-options="region:'north',split:false,border:false" style="height:80px;padding:10px;">
+    <div data-options="region:'north',split:false,border:false" style="height:40px;padding:10px;">
         @foreach (AuxiliaryTypeRecord aux in BaseAuxTypes)
         {
             <a href="javascript:void(0)" id="auxType_@aux.Id" class="easyui-linkbutton"
@@ -22,9 +22,9 @@
                data-options="singleSelect:true,toolbar: '#auxToolbar',fit:true,idField:'AccCode'">
             <thead>
                 <tr>
-                    <th data-options="field:'auxCode'">@T("编码")</th>
-                    <th data-options="field:'auxName'">@T("名称")</th>
-                    <th data-options="field:'auxState'">@T("状态")</th>
+                    <th data-options="field:'auxCode',width:200,align:'center'">@T("编码")</th>
+                    <th data-options="field:'auxName',width:200,align:'center'">@T("名称")</th>
+                    <th data-options="field:'auxState',width:200,align:'center'">@T("状态")</th>
                 </tr>
             </thead>
         </table>
@@ -41,10 +41,10 @@
 <div id="editDialog" class="easyui-dialog" title="编辑科目" style="width:450px;height:200px;font-size:14pt;" data-options="resizable:false,modal:true,closed: true">
     <form id="auxForm" method="post">
         <div>
-            <input class="easyui-textbox" id="AuxCode" name="AuxCode" data-options="label:'@T("编码")'" style="width:90%;height:32px">
+            <input class="easyui-textbox" id="AuxCode" name="AuxCode" data-options="label:'@T("编码")',required:true" style="width:90%;height:32px">
         </div>
         <div>
-            <input class="easyui-textbox" id="AuxName" name="AuxName" data-options="label:'@T("名称")'" style="width:90%;height:32px">
+            <input class="easyui-textbox" id="AuxName" name="AuxName" data-options="label:'@T("名称")',required:true" style="width:90%;height:32px">
         </div>
         <div style="float:right;">
             <a href="javascript:void(0)" class="easyui-linkbutton" onclick="save()" style="width:80px">保存</a>
@@ -70,9 +70,6 @@
 
 <script type="text/javascript">
 
-    var varObject = {
-        auxTypeId: -1
-    };
 
     $(function () {
         init();
@@ -80,13 +77,13 @@
 
     function init()
     {
-        $("#AuxTypeId").val(@auxType.Id);
-
         $("#auxForm").form({
             url: "/api/x/Save/",
             onSubmit: formOnSubmit,
             success: formSuccess
         });
+
+        auxTypeClick(@auxType.Id);
     }
 
     function auxTypeClick(auxType)
@@ -108,6 +105,9 @@
 
     function append()
     {
+        $("#AuxCode").textbox("clear");
+        $("#AuxName").textbox("clear");
+
         $("#editDialog").dialog("open");
     }
 
@@ -132,7 +132,13 @@
     }
 
     function formSuccess(data) {
-        formSuccessHandle(data);
+        var typeid = $("#AuxTypeId").val();
+        $("#dataCache").removeData("aux" + typeid);
+
+        if(formSuccessHandle(data))
+        {
+            auxTypeClick(typeid);
+        }
     }
 
 </script>
