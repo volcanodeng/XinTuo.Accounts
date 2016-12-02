@@ -9,7 +9,9 @@
     <div data-options="region:'north',split:false,border:false" style="height:80px;padding:10px;">
         @foreach (AccountCategoryRecord c in cates)
         {
-            <a href="javascript:void(0)" id="cate_@c.Id" class="easyui-linkbutton" data-options="iconCls:'icon-large-picture',size:'large',iconAlign:'top',toggle:true,group:'g1'" onclick="varObject.mainCate=@c.Id" style="width:80px;">@c.CateName</a>
+            <a href="javascript:void(0)" id="cate_@c.Id" class="easyui-linkbutton" 
+               data-options="iconCls:'icon-large-picture',size:'large',iconAlign:'top',toggle:true,group:'g1'" 
+               onclick="varObject.mainCate=@c.Id" style="width:80px;">@c.CateName</a>
         }
     </div>
     <div data-options="region:'center',border:false" style="padding:10px;">
@@ -84,6 +86,7 @@
         <div style="text-align:right;">
             <a href="javascript:void(0)" class="easyui-linkbutton" onclick="save()" style="width:80px">确 定</a>
             <a href="javascript:void(0)" class="easyui-linkbutton" onclick="cancel()" style="width:80px">取 消</a>
+            <input type="hidden" id="acctCate" name="acctCate" />
             <input type="hidden" id="__RequestVerificationToken" name="__RequestVerificationToken" value="@Html.AntiForgeryTokenValueOrchard()" />
         </div>
 
