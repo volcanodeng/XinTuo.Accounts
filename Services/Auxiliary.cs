@@ -62,19 +62,32 @@ namespace XinTuo.Accounts.Services
 
         public AuxiliaryPart SaveAuxiliary(VMAuxiliary aux)
         {
-            var auxPart = _contentManager.New<AuxiliaryPart>("Auxiliary");
+            AuxiliaryPart newAux = null;
+            if (!aux.AuxId.HasValue || aux.AuxId <= 0)
+            {
+                newAux = _contentManager.New<AuxiliaryPart>("Auxiliary");
 
-            AuxiliaryPart newAux = _mapper.Map<VMAuxiliary, AuxiliaryPart>(aux, auxPart);
-            newAux.AuxiliaryType = _auxType.Get(aux.AuxTypeId);
-            newAux.CreateTime = DateTime.Now;
+                newAux = _mapper.Map<VMAuxiliary, AuxiliaryPart>(aux, newAux);
+                newAux.AuxiliaryType = _auxType.Get(aux.AuxTypeId);
+                newAux.CreateTime = DateTime.Now;
 
-            IUser user = _authService.GetAuthenticatedUser();
-            if (user != null) newAux.Creator = user.Id;
+                IUser user = _authService.GetAuthenticatedUser();
+                if (user != null) newAux.Creator = user.Id;
 
-            CompanyPart cp = _company.GetCurrentCompany();
-            if (cp != null) newAux.Company = cp.Record;
+                CompanyPart cp = _company.GetCurrentCompany();
+                if (cp != null) newAux.Company = cp.Record;
 
-            _contentManager.Create(newAux);
+                _contentManager.Create(newAux);
+            }
+            else
+            {
+                newAux = _contentManager.Get<AuxiliaryPart>(aux.AuxId.Value);
+                if (newAux != null)
+                {
+                    newAux = _mapper.Map<VMAuxiliary, AuxiliaryPart>(aux, newAux);
+                    _contentManager.Restore(newAux.ContentItem, VersionOptions.Latest);
+                }
+            }
             return newAux;
         }
 

@@ -14,7 +14,7 @@ namespace XinTuo.Accounts.AutoMapperProfiles
         {
             CreateMap<VMAccount, AccountPart>(MemberList.None);
             CreateMap<VMAuxiliary, AuxiliaryPart>();
-            CreateMap<AuxiliaryPart, VMAuxiliary>();
+            CreateMap<AuxiliaryPart, VMAuxiliary>().ForMember(dest=>dest.AuxId,opt=>opt.MapFrom(src=>src.Id));
         }
 
     }

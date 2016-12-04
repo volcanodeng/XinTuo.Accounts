@@ -19,7 +19,7 @@
 
     <div data-options="region:'center',border:false" style="padding:10px;">
         <table class="easyui-datagrid" id="auxDatagrid"
-               data-options="singleSelect:true,toolbar: '#auxToolbar',fit:true,idField:'AccCode'">
+               data-options="singleSelect:true,toolbar: '#auxToolbar',fit:true,idField:'auxId',onSelect:aux_onDgSelect">
             <thead>
                 <tr>
                     <th data-options="field:'auxCode',width:200,align:'center'">@T("编码")</th>
@@ -52,6 +52,7 @@
         </div>
         <input type="hidden" id="AuxTypeId" name="AuxTypeId" />
         <input type="hidden" id="AuxId" name="AuxId" />
+        <input type="hidden" id="AuxState" name="AuxState" />
         <input type="hidden" id="__RequestVerificationToken" name="__RequestVerificationToken" value="@Html.AntiForgeryTokenValueOrchard()" />
     </form>
 </div>
@@ -139,6 +140,16 @@
         {
             aux_TypeClick(typeid);
         }
+    }
+
+    function aux_onDgSelect(index, row)
+    {
+        $("#auxForm").form("load", {
+            AuxCode: row.auxCode,
+            AuxName: row.auxName,
+            AuxId: row.auxId,
+            AuxState: row.auxState
+        });
     }
 
 </script>

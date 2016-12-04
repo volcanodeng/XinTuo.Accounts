@@ -9,6 +9,7 @@ using XinTuo.Accounts.ViewModels;
 using System.Text;
 using Orchard.Security;
 using Orchard;
+using Orchard.Logging;
 
 namespace XinTuo.Accounts.Controllers.Api
 {
@@ -44,6 +45,13 @@ namespace XinTuo.Accounts.Controllers.Api
             if (!aux.AuxId.HasValue || aux.AuxId.Value == 0) aux.AuxState = 1;
 
             var auxiliary = _aux.SaveAuxiliary(aux);
+
+            if(auxiliary == null)
+            {
+                var msg = new ApiResponse("找不到要处理的数据", System.Net.HttpStatusCode.NoContent);
+                msg.Logger.Warning("记录不存在。data:{0}", Newtonsoft.Json.JsonConvert.SerializeObject(aux));
+                throw new HttpResponseException(msg);
+            }
 
             return Ok(auxiliary.Id);
         }

@@ -6,13 +6,17 @@ using System.Net;
 using System.Net.Http;
 using System.Text;
 using Newtonsoft.Json;
+using Orchard.Logging;
 
 namespace XinTuo.Accounts.Controllers
 {
     public class ApiResponse : HttpResponseMessage
     {
+
         public ApiResponse(string msg) : base()
         {
+            Logger = NullLogger.Instance;
+
             Message m = new Message();
             m.message = msg;
             this.Content = new StringContent(JsonConvert.SerializeObject(m), Encoding.UTF8, "application/json");
@@ -20,10 +24,14 @@ namespace XinTuo.Accounts.Controllers
 
         public ApiResponse(string msg, HttpStatusCode code) : base(code)
         {
+            Logger = NullLogger.Instance;
+
             Message m = new Message();
             m.message = msg;
             this.Content = new StringContent(JsonConvert.SerializeObject(m), Encoding.UTF8, "application/json");
         }
+
+        public ILogger Logger { get; set; }
     }
 
     public class Message
