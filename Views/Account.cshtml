@@ -116,7 +116,7 @@
     function acct_init()
     {
         $("#accForm").form({
-            url: "/api/a/acct_save/",
+            url: "/api/a/save/",
             onSubmit: acct_formOnSubmit,
             success: acct_formSuccess
         });
@@ -166,7 +166,7 @@
     }
 
     function acct_formSuccess(data) {
-        acct_formSuccessHandle(data);
+        formSuccessHandle(data);
     }
 
     function acct_cancel()

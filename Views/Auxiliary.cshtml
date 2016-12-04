@@ -78,7 +78,7 @@
     function aux_init()
     {
         $("#auxForm").form({
-            url: "/api/x/aux_save/",
+            url: "/api/x/save/",
             onSubmit: aux_formOnSubmit,
             success: aux_formSuccess
         });
@@ -135,7 +135,7 @@
         var typeid = $("#AuxTypeId").val();
         $("#dataCache").removeData("aux" + typeid);
 
-        if(aux_formSuccessHandle(data))
+        if(formSuccessHandle(data))
         {
             aux_TypeClick(typeid);
         }
