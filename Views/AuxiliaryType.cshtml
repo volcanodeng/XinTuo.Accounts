@@ -9,7 +9,7 @@
         @foreach (AuxiliaryTypeRecord aux in auxTypes)
         {
             <li class="base_@aux.Id">
-                <a href="javascript:auxItemClick(@aux.Id,'@aux.AuxType')" class="item">
+                <a href="javascript:auxtype_ItemClick(@aux.Id,'@aux.AuxType')" class="item">
                     <i></i>
                     <strong> @aux.AuxType </strong>
                 </a>
@@ -17,7 +17,7 @@
         }
 
         <li class="custom">
-            <a href="javascript:appendAuxType()" class="item">
+            <a href="javascript:auxtype_append()" class="item">
                 <i></i>
                 <strong>+ 新增分类</strong>
             </a>
@@ -31,8 +31,8 @@
             <input class="easyui-textbox" id="auxTypeName" name="auxTypeName" data-options="label:'@T("名称")',required:true" style="width:90%;height:32px">
         </div>
         <div style="float:right;">
-            <a href="javascript:void(0)" class="easyui-linkbutton" onclick="save()" style="width:80px">保存</a>
-            <a href="javascript:void(0)" class="easyui-linkbutton" onclick="diaClose()" style="width:80px">关闭</a>
+            <a href="javascript:void(0)" class="easyui-linkbutton" onclick="auxtype_save()" style="width:80px">保存</a>
+            <a href="javascript:void(0)" class="easyui-linkbutton" onclick="auxtype_diaClose()" style="width:80px">关闭</a>
         </div>
         <input type="hidden" id="__RequestVerificationToken" name="__RequestVerificationToken" value="@Html.AntiForgeryTokenValueOrchard()" />
     </form>
@@ -162,41 +162,41 @@
 
     $(function () {
         $("#auxTypeForm").form({
-            url: "/api/x/SaveAuxType/",
-            onSubmit: formOnSubmit,
-            success: formSuccess
+            url: "/api/x/auxtype_saveAuxType/",
+            onSubmit: auxtype_formOnSubmit,
+            success: auxtype_formSuccess
         });
     });
 
-    function auxItemClick(type, tName) {
+    function auxtype_ItemClick(type, tName) {
         AddTabHref(tName, '/xintuo.accounts/auxiliary/Auxiliary/' + type);
     }
 
-    function appendAuxType() {
+    function auxtype_append() {
 
         $("#auxTypeName").textbox("clear");
 
         $("#addAuxTypeDialog").dialog("open");
     }
 
-    function save()
+    function auxtype_save()
     {
         $("#auxTypeForm").submit();
     }
 
-    function formOnSubmit() {
+    function auxtype_formOnSubmit() {
         return $(this).form('validate');
     }
 
-    function formSuccess(data) {
+    function auxtype_formSuccess(data) {
         
 
-        if (formSuccessHandle(data)) {
+        if (auxtype_formSuccessHandle(data)) {
             
         }
     }
 
-    function diaClose()
+    function auxtype_diaClose()
     {
         $("#addAuxTypeDialog").dialog("close");
     }

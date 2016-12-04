@@ -12,7 +12,7 @@
                @if (aux.Id == auxType.Id)
                { <text> data-options="toggle:true,group:'g1',selected:true" </text>}
                else { <text> data-options="toggle:true,group:'g1'" </text>}
-               onclick="auxTypeClick(@aux.Id)" style="width:80px;">@aux.AuxType</a>
+               onclick="aux_TypeClick(@aux.Id)" style="width:80px;">@aux.AuxType</a>
         }
 
     </div>
@@ -30,15 +30,15 @@
         </table>
 
         <div id="auxToolbar">
-            <a href="javascript:void(0)" class="easyui-linkbutton" data-options="plain:true" onclick="append()">新增</a>
-            <a href="javascript:void(0)" class="easyui-linkbutton" data-options="plain:true" onclick="edit()">编辑</a>
+            <a href="javascript:void(0)" class="easyui-linkbutton" data-options="plain:true" onclick="aux_append()">新增</a>
+            <a href="javascript:void(0)" class="easyui-linkbutton" data-options="plain:true" onclick="aux_edit()">编辑</a>
             <a href="javascript:void(0)" class="easyui-linkbutton" data-options="plain:true" onclick="remove()">删除</a>
         </div>
     </div>
 
 </div>
 
-<div id="editDialog" class="easyui-dialog" title="编辑科目" style="width:450px;height:200px;font-size:14pt;" data-options="resizable:false,modal:true,closed: true">
+<div id="auxaux_editDialog" class="easyui-dialog" title="编辑科目" style="width:450px;height:200px;font-size:14pt;" data-options="resizable:false,modal:true,closed: true">
     <form id="auxForm" method="post">
         <div>
             <input class="easyui-textbox" id="AuxCode" name="AuxCode" data-options="label:'@T("编码")',required:true" style="width:90%;height:32px">
@@ -47,8 +47,8 @@
             <input class="easyui-textbox" id="AuxName" name="AuxName" data-options="label:'@T("名称")',required:true" style="width:90%;height:32px">
         </div>
         <div style="float:right;">
-            <a href="javascript:void(0)" class="easyui-linkbutton" onclick="save()" style="width:80px">保存</a>
-            <a href="javascript:void(0)" class="easyui-linkbutton" onclick="diaClose()" style="width:80px">关闭</a>
+            <a href="javascript:void(0)" class="easyui-linkbutton" onclick="aux_save()" style="width:80px">保存</a>
+            <a href="javascript:void(0)" class="easyui-linkbutton" onclick="aux_diaClose()" style="width:80px">关闭</a>
         </div>
         <input type="hidden" id="AuxTypeId" name="AuxTypeId" />
         <input type="hidden" id="AuxId" name="AuxId" />
@@ -72,21 +72,21 @@
 
 
     $(function () {
-        init();
+        aux_init();
     });
 
-    function init()
+    function aux_init()
     {
         $("#auxForm").form({
-            url: "/api/x/Save/",
-            onSubmit: formOnSubmit,
-            success: formSuccess
+            url: "/api/x/aux_save/",
+            onSubmit: aux_formOnSubmit,
+            success: aux_formSuccess
         });
 
-        auxTypeClick(@auxType.Id);
+        aux_TypeClick(@auxType.Id);
     }
 
-    function auxTypeClick(auxType)
+    function aux_TypeClick(auxType)
     {
         $("#AuxTypeId").val(auxType);
 
@@ -103,41 +103,41 @@
         }
     }
 
-    function append()
+    function aux_append()
     {
         $("#AuxCode").textbox("clear");
         $("#AuxName").textbox("clear");
 
-        $("#editDialog").dialog("open");
+        $("#auxaux_editDialog").dialog("open");
     }
 
-    function edit()
+    function aux_edit()
     {
-        $("#editDialog").dialog("open");
+        $("#auxaux_editDialog").dialog("open");
     }
 
-    function save()
+    function aux_save()
     {
 
         $("#auxForm").submit();
     }
 
-    function diaClose()
+    function aux_diaClose()
     {
-        $("#editDialog").dialog("close");
+        $("#auxaux_editDialog").dialog("close");
     }
 
-    function formOnSubmit() {
+    function aux_formOnSubmit() {
         return $(this).form('validate');
     }
 
-    function formSuccess(data) {
+    function aux_formSuccess(data) {
         var typeid = $("#AuxTypeId").val();
         $("#dataCache").removeData("aux" + typeid);
 
-        if(formSuccessHandle(data))
+        if(aux_formSuccessHandle(data))
         {
-            auxTypeClick(typeid);
+            aux_TypeClick(typeid);
         }
     }
 

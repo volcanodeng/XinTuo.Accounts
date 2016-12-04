@@ -11,7 +11,7 @@
         {
             <a href="javascript:void(0)" id="cate_@c.Id" class="easyui-linkbutton" 
                data-options="iconCls:'icon-large-picture',size:'large',iconAlign:'top',toggle:true,group:'g1'" 
-               onclick="varObject.mainCate=@c.Id" style="width:80px;">@c.CateName</a>
+               onclick="acct_object.mainCate=@c.Id" style="width:80px;">@c.CateName</a>
         }
     </div>
     <div data-options="region:'center',border:false" style="padding:10px;">
@@ -31,15 +31,15 @@
         </table>
 
         <div id="accToolbar">
-            <a href="javascript:void(0)" class="easyui-linkbutton" data-options="plain:true" onclick="append()">新增</a>
-            <a href="javascript:void(0)" class="easyui-linkbutton" data-options="plain:true" onclick="appendSub()">新增下级</a>
+            <a href="javascript:void(0)" class="easyui-linkbutton" data-options="plain:true" onclick="acct_append()">新增</a>
+            <a href="javascript:void(0)" class="easyui-linkbutton" data-options="plain:true" onclick="acct_appendSub()">新增下级</a>
             <a href="javascript:void(0)" class="easyui-linkbutton" data-options="plain:true" onclick="edit()">编辑</a>
             <a href="javascript:void(0)" class="easyui-linkbutton" data-options="plain:true" onclick="remove()">删除</a>
         </div>
     </div>
 </div>
 
-<div id="editDialog" class="easyui-dialog" title="编辑科目" style="width:450px;height:600px;font-size:14pt;" data-options="resizable:false,modal:true,closed: true,onBeforeOpen:editOnBeforeOpen">
+<div id="acctEditDialog" class="easyui-dialog" title="编辑科目" style="width:450px;height:600px;font-size:14pt;" data-options="resizable:false,modal:true,closed: true,onBeforeOpen:acct_editOnBeforeOpen">
     <form id="accForm" method="post">
 
         <div>
@@ -84,8 +84,8 @@
         </div>
 
         <div style="text-align:right;">
-            <a href="javascript:void(0)" class="easyui-linkbutton" onclick="save()" style="width:80px">确 定</a>
-            <a href="javascript:void(0)" class="easyui-linkbutton" onclick="cancel()" style="width:80px">取 消</a>
+            <a href="javascript:void(0)" class="easyui-linkbutton" onclick="acct_save()" style="width:80px">确 定</a>
+            <a href="javascript:void(0)" class="easyui-linkbutton" onclick="acct_cancel()" style="width:80px">取 消</a>
             <input type="hidden" id="acctCate" name="acctCate" />
             <input type="hidden" id="__RequestVerificationToken" name="__RequestVerificationToken" value="@Html.AntiForgeryTokenValueOrchard()" />
         </div>
@@ -105,20 +105,20 @@
 
 <script type="text/javascript">
 
-    var varObject = {
+    var acct_object = {
         mainCate:-1
     };
 
     $(function () {
-        init();
+        acct_init();
     });
 
-    function init()
+    function acct_init()
     {
         $("#accForm").form({
-            url: "/api/a/Save/",
-            onSubmit: formOnSubmit,
-            success: formSuccess
+            url: "/api/a/acct_save/",
+            onSubmit: acct_formOnSubmit,
+            success: acct_formSuccess
         });
 
         $("#aux").change(function () {
@@ -146,32 +146,32 @@
         $("#cate_1").click();
     }
 
-    function append()
+    function acct_append()
     {
-        $("#editDialog").dialog('open');
+        $("#acctEditDialog").dialog('open');
     }
 
-    function editOnBeforeOpen()
+    function acct_editOnBeforeOpen()
     {
-        $("#CateId").combobox('reload', '/api/a/GetSubAccCate?cid=' + varObject.mainCate);
+        $("#CateId").combobox('reload', '/api/a/GetSubAccCate?cid=' + acct_object.mainCate);
     }
 
-    function save()
+    function acct_save()
     {
         $("#accForm").submit();
     }
 
-    function formOnSubmit() {
+    function acct_formOnSubmit() {
         return $(this).form('validate');
     }
 
-    function formSuccess(data) {
-        formSuccessHandle(data);
+    function acct_formSuccess(data) {
+        acct_formSuccessHandle(data);
     }
 
-    function cancel()
+    function acct_cancel()
     {
         $('#accForm').form('clear');
-        $("#editDialog").dialog('close');
+        $("#acctEditDialog").dialog('close');
     }
 </script>
