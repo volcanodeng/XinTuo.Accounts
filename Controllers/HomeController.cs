@@ -12,20 +12,16 @@ namespace XinTuo.Accounts.Controllers
     public class HomeController : Controller
     {
         private readonly IOrchardServices _orchard;
-        private readonly IRoleService _role;
 
-        public HomeController(IOrchardServices orchard,IRoleService role)
+        public HomeController(IOrchardServices orchard)
         {
             _orchard = orchard;
-            _role = role;
         }
 
-        
         public ActionResult Index()
         {
-            var roles = ((ContentItem)_orchard.WorkContext.CurrentUser.ContentItem).As<UserRolesPart>().Roles;
-            var p = _role.GetPermissionsForRole(9);
-            return new ShapeResult(this, _orchard.New.Index(obj:roles));
+            
+            return new ShapeResult(this, _orchard.New.Index());
         }
     }
 }

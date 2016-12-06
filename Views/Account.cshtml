@@ -11,7 +11,7 @@
         {
             <a href="javascript:void(0)" id="cate_@c.Id" class="easyui-linkbutton" 
                data-options="iconCls:'icon-large-picture',size:'large',iconAlign:'top',toggle:true,group:'g1'" 
-               onclick="acct_object.mainCate=@c.Id" style="width:80px;">@c.CateName</a>
+               onclick="acct_cateOnClick(@c.Id)" style="width:80px;">@c.CateName</a>
         }
     </div>
     <div data-options="region:'center',border:false" style="padding:10px;">
@@ -40,7 +40,7 @@
 </div>
 
 <div id="acctEditDialog" class="easyui-dialog" title="编辑科目" style="width:450px;height:600px;font-size:14pt;" data-options="resizable:false,modal:true,closed: true,onBeforeOpen:acct_editOnBeforeOpen">
-    <form id="accForm" method="post">
+    <form id="acctForm" method="post">
 
         <div>
             <input class="easyui-textbox" id="AccCode" name="AccCode" data-options="label:'@T("科目编码")',required:true" style="width:90%;height:32px">
@@ -86,7 +86,7 @@
         <div style="text-align:right;">
             <a href="javascript:void(0)" class="easyui-linkbutton" onclick="acct_save()" style="width:80px">确 定</a>
             <a href="javascript:void(0)" class="easyui-linkbutton" onclick="acct_cancel()" style="width:80px">取 消</a>
-            <input type="hidden" id="acctCate" name="acctCate" />
+            <input type="hidden" id="acctTopCate" name="acctTopCate" />
             <input type="hidden" id="__RequestVerificationToken" name="__RequestVerificationToken" value="@Html.AntiForgeryTokenValueOrchard()" />
         </div>
 
@@ -94,20 +94,17 @@
 </div>
 
 <style type="text/css">
-    #accForm div{
+    #acctForm div{
         padding:10px;
     }
 
-    #accForm input {
+    #acctForm input {
         font-size:14pt;
     }
 </style>
 
 <script type="text/javascript">
 
-    var acct_object = {
-        mainCate:-1
-    };
 
     $(function () {
         acct_init();
@@ -115,7 +112,7 @@
 
     function acct_init()
     {
-        $("#accForm").form({
+        $("#acctForm").form({
             url: "/api/a/save/",
             onSubmit: acct_formOnSubmit,
             success: acct_formSuccess
@@ -153,12 +150,12 @@
 
     function acct_editOnBeforeOpen()
     {
-        $("#CateId").combobox('reload', '/api/a/GetSubAccCate?cid=' + acct_object.mainCate);
+        $("#CateId").combobox('reload', '/api/a/GetSubAccCate?cid=' + $("#acctTopCate").val());
     }
 
     function acct_save()
     {
-        $("#accForm").submit();
+        $("#acctForm").submit();
     }
 
     function acct_formOnSubmit() {
@@ -171,7 +168,12 @@
 
     function acct_cancel()
     {
-        $('#accForm').form('clear');
+        $('#acctForm').form('clear');
         $("#acctEditDialog").dialog('close');
+    }
+
+    function acct_cateOnClick(cateId)
+    {
+        $("#acctTopCate").val(cateId);
     }
 </script>

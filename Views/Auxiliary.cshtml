@@ -57,7 +57,7 @@
     </form>
 </div>
 
-<div id="dataCache"></div>
+<div id="aux_dataCache"></div>
 
 <style type="text/css">
     #auxForm div {
@@ -91,12 +91,12 @@
     {
         $("#AuxTypeId").val(auxType);
 
-        var dgCache = $("#dataCache").data("aux" + auxType);
+        var dgCache = $("#aux_dataCache").data("aux" + auxType);
 
         if (dgCache == undefined) {
             $.get("/api/x/GetAuxiliary/", { auxTypeId: auxType }, function (data) {
                 $("#auxDatagrid").datagrid("loadData", data);
-                $("#dataCache").data("aux" + auxType, data);
+                $("#aux_dataCache").data("aux" + auxType, data);
             });
         }
         else {
@@ -134,7 +134,7 @@
 
     function aux_formSuccess(data) {
         var typeid = $("#AuxTypeId").val();
-        $("#dataCache").removeData("aux" + typeid);
+        $("#aux_dataCache").removeData("aux" + typeid);
 
         if(formSuccessHandle(data))
         {

@@ -187,6 +187,7 @@
     <Compile Include="Models\VoucherRecord.cs" />
     <Compile Include="MvcRoutes.cs" />
     <Compile Include="Permissions.cs" />
+    <Compile Include="ResourceManifest.cs" />
     <Compile Include="Services\Account.cs" />
     <Compile Include="Services\AccountCategory.cs" />
     <Compile Include="Services\Auxiliary.cs" />
@@ -224,6 +225,7 @@
   <ItemGroup>
     <None Include="bundleconfig.json" />
     <Content Include="Views\Auxiliary.cshtml" />
+    <Content Include="Views\ResourcePartial.cshtml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
