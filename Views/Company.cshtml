@@ -1,65 +1,75 @@
 ﻿@using XinTuo.Accounts.ViewModels;
-@{ 
+@{
     VMCompany com = Model.Company;
 }
 
+<!DOCTYPE html>
 
-<div class="easyui-panel"  style="padding:30px 60px;">
-    <form id="comForm" method="post">
-        <div>
-            <input class="easyui-textbox" id="FullName" name="FullName" data-options="label:'@T("公司全称")',prompt:'如：广西新拓财务科技公司...',required:true" style="width:100%;height:32px">
-        </div>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    @Html.Partial("ResourcePartial")
 
-        <div>
-            <input class="easyui-textbox" id="ShortName" name="ShortName" data-options="label:'@T("公司简称")',prompt:'如：“新拓”、“财务”...'" style="width:100%;height:32px">
-        </div>
+    <style type="text/css">
+        #comForm div {
+            padding: 10px;
+        }
 
-        <div>
-            <select id="ProvinceId" name="ProvinceId" class="easyui-combobox" style="width:250px;height:30px;" data-options="valueField: 'provinceId',textField: 'provinceName',url: '/api/c/GetProvinces',method: 'GET',onChange: com_onProvinceSelected,required: true,editable: false,label:'@T("行政区划")',onLoadSuccess:com_cbOnLoadSuccess" ></select>
-            <select id="CityId" name="CityId" class="easyui-combobox" style="width:100px;height:30px;" data-options="required:true,editable:false"></select>
-            <select id="RegionId" name="RegionId" class="easyui-combobox" style="width:100px;height:30px;" data-options="required:true,editable:false"></select>
-        </div>
+        #comForm input {
+            font-size: 14pt;
+        }
+    </style>
+</head>
+<body>
 
-        <div>
-            <input class="easyui-textbox" id="Address" name="Address" data-options="label:'@T("公司地址")',prompt:'如：安吉光辉大厦1312号...',required:true" style="width:100%;height:32px">
-        </div>
+    <div class="easyui-panel" style="padding:30px 60px;">
+        <form id="comForm" method="post">
+            <div>
+                <input class="easyui-textbox" id="FullName" name="FullName" data-options="label:'@T("公司全称")',prompt:'如：广西新拓财务科技公司...',required:true" style="width:100%;height:32px">
+            </div>
 
-        <div>
-            <input class="easyui-textbox" id="Tel" name="Tel" data-options="label:'@T("公司电话")',prompt:'如：0771-7654321...',validType:'telNum'" style="width:100%;height:32px">
-        </div>
+            <div>
+                <input class="easyui-textbox" id="ShortName" name="ShortName" data-options="label:'@T("公司简称")',prompt:'如：“新拓”、“财务”...'" style="width:100%;height:32px">
+            </div>
 
-        <div>
-            <input class="easyui-textbox" id="ContractName" name="ContractName" data-options="label:'@T("联系人姓名")',prompt:'如：张小三...',required:true" style="width:100%;height:32px">
-        </div>
+            <div>
+                <select id="ProvinceId" name="ProvinceId" class="easyui-combobox" style="width:250px;height:30px;" data-options="valueField: 'provinceId',textField: 'provinceName',url: '/api/c/GetProvinces',method: 'GET',onChange: com_onProvinceSelected,required: true,editable: false,label:'@T("行政区划")',onLoadSuccess:com_cbOnLoadSuccess"></select>
+                <select id="CityId" name="CityId" class="easyui-combobox" style="width:100px;height:30px;" data-options="required:true,editable:false"></select>
+                <select id="RegionId" name="RegionId" class="easyui-combobox" style="width:100px;height:30px;" data-options="required:true,editable:false"></select>
+            </div>
 
-        <div>
-            <input class="easyui-textbox" id="ContractMobile" name="ContractMobile" data-options="label:'@T("联系人电话")',prompt:'如：13907881234...',required:true" style="width:100%;height:32px">
-        </div>
+            <div>
+                <input class="easyui-textbox" id="Address" name="Address" data-options="label:'@T("公司地址")',prompt:'如：安吉光辉大厦1312号...',required:true" style="width:100%;height:32px">
+            </div>
 
-        <div>
-            <input class="easyui-textbox" id="ContractEmail" name="ContractEmail" data-options="label:'@T("联系人邮箱")',prompt:'如：1234567@qq.com...',required:true,validType:'email'" style="width:100%;height:32px">
-        </div>
+            <div>
+                <input class="easyui-textbox" id="Tel" name="Tel" data-options="label:'@T("公司电话")',prompt:'如：0771-7654321...',validType:'telNum'" style="width:100%;height:32px">
+            </div>
 
-        <div>
-            <input type="hidden" id="companyId" name="companyId" />
-            <input type="hidden" id="__RequestVerificationToken" name="__RequestVerificationToken" value="@Html.AntiForgeryTokenValueOrchard()" />
+            <div>
+                <input class="easyui-textbox" id="ContractName" name="ContractName" data-options="label:'@T("联系人姓名")',prompt:'如：张小三...',required:true" style="width:100%;height:32px">
+            </div>
 
-            <a href="javascript:void(0)" class="easyui-linkbutton" onclick="com_save()" style="width:80px">保存</a>
-            <a href="javascript:void(0)" class="easyui-linkbutton" onclick="com_reset()" style="width:80px">重置</a>
-        </div>
-    </form>
+            <div>
+                <input class="easyui-textbox" id="ContractMobile" name="ContractMobile" data-options="label:'@T("联系人电话")',prompt:'如：13907881234...',required:true" style="width:100%;height:32px">
+            </div>
+
+            <div>
+                <input class="easyui-textbox" id="ContractEmail" name="ContractEmail" data-options="label:'@T("联系人邮箱")',prompt:'如：1234567@qq.com...',required:true,validType:'email'" style="width:100%;height:32px">
+            </div>
+
+            <div>
+                <input type="hidden" id="companyId" name="companyId" />
+                <input type="hidden" id="__RequestVerificationToken" name="__RequestVerificationToken" value="@Html.AntiForgeryTokenValueOrchard()" />
+
+                <a href="javascript:void(0)" class="easyui-linkbutton" onclick="com_save()" style="width:80px">保存</a>
+                <a href="javascript:void(0)" class="easyui-linkbutton" onclick="com_reset()" style="width:80px">重置</a>
+            </div>
+        </form>
 
     </div>
 
-<style type="text/css">
-    #comForm div {
-        padding:10px;
-    }
 
-    #comForm input {
-        font-size:14pt;
-    }
-</style>
 
     <script type="text/javascript">
         $(function () {
@@ -123,3 +133,6 @@
             $("#RegionId").combobox("setValue","@com.CountyName");
         }
     </script>
+
+</body>
+</html>

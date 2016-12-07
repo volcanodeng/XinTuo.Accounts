@@ -4,72 +4,80 @@
     List<AuxiliaryTypeRecord> BaseAuxTypes = Model.BaseAuxTypes;
 }
 
-<div class="easyui-layout" data-options="fit:true">
-    <div data-options="region:'north',split:false,border:false" style="height:40px;padding:10px;">
-        @foreach (AuxiliaryTypeRecord aux in BaseAuxTypes)
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    @Html.Partial("ResourcePartial")
+
+    <style type="text/css">
+        #auxForm div {
+            padding: 10px;
+        }
+
+        #auxForm input {
+            font-size: 14pt;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="easyui-layout" data-options="fit:true">
+        <div data-options="region:'north',split:false,border:false" style="height:40px;padding:10px;">
+            @foreach (AuxiliaryTypeRecord aux in BaseAuxTypes)
         {
             <a href="javascript:void(0)" id="auxType_@aux.Id" class="easyui-linkbutton"
-               @if (aux.Id == auxType.Id)
-               { <text> data-options="toggle:true,group:'g1',selected:true" </text>}
-               else { <text> data-options="toggle:true,group:'g1'" </text>}
+               @if (aux.Id == auxType.Id) { <text> data-options="toggle:true,group:'g1',selected:true" </text>   } else { <text> data-options="toggle:true,group:'g1'" </text>   }
                onclick="aux_TypeClick(@aux.Id)" style="width:80px;">@aux.AuxType</a>
         }
 
+        </div>
+
+        <div data-options="region:'center',border:false" style="padding:10px;">
+            <table class="easyui-datagrid" id="auxDatagrid"
+                   data-options="singleSelect:true,toolbar: '#auxToolbar',fit:true,idField:'auxId',onSelect:aux_onDgSelect">
+                <thead>
+                    <tr>
+                        <th data-options="field:'auxCode',width:200,align:'center'">@T("编码")</th>
+                        <th data-options="field:'auxName',width:200,align:'center'">@T("名称")</th>
+                        <th data-options="field:'auxState',width:200,align:'center'">@T("状态")</th>
+                    </tr>
+                </thead>
+            </table>
+
+            <div id="auxToolbar">
+                <a href="javascript:void(0)" class="easyui-linkbutton" data-options="plain:true" onclick="aux_append()">新增</a>
+                <a href="javascript:void(0)" class="easyui-linkbutton" data-options="plain:true" onclick="aux_edit()">编辑</a>
+                <a href="javascript:void(0)" class="easyui-linkbutton" data-options="plain:true" onclick="remove()">删除</a>
+            </div>
+        </div>
+
     </div>
 
-    <div data-options="region:'center',border:false" style="padding:10px;">
-        <table class="easyui-datagrid" id="auxDatagrid"
-               data-options="singleSelect:true,toolbar: '#auxToolbar',fit:true,idField:'auxId',onSelect:aux_onDgSelect">
-            <thead>
-                <tr>
-                    <th data-options="field:'auxCode',width:200,align:'center'">@T("编码")</th>
-                    <th data-options="field:'auxName',width:200,align:'center'">@T("名称")</th>
-                    <th data-options="field:'auxState',width:200,align:'center'">@T("状态")</th>
-                </tr>
-            </thead>
-        </table>
-
-        <div id="auxToolbar">
-            <a href="javascript:void(0)" class="easyui-linkbutton" data-options="plain:true" onclick="aux_append()">新增</a>
-            <a href="javascript:void(0)" class="easyui-linkbutton" data-options="plain:true" onclick="aux_edit()">编辑</a>
-            <a href="javascript:void(0)" class="easyui-linkbutton" data-options="plain:true" onclick="remove()">删除</a>
-        </div>
+    <div id="auxaux_editDialog" class="easyui-dialog" title="编辑科目" style="width:450px;height:200px;font-size:14pt;" data-options="resizable:false,modal:true,closed: true">
+        <form id="auxForm" method="post">
+            <div>
+                <input class="easyui-textbox" id="AuxCode" name="AuxCode" data-options="label:'@T("编码")',required:true" style="width:90%;height:32px">
+            </div>
+            <div>
+                <input class="easyui-textbox" id="AuxName" name="AuxName" data-options="label:'@T("名称")',required:true" style="width:90%;height:32px">
+            </div>
+            <div style="float:right;">
+                <a href="javascript:void(0)" class="easyui-linkbutton" onclick="aux_save()" style="width:80px">保存</a>
+                <a href="javascript:void(0)" class="easyui-linkbutton" onclick="aux_diaClose()" style="width:80px">关闭</a>
+            </div>
+            <input type="hidden" id="AuxTypeId" name="AuxTypeId" />
+            <input type="hidden" id="AuxId" name="AuxId" />
+            <input type="hidden" id="AuxState" name="AuxState" />
+            <input type="hidden" id="__RequestVerificationToken" name="__RequestVerificationToken" value="@Html.AntiForgeryTokenValueOrchard()" />
+        </form>
     </div>
 
-</div>
+    <div id="aux_dataCache"></div>
 
-<div id="auxaux_editDialog" class="easyui-dialog" title="编辑科目" style="width:450px;height:200px;font-size:14pt;" data-options="resizable:false,modal:true,closed: true">
-    <form id="auxForm" method="post">
-        <div>
-            <input class="easyui-textbox" id="AuxCode" name="AuxCode" data-options="label:'@T("编码")',required:true" style="width:90%;height:32px">
-        </div>
-        <div>
-            <input class="easyui-textbox" id="AuxName" name="AuxName" data-options="label:'@T("名称")',required:true" style="width:90%;height:32px">
-        </div>
-        <div style="float:right;">
-            <a href="javascript:void(0)" class="easyui-linkbutton" onclick="aux_save()" style="width:80px">保存</a>
-            <a href="javascript:void(0)" class="easyui-linkbutton" onclick="aux_diaClose()" style="width:80px">关闭</a>
-        </div>
-        <input type="hidden" id="AuxTypeId" name="AuxTypeId" />
-        <input type="hidden" id="AuxId" name="AuxId" />
-        <input type="hidden" id="AuxState" name="AuxState" />
-        <input type="hidden" id="__RequestVerificationToken" name="__RequestVerificationToken" value="@Html.AntiForgeryTokenValueOrchard()" />
-    </form>
-</div>
-
-<div id="aux_dataCache"></div>
-
-<style type="text/css">
-    #auxForm div {
-        padding: 10px;
-    }
-
-    #auxForm input {
-        font-size: 14pt;
-    }
-</style>
-
-<script type="text/javascript">
+    <script type="text/javascript">
 
 
     $(function () {
@@ -152,4 +160,7 @@
         });
     }
 
-</script>
+    </script>
+
+</body>
+</html>
