@@ -12,7 +12,9 @@ namespace XinTuo.Accounts.AutoMapperProfiles
     {
         public AccountProfile()
         {
-            CreateMap<VMAccount, AccountPart>(MemberList.None);
+            CreateMap<VMAccount, AccountPart>().ForMember(dest=>dest.Id,opt=>opt.MapFrom(src=>src.AccId));
+            CreateMap<AccountPart, VMAccount>().ForMember(dest=>dest.AccId,opt=>opt.MapFrom(src=>src.Id));
+
             CreateMap<VMAuxiliary, AuxiliaryPart>();
             CreateMap<AuxiliaryPart, VMAuxiliary>().ForMember(dest=>dest.AuxId,opt=>opt.MapFrom(src=>src.Id));
         }

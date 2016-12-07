@@ -7,6 +7,11 @@ namespace XinTuo.Accounts.ViewModels
 {
     public class VMAccount
     {
+        public int AccId
+        {
+            get;set;
+        }
+
         public string AccCode
         {
             get;set;
@@ -91,28 +96,6 @@ namespace XinTuo.Accounts.ViewModels
         {
             get;set;
         }
-
-        //public int CompanyId
-        //{
-        //    get;set;
-        //}
-
-        //public string CompanyName
-        //{
-        //    get;set;
-        //}
-
-        //public string CreatorName
-        //{
-        //    get;
-        //    set;
-        //}
-
-        //public DateTime CreateTime
-        //{
-        //    get;
-        //    set;
-        //}
 
     }
 }

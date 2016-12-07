@@ -84,6 +84,7 @@
                     <input type="radio" id="dirDebit" name="dir" value="debit" /><label for="dirDebit" style="display:inline;font-weight:bold;margin-right:10px;">借</label>
                     <input type="radio" id="dirCredit" name="dir" value="credit" /><label for="dirCredit" style="display:inline;font-weight:bold;">贷</label>
                 </fieldset>
+                <input type="hidden" id="Direction" name="Direction" />
             </div>
 
             <div>
@@ -108,6 +109,7 @@
                 <a href="javascript:void(0)" class="easyui-linkbutton" onclick="save()" style="width:80px">确 定</a>
                 <a href="javascript:void(0)" class="easyui-linkbutton" onclick="cancel()" style="width:80px">取 消</a>
                 <input type="hidden" id="acctTopCate" name="acctTopCate" />
+                <input type="hidden" id="AccId" name="AccId" />
                 <input type="hidden" id="__RequestVerificationToken" name="__RequestVerificationToken" value="@Html.AntiForgeryTokenValueOrchard()" />
             </div>
 
@@ -171,11 +173,12 @@
 
     function save()
     {
-        var auxIds = $.map($("#auxItems > input:checked"),function(n){
-            return $(n).val();
-        }).join(",");
-        
+        //辅助核算
+        var auxIds = $.map($("#auxItems > input:checked"),function(n){return $(n).val();}).join(",");
         $("#AuxCodes").val(auxIds);
+
+        //余额方向
+        $("#Direction").val( $("#dirGroup > input:checked").val());
 
         $("#acctForm").submit();
     }

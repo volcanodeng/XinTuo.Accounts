@@ -47,6 +47,8 @@ namespace XinTuo.Accounts.Services
             newAccount.Updater = _authService.GetAuthenticatedUser().Id;
             newAccount.UpdateTime = DateTime.Now;
 
+            _contentManager.Create(newAccount);
+
             return newAccount;
         }
 
