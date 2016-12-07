@@ -4,6 +4,7 @@ namespace XinTuo.Accounts.ViewModels
 {
     public class VMAuxiliary
     {
+        [Display(Name ="编号")]
         public int? AuxId
         {
             get;set;
@@ -28,7 +29,7 @@ namespace XinTuo.Accounts.ViewModels
         }
 
         [Display(Name = "状态")]
-        public int AuxState
+        public int? AuxState
         {
             get;set;
         }

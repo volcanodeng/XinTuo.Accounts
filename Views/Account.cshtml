@@ -31,7 +31,7 @@
             {
                 <a href="javascript:void(0)" id="cate_@c.Id" class="easyui-linkbutton"
                    data-options="iconCls:'icon-large-picture',size:'large',iconAlign:'top',toggle:true,group:'g1'"
-                   onclick="acct_cateOnClick(@c.Id)" style="width:80px;">@c.CateName</a>
+                   onclick="cateOnClick(@c.Id)" style="width:80px;">@c.CateName</a>
             }
         </div>
         <div data-options="region:'center',border:false" style="padding:10px;">
@@ -51,15 +51,15 @@
             </table>
 
             <div id="accToolbar">
-                <a href="javascript:void(0)" class="easyui-linkbutton" data-options="plain:true" onclick="acct_append()">新增</a>
-                <a href="javascript:void(0)" class="easyui-linkbutton" data-options="plain:true" onclick="acct_appendSub()">新增下级</a>
+                <a href="javascript:void(0)" class="easyui-linkbutton" data-options="plain:true" onclick="append()">新增</a>
+                <a href="javascript:void(0)" class="easyui-linkbutton" data-options="plain:true" onclick="appendSub()">新增下级</a>
                 <a href="javascript:void(0)" class="easyui-linkbutton" data-options="plain:true" onclick="edit()">编辑</a>
                 <a href="javascript:void(0)" class="easyui-linkbutton" data-options="plain:true" onclick="remove()">删除</a>
             </div>
         </div>
     </div>
 
-    <div id="acctEditDialog" class="easyui-dialog" title="编辑科目" style="width:450px;height:600px;font-size:14pt;" data-options="resizable:false,modal:true,closed: true,onBeforeOpen:acct_editOnBeforeOpen">
+    <div id="acctEditDialog" class="easyui-dialog" title="编辑科目" style="width:450px;height:600px;font-size:14pt;" data-options="resizable:false,modal:true,closed: true,onBeforeOpen:editOnBeforeOpen">
         <form id="acctForm" method="post">
 
             <div>
@@ -75,7 +75,7 @@
             </div>
 
             <div>
-                <input class="easyui-combobox" id="CateId" name="CateId" data-options="label:'@T("科目类别")',required:true,valueField:'id',textField:'cateName',method: 'GET'" style="width:90%;height:32px">
+                <input class="easyui-combobox" id="CateId" name="CateId" data-options="label:'@T("科目类别")',required:true,valueField:'id',textField:'cateName',method: 'GET',editable:false" style="width:90%;height:32px">
             </div>
 
             <div>
@@ -98,14 +98,14 @@
 
             <div>
                 <input type="checkbox" id="quantity" name="quantity" /><label for="quantity" style="display:inline;margin-left:5px;">数量核算</label>
-                <div id="qtyUnit" style="display:inline-block;">
-                    <input class="easyui-textbox" id="Unit" name="Unit" data-options="label:'@T("计量单位")'" style="width:80px;height:32px">
+                <div id="qtyUnit" style="padding:0px;margin:0px;display:inline;">
+                    <input class="easyui-textbox" id="Unit" name="Unit" data-options="label:'@T("计量单位")'" style="width:100%;height:32px">
                 </div>
             </div>
 
             <div style="text-align:right;">
-                <a href="javascript:void(0)" class="easyui-linkbutton" onclick="acct_save()" style="width:80px">确 定</a>
-                <a href="javascript:void(0)" class="easyui-linkbutton" onclick="acct_cancel()" style="width:80px">取 消</a>
+                <a href="javascript:void(0)" class="easyui-linkbutton" onclick="save()" style="width:80px">确 定</a>
+                <a href="javascript:void(0)" class="easyui-linkbutton" onclick="cancel()" style="width:80px">取 消</a>
                 <input type="hidden" id="acctTopCate" name="acctTopCate" />
                 <input type="hidden" id="__RequestVerificationToken" name="__RequestVerificationToken" value="@Html.AntiForgeryTokenValueOrchard()" />
             </div>
@@ -119,15 +119,15 @@
 
 
     $(function () {
-        acct_init();
+        init();
     });
 
-    function acct_init()
+    function init()
     {
         $("#acctForm").form({
             url: "/api/a/save/",
-            onSubmit: acct_formOnSubmit,
-            success: acct_formSuccess
+            onSubmit: formOnSubmit,
+            success: formSuccess
         });
 
         $("#aux").change(function () {
@@ -155,36 +155,36 @@
         $("#cate_1").click();
     }
 
-    function acct_append()
+    function append()
     {
         $("#acctEditDialog").dialog('open');
     }
 
-    function acct_editOnBeforeOpen()
+    function editOnBeforeOpen()
     {
         $("#CateId").combobox('reload', '/api/a/GetSubAccCate?cid=' + $("#acctTopCate").val());
     }
 
-    function acct_save()
+    function save()
     {
         $("#acctForm").submit();
     }
 
-    function acct_formOnSubmit() {
+    function formOnSubmit() {
         return $(this).form('validate');
     }
 
-    function acct_formSuccess(data) {
+    function formSuccess(data) {
         formSuccessHandle(data);
     }
 
-    function acct_cancel()
+    function cancel()
     {
         $('#acctForm').form('clear');
         $("#acctEditDialog").dialog('close');
     }
 
-    function acct_cateOnClick(cateId)
+    function cateOnClick(cateId)
     {
         $("#acctTopCate").val(cateId);
     }

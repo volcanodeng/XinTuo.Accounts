@@ -33,7 +33,7 @@
             </div>
 
             <div>
-                <select id="ProvinceId" name="ProvinceId" class="easyui-combobox" style="width:250px;height:30px;" data-options="valueField: 'provinceId',textField: 'provinceName',url: '/api/c/GetProvinces',method: 'GET',onChange: com_onProvinceSelected,required: true,editable: false,label:'@T("行政区划")',onLoadSuccess:com_cbOnLoadSuccess"></select>
+                <select id="ProvinceId" name="ProvinceId" class="easyui-combobox" style="width:250px;height:30px;" data-options="valueField: 'provinceId',textField: 'provinceName',url: '/api/c/GetProvinces',method: 'GET',onChange: onProvinceSelected,required: true,editable: false,label:'@T("行政区划")',onLoadSuccess:cbOnLoadSuccess"></select>
                 <select id="CityId" name="CityId" class="easyui-combobox" style="width:100px;height:30px;" data-options="required:true,editable:false"></select>
                 <select id="RegionId" name="RegionId" class="easyui-combobox" style="width:100px;height:30px;" data-options="required:true,editable:false"></select>
             </div>
@@ -62,8 +62,8 @@
                 <input type="hidden" id="companyId" name="companyId" />
                 <input type="hidden" id="__RequestVerificationToken" name="__RequestVerificationToken" value="@Html.AntiForgeryTokenValueOrchard()" />
 
-                <a href="javascript:void(0)" class="easyui-linkbutton" onclick="com_save()" style="width:80px">保存</a>
-                <a href="javascript:void(0)" class="easyui-linkbutton" onclick="com_reset()" style="width:80px">重置</a>
+                <a href="javascript:void(0)" class="easyui-linkbutton" onclick="save()" style="width:80px">保存</a>
+                <a href="javascript:void(0)" class="easyui-linkbutton" onclick="reset()" style="width:80px">重置</a>
             </div>
         </form>
 
@@ -73,14 +73,14 @@
 
     <script type="text/javascript">
         $(function () {
-            com_init();
+            init();
         });
 
-        function com_init() {
+        function init() {
             $("#comForm").form({
-                url: "/api/c/com_save/",
-                onSubmit: com_formOnSubmit,
-                success: com_formSuccess
+                url: "/api/c/save/",
+                onSubmit: formOnSubmit,
+                success: formSuccess
             });
 
 
@@ -97,36 +97,36 @@
 
         }
 
-        function com_formOnSubmit() {
+        function formOnSubmit() {
             return $(this).form('validate');
         }
 
-        function com_formSuccess(data) {
+        function formSuccess(data) {
             formSuccessHandle(data);
         }
 
-        function com_save() {
+        function save() {
             $("#comForm").submit();
         }
-        function com_reset()
+        function reset()
         {
-            $("#comForm").form("com_reset");
+            $("#comForm").form("reset");
         }
 
-        function com_onProvinceSelected(newValue, oldValue) {
+        function onProvinceSelected(newValue, oldValue) {
             $("#RegionId").combobox("clear");
             $("#CityId").combobox({
-                url: '/api/c/GetRegion/' + newValue, valueField: 'cityId', textField: 'cityName', onChange: com_onCitySelected, method: 'GET'
+                url: '/api/c/GetRegion/' + newValue, valueField: 'cityId', textField: 'cityName', onChange: onCitySelected, method: 'GET'
             });
         }
 
-        function com_onCitySelected(newValue, oldValue) {
+        function onCitySelected(newValue, oldValue) {
             $("#RegionId").combobox({
                 url: '/api/c/GetRegion/' + newValue, valueField: 'regionId', textField: 'countyName', method: 'GET'
             });
         }
 
-        function com_cbOnLoadSuccess()
+        function cbOnLoadSuccess()
         {
             $("#ProvinceId").combobox("setValue","@com.ProvinceName");
             $("#CityId").combobox("setValue","@com.CityName");

@@ -30,14 +30,14 @@
         {
             <a href="javascript:void(0)" id="auxType_@aux.Id" class="easyui-linkbutton"
                @if (aux.Id == auxType.Id) { <text> data-options="toggle:true,group:'g1',selected:true" </text>   } else { <text> data-options="toggle:true,group:'g1'" </text>   }
-               onclick="aux_TypeClick(@aux.Id)" style="width:80px;">@aux.AuxType</a>
+               onclick="TypeClick(@aux.Id)" style="width:80px;">@aux.AuxType</a>
         }
 
         </div>
 
         <div data-options="region:'center',border:false" style="padding:10px;">
             <table class="easyui-datagrid" id="auxDatagrid"
-                   data-options="singleSelect:true,toolbar: '#auxToolbar',fit:true,idField:'auxId',onSelect:aux_onDgSelect">
+                   data-options="singleSelect:true,toolbar: '#auxToolbar',fit:true,idField:'auxId',onSelect:onDgSelect">
                 <thead>
                     <tr>
                         <th data-options="field:'auxCode',width:200,align:'center'">@T("编码")</th>
@@ -48,15 +48,15 @@
             </table>
 
             <div id="auxToolbar">
-                <a href="javascript:void(0)" class="easyui-linkbutton" data-options="plain:true" onclick="aux_append()">新增</a>
-                <a href="javascript:void(0)" class="easyui-linkbutton" data-options="plain:true" onclick="aux_edit()">编辑</a>
+                <a href="javascript:void(0)" class="easyui-linkbutton" data-options="plain:true" onclick="append()">新增</a>
+                <a href="javascript:void(0)" class="easyui-linkbutton" data-options="plain:true" onclick="edit()">编辑</a>
                 <a href="javascript:void(0)" class="easyui-linkbutton" data-options="plain:true" onclick="remove()">删除</a>
             </div>
         </div>
 
     </div>
 
-    <div id="auxaux_editDialog" class="easyui-dialog" title="编辑科目" style="width:450px;height:200px;font-size:14pt;" data-options="resizable:false,modal:true,closed: true">
+    <div id="auxeditDialog" class="easyui-dialog" title="编辑科目" style="width:450px;height:200px;font-size:14pt;" data-options="resizable:false,modal:true,closed: true">
         <form id="auxForm" method="post">
             <div>
                 <input class="easyui-textbox" id="AuxCode" name="AuxCode" data-options="label:'@T("编码")',required:true" style="width:90%;height:32px">
@@ -65,8 +65,8 @@
                 <input class="easyui-textbox" id="AuxName" name="AuxName" data-options="label:'@T("名称")',required:true" style="width:90%;height:32px">
             </div>
             <div style="float:right;">
-                <a href="javascript:void(0)" class="easyui-linkbutton" onclick="aux_save()" style="width:80px">保存</a>
-                <a href="javascript:void(0)" class="easyui-linkbutton" onclick="aux_diaClose()" style="width:80px">关闭</a>
+                <a href="javascript:void(0)" class="easyui-linkbutton" onclick="save()" style="width:80px">保存</a>
+                <a href="javascript:void(0)" class="easyui-linkbutton" onclick="diaClose()" style="width:80px">关闭</a>
             </div>
             <input type="hidden" id="AuxTypeId" name="AuxTypeId" />
             <input type="hidden" id="AuxId" name="AuxId" />
@@ -81,21 +81,21 @@
 
 
     $(function () {
-        aux_init();
+        init();
     });
 
-    function aux_init()
+    function init()
     {
         $("#auxForm").form({
             url: "/api/x/save/",
-            onSubmit: aux_formOnSubmit,
-            success: aux_formSuccess
+            onSubmit: formOnSubmit,
+            success: formSuccess
         });
 
-        aux_TypeClick(@auxType.Id);
+        TypeClick(@auxType.Id);
     }
 
-    function aux_TypeClick(auxType)
+    function TypeClick(auxType)
     {
         $("#AuxTypeId").val(auxType);
 
@@ -112,45 +112,47 @@
         }
     }
 
-    function aux_append()
+    function append()
     {
         $("#AuxCode").textbox("clear");
         $("#AuxName").textbox("clear");
+        $("#AuxId").val(0);
+        $("#AuxState").val(1);
 
-        $("#auxaux_editDialog").dialog("open");
+        $("#auxeditDialog").dialog("open");
     }
 
-    function aux_edit()
+    function edit()
     {
-        $("#auxaux_editDialog").dialog("open");
+        $("#auxeditDialog").dialog("open");
     }
 
-    function aux_save()
+    function save()
     {
 
         $("#auxForm").submit();
     }
 
-    function aux_diaClose()
+    function diaClose()
     {
-        $("#auxaux_editDialog").dialog("close");
+        $("#auxeditDialog").dialog("close");
     }
 
-    function aux_formOnSubmit() {
+    function formOnSubmit() {
         return $(this).form('validate');
     }
 
-    function aux_formSuccess(data) {
+    function formSuccess(data) {
         var typeid = $("#AuxTypeId").val();
         $("#aux_dataCache").removeData("aux" + typeid);
 
         if(formSuccessHandle(data))
         {
-            aux_TypeClick(typeid);
+            TypeClick(typeid);
         }
     }
 
-    function aux_onDgSelect(index, row)
+    function onDgSelect(index, row)
     {
         $("#auxForm").form("load", {
             AuxCode: row.auxCode,
