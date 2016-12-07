@@ -91,9 +91,10 @@
                 <div id="auxItems" style="display:inline-block;">
                     @foreach (AuxiliaryTypeRecord aux in auxTypes)
                     {
-                        <input type="checkbox" id="aux_@aux.Id" name="aux_@aux.Id" /><label for="aux_@aux.Id" style="display:inline;margin-left:5px;">@aux.AuxType</label>
+                        <input type="checkbox" id="aux_@aux.Id"  value="@aux.Id" /><label for="aux_@aux.Id" style="display:inline;margin-left:5px;">@aux.AuxType</label>
                     }
                 </div>
+                <input type="hidden" id="AuxCodes" name="AuxCodes" />
             </div>
 
             <div>
@@ -130,6 +131,7 @@
             success: formSuccess
         });
 
+        //启动或禁用辅助核算
         $("#aux").change(function () {
             if($(this).is(":checked"))
             {
@@ -142,6 +144,7 @@
         });
         $("#auxItems").hide();
 
+        //启动或禁用数量核算
         $("#quantity").change(function () {
             if ($(this).is(":checked")) {
                 $("#qtyUnit").show();
@@ -151,8 +154,9 @@
             }
         });
         $("#qtyUnit").hide();
-
+        //默认类别
         $("#cate_1").click();
+
     }
 
     function append()
@@ -167,6 +171,12 @@
 
     function save()
     {
+        var auxIds = $.map($("#auxItems > input:checked"),function(n){
+            return $(n).val();
+        }).join(",");
+        
+        $("#AuxCodes").val(auxIds);
+
         $("#acctForm").submit();
     }
 
