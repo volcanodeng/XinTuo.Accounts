@@ -1,11 +1,6 @@
 ﻿using System.Web.Mvc;
-using Orchard.Themes;
 using Orchard.Mvc;
-using Orchard.Roles.Models;
 using Orchard;
-using Orchard.ContentManagement;
-using Orchard.Roles.Services;
-using System.Collections.Generic;
 
 namespace XinTuo.Accounts.Controllers
 {
