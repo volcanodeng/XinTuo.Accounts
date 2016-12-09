@@ -6,6 +6,7 @@ using System.Web.Mvc;
 using Orchard.Mvc;
 using Orchard;
 using XinTuo.Accounts.Services;
+using Orchard.Themes;
 
 namespace XinTuo.Accounts.Controllers
 {
@@ -20,6 +21,7 @@ namespace XinTuo.Accounts.Controllers
             _company = company;
         }
 
+        [Themed]
         public ActionResult FiscalSystem()
         {
             var curCom = _company.GetCurrentCompany();
@@ -27,7 +29,7 @@ namespace XinTuo.Accounts.Controllers
             {
                 return new HttpUnauthorizedResult();
             }
-            return new ShapeResult(this, _orchard.New.Index());
+            return new ShapeResult(this, _orchard.New.FiscalSystem(Company:curCom));
         }
     }
 }
