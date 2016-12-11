@@ -105,6 +105,43 @@ namespace XinTuo.Accounts.Models
             }
         }
 
+        public int? StartYear
+        {
+            get
+            {
+                return Record.StartYear;
+            }
+            set
+            {
+                Record.StartYear = value;
+            }
+        }
+
+        public int? StartPeriod
+        {
+            get
+            {
+                return Record.StartPeriod;
+            }
+            set
+            {
+                Record.StartPeriod = value;
+            }
+        }
+
+        public string FiscalSystem
+        {
+            get
+            {
+                return Record.FiscalSystem;
+            }
+
+            set
+            {
+                Record.FiscalSystem = value;
+            }
+        }
+
         public IEnumerable<UserPartRecord> UserPart
         {
             get

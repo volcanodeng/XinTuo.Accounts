@@ -16,7 +16,9 @@
 <article style="font-size:16pt;font-weight:bolder;">创建账套，开始您的会计之旅吧！</article>
 <hr />
 
-<div class="easyui-panel" data-options="fit:true" id="fsPanel" style="font-size:14pt;overflow:hidden;">
+@using (Html.BeginFormAntiForgeryPost(Url.Action("SaveFiscal", "FiscalSystem", new { area = "XinTuo.Accounts" })))
+{
+<div class="easyui-panel" data-options="fit:true,border:false" id="fsPanel" style="font-size:14pt;overflow:hidden;">
     <div>
         <span>公司名称：</span><span> @com.FullName</span>
     </div>
@@ -25,19 +27,20 @@
     </div>
     <div>
         <label for="startYear" style="display:inline;">启动时间：</label>
-        <input id="startYear" class="easyui-numberspinner" value="@DateTime.Now.Year" data-options="min:2000,max:2030" style="width:200px;">年
-        <input id="startTimes" class="easyui-numberspinner" value="1" data-options="min:1" style="width:50px;">期
+        <input id="startYear" class="easyui-numberspinner" value="@DateTime.Now.Year" data-options="min:2000,max:2030" style="width:100px;">年
+        <input id="startTimes" class="easyui-numberspinner" value="1" data-options="min:1" style="width:60px;">期
     </div>
     <div>
         <label for="fiscal" style="display:inline;">会计制度：</label>
         <select id="fiscal" class="easyui-combobox" name="fiscal"  style="width:270px;" >
-            <option value="xqykj">小企业会计准则（2013年颁）</option>
+            <option value="xqykj" selected>小企业会计准则（2013年颁）</option>
             <option value="xkj">新会计准则（2006年颁）</option>
             <option value="fyl">民间非营利组织会计制度</option>
         </select>
     </div>
-    <div>
-        <a href="#" class="easyui-linkbutton" data-options="iconCls:'icon-print'" style="width:120px;">开始创建账套</a>
+    <div style="padding-left:100px;">
+        <a href="#" class="easyui-linkbutton" data-options="iconCls:'icon-large-smartart',size:'large'" style="width:140px;">开始创建账套</a>
     </div>
 
 </div>
+}

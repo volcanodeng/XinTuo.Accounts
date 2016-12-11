@@ -47,6 +47,9 @@ namespace XinTuo.Accounts {
                 .Column<string>("ContactName", c => c.WithLength(100))              //联系人名称
                 .Column<string>("ContactMobile", c => c.WithLength(30))             //联系人电话
                 .Column<string>("ContactEmail", c => c.WithLength(100))             //联系人邮件
+                .Column<int>("StartYear",c=>c.Nullable())                           //启动时间（年度）
+                .Column<int>("StartPeriod", c=>c.Nullable())                        //启动时间（账期）
+                .Column<string>("FiscalSystem", c=>c.WithLength(50))                //会计制度
                 );
             //所属公司的用户
             SchemaBuilder.CreateTable("CompanyUserRecord",
@@ -216,17 +219,25 @@ namespace XinTuo.Accounts {
 
         public int UpdateFrom2()
         {
-            //ContentDefinitionManager.AlterTypeDefinition("Company", type => type
-            //                                                        .WithPart(typeof(CompanyPart).Name)
-            //                                                        .WithPart(typeof(UserPart).Name)
-            //                                                        .WithPart(typeof(UserRolesPart).Name));
-
+            
             _role.CreateRole("Accountant");
 
             _role.CreatePermissionForRole("Accountant", Permissions.CreateAccount.Name);
             _role.CreatePermissionForRole("Accountant", Permissions.CreateAuxiliary.Name);
 
             return 3;
+        }
+
+        public int UpdateFrom3()
+        {
+            SchemaBuilder.AlterTable("CompanyRecord", table => table
+                   .AddColumn<int>("StartYear"));
+            SchemaBuilder.AlterTable("CompanyRecord", table => table
+                   .AddColumn<int>("StartPeriod"));
+            SchemaBuilder.AlterTable("CompanyRecord", table => table
+                   .AddColumn<string>("FiscalSystem"));
+
+            return 4;
         }
     }
 }

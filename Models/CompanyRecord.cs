@@ -22,6 +22,10 @@ namespace XinTuo.Accounts.Models
         public virtual string ContactMobile { get; set; }
         public virtual string ContactEmail { get; set; }
 
+        public virtual int? StartYear { get; set; }
+        public virtual int? StartPeriod { get; set; }
+        public virtual string FiscalSystem { get; set; }
+
         public virtual IList<CompanyUserRecord> Users { get; set; }
     }
 }

@@ -11,6 +11,7 @@ using AutoMapper;
 using Orchard.Users.Models;
 using Orchard.Roles.Services;
 using Orchard.Roles.Models;
+using Orchard.Users.Events;
 
 
 namespace XinTuo.Accounts.Services
@@ -25,6 +26,7 @@ namespace XinTuo.Accounts.Services
         private readonly IMembershipService _membership;
         private readonly IRepository<UserRolesPartRecord> _userRole;
         private readonly IRoleService _role;
+        private readonly IUserEventHandler _userEventHandler;
 
         public Company(IAuthenticationService authService,
             IRepository<CompanyUserRecord> companyUser,
@@ -33,7 +35,8 @@ namespace XinTuo.Accounts.Services
             IRoleService roleService,
             IContentManager contentManager,
             IMapper mapper,
-            IMembershipService membership)
+            IMembershipService membership,
+            IUserEventHandler userEventHandler)
         {
             _authService = authService;
             _companyUser = companyUser;
@@ -43,6 +46,7 @@ namespace XinTuo.Accounts.Services
             _membership = membership;
             _userRole = userRolesRepository;
             _role = roleService;
+            _userEventHandler = userEventHandler;
         }
 
         public CompanyPart GetCurrentCompany()
@@ -87,7 +91,34 @@ namespace XinTuo.Accounts.Services
             var accountant = _role.GetRoleByName("Accountant");
             if (accountant != null) _userRole.Create(new UserRolesPartRecord() { UserId = newUser.Id, Role = accountant });
 
+            #region 新用户登录
+            _userEventHandler.LoggingIn(company.ContractName, company.ContractName);
+            var user = _membership.ValidateUser(company.ContractName, company.ContractName);
+            if (user != null)
+            {
+                _authService.SignIn(user,false);
+                _userEventHandler.LoggedIn(user);
+            }
+            #endregion
+
             return newCompany;
+        }
+
+        public void UpdateFiscalSystem(VMFiscalSystem fiscal)
+        {
+            CompanyPart com = GetCurrentCompany();
+
+            //一个公司只能设置一次会计制度
+            if(com.StartYear.HasValue && !string.IsNullOrEmpty(com.FiscalSystem))
+            {
+                return;
+            }
+
+            com.StartYear = fiscal.Year;
+            com.StartPeriod = fiscal.Period;
+            com.FiscalSystem = fiscal.Fiscal;
+
+            _contentManager.Restore(com.ContentItem, VersionOptions.Latest);
         }
     }
 }
