@@ -7,6 +7,7 @@ using Orchard.Mvc;
 using Orchard;
 using XinTuo.Accounts.Services;
 using Orchard.Themes;
+using Orchard.DisplayManagement;
 using XinTuo.Accounts.ViewModels;
 
 namespace XinTuo.Accounts.Controllers
@@ -33,9 +34,18 @@ namespace XinTuo.Accounts.Controllers
             return new ShapeResult(this, _orchard.New.FiscalSystem(Company:curCom));
         }
 
-        [Themed,HttpPost]
-        public ActionResult SaveFiscal(VMFiscalSystem fiscal)
+        [Themed, HttpPost]
+        public ActionResult SaveFiscal(int? Year,int? Period ,string Fiscal)
         {
+            //if (!ModelState.IsValid)
+            //{
+            //    return RedirectToAction("FiscalSystem");
+            //}
+            VMFiscalSystem fiscal = new VMFiscalSystem();
+            fiscal.Year = Year;
+            fiscal.Period = Period;
+            fiscal.Fiscal = Fiscal;
+
             var curCom = _company.GetCurrentCompany();
             if (curCom == null)
             {
@@ -44,7 +54,7 @@ namespace XinTuo.Accounts.Controllers
 
             _company.UpdateFiscalSystem(fiscal);
 
-            return new ShapeResult(this, _orchard.New.Home_Index());
+            return new ShapeResult(this, _orchard.New.Index());
         }
     }
 }

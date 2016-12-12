@@ -1,6 +1,7 @@
 ﻿using System.Web.Mvc;
 using Orchard.Mvc;
 using Orchard;
+using Orchard.Themes;
 
 namespace XinTuo.Accounts.Controllers
 {
