@@ -2,56 +2,80 @@
 @{
     CompanyPart com = Model.Company;
 }
+<!DOCTYPE html>
 
-<style type="text/css">
-    #fsPanel div{
-        width:100%;
-        padding:10px;
-    }
-    #fsPanel input{
-        font-size:14pt;
-    }
-</style>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    @Html.Partial("ResourcePartial")
+    <style type="text/css">
+        #fsPanel div {
+            width: 100%;
+            padding: 10px;
+        }
 
-<article style="font-size:16pt;font-weight:bolder;">创建账套，开始您的会计之旅吧！</article>
-<hr />
+        #fsPanel input {
+            font-size: 14pt;
+        }
+    </style>
+</head>
+<body>
+    <article style="font-size:16pt;font-weight:bolder;">创建账套，开始您的会计之旅吧！</article>
+    <hr />
 
-@using (Html.BeginFormAntiForgeryPost(Url.Action("SaveFiscal", "FiscalSystem", new { area = "XinTuo.Accounts" }), FormMethod.Post,new { id="fiscalForm"}))
-{
-<div class="easyui-panel" data-options="fit:true,border:false" id="fsPanel" style="font-size:14pt;overflow:hidden;">
-    <div>
-        <span>公司名称：</span><span> @com.FullName</span>
-    </div>
-    <div>
-        <span>本位币种：</span><span> RMB</span>
-    </div>
-    <div>
-        <label for="startYear" style="display:inline;">启动时间：</label>
-        <input id="startYear" name="Year" class="easyui-numberspinner" value="@DateTime.Now.Year" data-options="min:2000,max:2030" style="width:100px;">年
-        <input id="startTimes" name="Period" class="easyui-numberspinner" value="1" data-options="min:1" style="width:60px;">期
-    </div>
-    <div>
-        <label for="fiscal" style="display:inline;">会计制度：</label>
-        <select id="Fiscal" class="easyui-combobox" name="Fiscal"  style="width:270px;" >
-            <option value="xqykj" selected>小企业会计准则（2013年颁）</option>
-            <option value="xkj">新会计准则（2006年颁）</option>
-            <option value="fyl">民间非营利组织会计制度</option>
-        </select>
-    </div>
-    <div style="padding-left:100px;">
-        <a href="#" class="easyui-linkbutton" data-options="iconCls:'icon-large-smartart',size:'large'" style="width:140px;" onclick="submitForm()">开始创建账套</a>
-    </div>
 
-</div>
-}
+    <form id="fiscalForm" method="post">
+        <div class="easyui-panel" data-options="fit:true,border:false" id="fsPanel" style="font-size:14pt;overflow:hidden;">
+            <div>
+                <span>公司名称：</span><span> @com.FullName</span>
+            </div>
+            <div>
+                <span>本位币种：</span><span> RMB</span>
+            </div>
+            <div>
+                <label for="startYear" style="display:inline;">启动时间：</label>
+                <input id="startYear" name="Year" class="easyui-numberspinner" value="@DateTime.Now.Year" data-options="min:2000,max:2030" style="width:100px;">年
+                <input id="startTimes" name="Period" class="easyui-numberspinner" value="1" data-options="min:1" style="width:60px;">期
+            </div>
+            <div>
+                <label for="fiscal" style="display:inline;">会计制度：</label>
+                <select id="Fiscal" class="easyui-combobox" name="Fiscal" style="width:270px;">
+                    <option value="xqykj" selected>小企业会计准则（2013年颁）</option>
+                    <option value="xkj">新会计准则（2006年颁）</option>
+                    <option value="fyl">民间非营利组织会计制度</option>
+                </select>
+            </div>
+            <div style="padding-left:100px;">
+                <a href="#" class="easyui-linkbutton" data-options="iconCls:'icon-large-smartart',size:'large'" style="width:140px;" onclick="$('#fiscalForm').submit();">开始创建账套</a>
+            </div>
 
-<script type="text/javascript">
-    function submitForm() {
-        $('#fiscalForm').form('submit', {
-            onSubmit: function () {
-                return $(this).form('enableValidation').form('validate');
-            }
+        </div>
+    </form>
+
+
+    <script type="text/javascript">
+        $(function () {
+            init();
         });
-    }
 
-</script>
+        function init() {
+            $('#fiscalForm').form({
+                url: '/api/c/SaveFiscal',
+                onSubmit: function () {
+                    return $(this).form('enableValidation').form('validate');
+                },
+                success: function (data) {
+                    if (formSuccessHandle(data)) {
+                        location.replace("/xintuo.accounts/account/account");
+                    }
+                    else {
+                        location.replace("/xintuo.accounts/Company/Register");
+                    }
+                }
+            });
+        }
+
+
+    </script>
+</body>
+</html>

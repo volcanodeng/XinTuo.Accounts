@@ -23,7 +23,6 @@ namespace XinTuo.Accounts.Controllers
             _company = company;
         }
 
-        [Themed]
         public ActionResult FiscalSystem()
         {
             var curCom = _company.GetCurrentCompany();
@@ -34,27 +33,6 @@ namespace XinTuo.Accounts.Controllers
             return new ShapeResult(this, _orchard.New.FiscalSystem(Company:curCom));
         }
 
-        [Themed, HttpPost]
-        public ActionResult SaveFiscal(int? Year,int? Period ,string Fiscal)
-        {
-            //if (!ModelState.IsValid)
-            //{
-            //    return RedirectToAction("FiscalSystem");
-            //}
-            VMFiscalSystem fiscal = new VMFiscalSystem();
-            fiscal.Year = Year;
-            fiscal.Period = Period;
-            fiscal.Fiscal = Fiscal;
-
-            var curCom = _company.GetCurrentCompany();
-            if (curCom == null)
-            {
-                return new HttpUnauthorizedResult();
-            }
-
-            _company.UpdateFiscalSystem(fiscal);
-
-            return new ShapeResult(this, _orchard.New.Index());
-        }
+        
     }
 }

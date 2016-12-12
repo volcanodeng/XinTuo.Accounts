@@ -47,5 +47,25 @@ namespace XinTuo.Accounts.Controllers.Api
 
             return Ok(comPart.Id);
         }
+
+        public IHttpActionResult SaveFiscal([FromBody]VMFiscalSystem fiscal)
+        {
+            string err;
+            if (!ModelValidHelper.ModelValid(ModelState, out err))
+            {
+                return BadRequest(err);
+            }
+
+            if (_company.GetCurrentCompany() == null)
+            {
+                var msg = new ApiResponse("未授权访问", System.Net.HttpStatusCode.Unauthorized);
+                throw new HttpResponseException(msg);
+            }
+
+            _company.UpdateFiscalSystem(fiscal);
+
+            return Ok(1);
+        }
+
     }
 }
