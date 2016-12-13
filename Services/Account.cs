@@ -40,8 +40,8 @@ namespace XinTuo.Accounts.Services
             AccountPart newAccount = _contentManager.New("Account").As<AccountPart>();
 
             newAccount = _mapper.Map<VMAccount,AccountPart>(account,newAccount);
-            newAccount.AccountCategory = _accCategoryRepository.Get(account.CateId);
-            newAccount.Company = _company.GetCurrentCompany().Record;
+            newAccount.AccountCategoryRecord = _accCategoryRepository.Get(account.CateId);
+            newAccount.CompanyRecord = _company.GetCurrentCompany().Record;
             newAccount.Creator = _authService.GetAuthenticatedUser().Id;
             newAccount.CreateTime = DateTime.Now;
             newAccount.Updater = _authService.GetAuthenticatedUser().Id;

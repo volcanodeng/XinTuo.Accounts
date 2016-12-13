@@ -12,7 +12,7 @@ namespace XinTuo.Accounts.Models
 
         public virtual string ParentCode { get; set; }
 
-        public virtual AccountCategoryRecord AccountCategory { get; set; }
+        public virtual AccountCategoryRecord AccountCategoryRecord { get; set; }
 
         public virtual string AccName { get; set; }
 
@@ -44,7 +44,7 @@ namespace XinTuo.Accounts.Models
 
         public virtual int AccState { get; set; }
 
-        public virtual CompanyRecord Company { get; set; }
+        public virtual CompanyRecord CompanyRecord { get; set; }
 
         public virtual int Creator { get; set; }
 

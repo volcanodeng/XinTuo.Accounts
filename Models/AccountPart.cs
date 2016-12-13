@@ -20,15 +20,15 @@ namespace XinTuo.Accounts.Models
             set { Record.ParentCode = value; }
         }
 
-        public AccountCategoryRecord AccountCategory
+        public AccountCategoryRecord AccountCategoryRecord
         {
             get
             {
-                return Record.AccountCategory;
+                return Record.AccountCategoryRecord;
             }
             set
             {
-                Record.AccountCategory = value;
+                Record.AccountCategoryRecord = value;
             }
         }
 
@@ -126,10 +126,10 @@ namespace XinTuo.Accounts.Models
             set { Record.AccState = value; }
         }
 
-        public CompanyRecord Company
+        public CompanyRecord CompanyRecord
         {
-            get { return Record.Company; }
-            set { Record.Company = value; }
+            get { return Record.CompanyRecord; }
+            set { Record.CompanyRecord = value; }
         }
 
         public int Creator

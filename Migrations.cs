@@ -204,7 +204,6 @@ namespace XinTuo.Accounts {
                                                                     .WithPart(typeof(AuxiliaryPart).Name));
 
             ContentDefinitionManager.AlterTypeDefinition("Account", type => type
-                                                                     .WithPart(typeof(AuxiliaryPart).Name)
                                                                      .WithPart(typeof(CertificateWordPart).Name)
                                                                      .WithPart(typeof(AccountPart).Name)
                                                                      .WithPart(typeof(AbstractPart).Name));
@@ -228,16 +227,6 @@ namespace XinTuo.Accounts {
             return 3;
         }
 
-        public int UpdateFrom3()
-        {
-            SchemaBuilder.AlterTable("CompanyRecord", table => table
-                   .AddColumn<int>("StartYear"));
-            SchemaBuilder.AlterTable("CompanyRecord", table => table
-                   .AddColumn<int>("StartPeriod"));
-            SchemaBuilder.AlterTable("CompanyRecord", table => table
-                   .AddColumn<string>("FiscalSystem"));
-
-            return 4;
-        }
+        
     }
 }

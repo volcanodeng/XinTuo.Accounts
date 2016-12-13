@@ -13,7 +13,6 @@ namespace XinTuo.Accounts.Handlers
         public AuxiliaryHandler(IRepository<AuxiliaryRecord> repository)
         {
             Filters.Add(StorageFilter.For(repository));
-            Filters.Add(new ActivatingFilter<AuxiliaryPart>("Account"));
             Filters.Add(new ActivatingFilter<AuxiliaryPart>("Auxiliary"));
         }
     }
