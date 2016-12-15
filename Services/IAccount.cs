@@ -10,8 +10,8 @@ namespace XinTuo.Accounts.Services
 {
     public interface IAccount : IDependency
     {
-        AccountPart GetAccount(int id);
+        AccountRecord GetAccount(int id);
 
-        AccountPart SaveAccount(VMAccount account);
+        void SaveAccount(VMAccount account);
     }
 }

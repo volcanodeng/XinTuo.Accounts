@@ -51,7 +51,9 @@ namespace XinTuo.Accounts.Controllers.Api
                 throw new HttpResponseException(msg);
             }
 
-            return Ok(_account.SaveAccount(account));
+            _account.SaveAccount(account);
+
+            return Ok(1);
         }
 
         

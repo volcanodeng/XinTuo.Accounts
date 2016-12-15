@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web;
 using Orchard.Data;
 using Orchard.ContentManagement.Handlers;
+using Orchard.Core.Common.Models;
 using XinTuo.Accounts.Models;
 
 namespace XinTuo.Accounts.Handlers
@@ -14,6 +15,7 @@ namespace XinTuo.Accounts.Handlers
         {
             Filters.Add(StorageFilter.For(repository));
             Filters.Add(new ActivatingFilter<AuxiliaryPart>("Auxiliary"));
+            Filters.Add(new ActivatingFilter<CommonPart>("Auxiliary"));
         }
     }
 }

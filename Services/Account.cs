@@ -13,33 +13,36 @@ namespace XinTuo.Accounts.Services
     {
         private readonly IContentManager _contentManager;
         private readonly IRepository<AccountCategoryRecord> _accCategoryRepository;
+        private readonly IRepository<AccountRecord> _account;
         private readonly IMapper _mapper;
         private readonly ICompany _company;
         private readonly IAuthenticationService _authService;
 
         public Account(IContentManager contentManager,
                        IRepository<AccountCategoryRecord> accCategory,
+                       IRepository<AccountRecord> account,
                        IMapper mapper,
                        ICompany company,
                        IAuthenticationService authService)
         {
             _contentManager = contentManager;
             _accCategoryRepository = accCategory;
+            _account = account;
             _mapper = mapper;
             _company = company;
             _authService = authService;
         }
 
-        public AccountPart GetAccount(int id)
+        public AccountRecord GetAccount(int id)
         {
-            return _contentManager.Query<AccountPart, AccountRecord>().Where(c => c.Id == id).List().FirstOrDefault();
+            return _account.Fetch(c => c.Id == id).FirstOrDefault();
         }
 
-        public AccountPart SaveAccount(VMAccount account)
+        public void SaveAccount(VMAccount account)
         {
-            AccountPart newAccount = _contentManager.New("Account").As<AccountPart>();
+            AccountRecord newAccount = new AccountRecord();
 
-            newAccount = _mapper.Map<VMAccount,AccountPart>(account,newAccount);
+            newAccount = _mapper.Map<VMAccount,AccountRecord>(account,newAccount);
             newAccount.AccountCategoryRecord = _accCategoryRepository.Get(account.CateId);
             newAccount.CompanyRecord = _company.GetCurrentCompany().Record;
             newAccount.Creator = _authService.GetAuthenticatedUser().Id;
@@ -47,9 +50,8 @@ namespace XinTuo.Accounts.Services
             newAccount.Updater = _authService.GetAuthenticatedUser().Id;
             newAccount.UpdateTime = DateTime.Now;
 
-            _contentManager.Create(newAccount);
+            _account.Create(newAccount);
 
-            return newAccount;
         }
 
     }

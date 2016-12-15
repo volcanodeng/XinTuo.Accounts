@@ -26,6 +26,7 @@ SET IDENTITY_INSERT XinTuo_Accounts_AccountCategoryRecord OFF
 
 SET IDENTITY_INSERT XinTuo_Accounts_RegionRecord ON
 
+
 INSERT INTO [XinTuo_Accounts_RegionRecord] ([Id],[RegionId],[CityId],[ProvinceId],[CountyName],[CityName],[ProvinceName],[Pinyin],[Level]) values (1,110000,110000,110000,N'北京市',N'北京市',N'北京市',NULL,1)
 INSERT INTO [XinTuo_Accounts_RegionRecord] ([Id],[RegionId],[CityId],[ProvinceId],[CountyName],[CityName],[ProvinceName],[Pinyin],[Level]) values (2,110100,110100,110000,N'市辖区',N'市辖区',N'北京市',NULL,2)
 INSERT INTO [XinTuo_Accounts_RegionRecord] ([Id],[RegionId],[CityId],[ProvinceId],[CountyName],[CityName],[ProvinceName],[Pinyin],[Level]) values (3,110101,110100,110000,N'东城区',N'市辖区',N'北京市',NULL,3)
@@ -3545,7 +3546,7 @@ SET IDENTITY_INSERT XinTuo_Accounts_RegionRecord OFF
 
 
 
-
+SET IDENTITY_INSERT [XinTuo_Accounts_AccountRecord] OFF
 INSERT INTO [XinTuo_Accounts_AccountRecord] ([Id],[AccCode],[ParentCode],[AccountCategoryRecord_Id],[AccName],[Direction],[AuxIds],[AuxCodes],[AuxNames],[Unit],[InitialQuantity],[InitialBalance],[YtdDebitQuantity],[YtdDebit],[YtdCreditQuantity],[YtdCredit],[YtdBeginBalanceQuantity],[YtdBeginBalance],[AccState],[CompanyRecord_Id],[Creator],[CreateTime],[Updater],[UpdateTime]) values (1,N'1001',NULL,2,N'库存现金',N'借',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,NULL,NULL,NULL)
 INSERT INTO [XinTuo_Accounts_AccountRecord] ([Id],[AccCode],[ParentCode],[AccountCategoryRecord_Id],[AccName],[Direction],[AuxIds],[AuxCodes],[AuxNames],[Unit],[InitialQuantity],[InitialBalance],[YtdDebitQuantity],[YtdDebit],[YtdCreditQuantity],[YtdCredit],[YtdBeginBalanceQuantity],[YtdBeginBalance],[AccState],[CompanyRecord_Id],[Creator],[CreateTime],[Updater],[UpdateTime]) values (2,N'1002',NULL,2,N'银行存款',N'借',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,NULL,NULL,NULL)
 INSERT INTO [XinTuo_Accounts_AccountRecord] ([Id],[AccCode],[ParentCode],[AccountCategoryRecord_Id],[AccName],[Direction],[AuxIds],[AuxCodes],[AuxNames],[Unit],[InitialQuantity],[InitialBalance],[YtdDebitQuantity],[YtdDebit],[YtdCreditQuantity],[YtdCredit],[YtdBeginBalanceQuantity],[YtdBeginBalance],[AccState],[CompanyRecord_Id],[Creator],[CreateTime],[Updater],[UpdateTime]) values (3,N'1012',NULL,2,N'其他货币资金',N'借',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,NULL,NULL,NULL)
@@ -3729,6 +3730,8 @@ INSERT INTO [XinTuo_Accounts_AccountRecord] ([Id],[AccCode],[ParentCode],[Accoun
 INSERT INTO [XinTuo_Accounts_AccountRecord] ([Id],[AccCode],[ParentCode],[AccountCategoryRecord_Id],[AccName],[Direction],[AuxIds],[AuxCodes],[AuxNames],[Unit],[InitialQuantity],[InitialBalance],[YtdDebitQuantity],[YtdDebit],[YtdCreditQuantity],[YtdCredit],[YtdBeginBalanceQuantity],[YtdBeginBalance],[AccState],[CompanyRecord_Id],[Creator],[CreateTime],[Updater],[UpdateTime]) values (181,N'22210107',N'222101',5,N'出口退税',N'贷',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,NULL,NULL,NULL)
 INSERT INTO [XinTuo_Accounts_AccountRecord] ([Id],[AccCode],[ParentCode],[AccountCategoryRecord_Id],[AccName],[Direction],[AuxIds],[AuxCodes],[AuxNames],[Unit],[InitialQuantity],[InitialBalance],[YtdDebitQuantity],[YtdDebit],[YtdCreditQuantity],[YtdCredit],[YtdBeginBalanceQuantity],[YtdBeginBalance],[AccState],[CompanyRecord_Id],[Creator],[CreateTime],[Updater],[UpdateTime]) values (182,N'22210108',N'222101',5,N'进项税额转出',N'贷',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,NULL,NULL,NULL)
 INSERT INTO [XinTuo_Accounts_AccountRecord] ([Id],[AccCode],[ParentCode],[AccountCategoryRecord_Id],[AccName],[Direction],[AuxIds],[AuxCodes],[AuxNames],[Unit],[InitialQuantity],[InitialBalance],[YtdDebitQuantity],[YtdDebit],[YtdCreditQuantity],[YtdCredit],[YtdBeginBalanceQuantity],[YtdBeginBalance],[AccState],[CompanyRecord_Id],[Creator],[CreateTime],[Updater],[UpdateTime]) values (183,N'22210109',N'222101',5,N'转出多交增值税',N'贷',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,NULL,NULL,NULL)
+SET IDENTITY_INSERT [XinTuo_Accounts_AccountRecord] ON
+
 
 
 SET IDENTITY_INSERT XinTuo_Accounts_AuxiliaryTypeRecord ON

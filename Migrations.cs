@@ -10,6 +10,7 @@ using XinTuo.Accounts.Models;
 using Orchard.Users.Models;
 using Orchard.Roles.Models;
 using Orchard.Roles.Services;
+using Orchard.Core.Common.Models;
 
 namespace XinTuo.Accounts {
     public class Migrations : DataMigrationImpl {
@@ -68,7 +69,7 @@ namespace XinTuo.Accounts {
             //辅助核算
             SchemaBuilder.CreateTable("AuxiliaryRecord",
                 t => t.ContentPartRecord()                                          //id
-                .Column<int>("AuxiliaryTypeRecord_Id")                         //辅助核算类型
+                .Column<int>("AuxiliaryTypeRecord_Id")                              //辅助核算类型
                 .Column<string>("AuxCode", c => c.WithLength(50))                   //核算编码
                 .Column<string>("AuxName", c => c.WithLength(50))                   //核算名称
                 .Column<int>("AuxState", c => c.WithDefault(1))                     //状态：1 正常  0 禁用
@@ -98,7 +99,7 @@ namespace XinTuo.Accounts {
 
             //会计科目
             SchemaBuilder.CreateTable("AccountRecord",
-                t=>t.ContentPartRecord()                                            //科目主键
+                t=>t.Column<int>("Id",c=>c.PrimaryKey().Identity())                 //科目主键
                 .Column<string>("AccCode",c=>c.WithLength(50))                      //科目编码
                 .Column<string>("ParentCode",c=>c.WithLength(50))                   //父编码
                 .Column<int>("AccountCategoryRecord_Id")                            //科目类别（取第二级类别）
@@ -125,7 +126,7 @@ namespace XinTuo.Accounts {
                 );
 
             //凭证摘要库(通过Creator关联获取数据)
-            SchemaBuilder.CreateTable("VouAbstractRecord",
+            SchemaBuilder.CreateTable("AbstractRecord",
                 t=>t.ContentPartRecord()
                 .Column<string>("Abstract",c=>c.WithLength(255))
                 .Column<int>("Creator")
@@ -134,8 +135,8 @@ namespace XinTuo.Accounts {
 
             //凭证
             SchemaBuilder.CreateTable("VoucherRecord",
-                t=>t.ContentPartRecord()                                        //凭证主键
-                .Column<int>("AccCertificateWordRecord_CwId")                   //凭证字
+                t=>t.Column<int>("Id",c=>c.PrimaryKey().Identity())             //凭证主键
+                .Column<int>("CertificateWordRecord_Id")                        //凭证字
                 .Column<int>("CertWordSN",c=>c.WithDefault(1))                  //凭证字流水号
                 .Column<DateTime>("Date",c=>c.Nullable())                       //日期
                 .Column<int>("InvoiceCount",c=>c.WithDefault(0))                //附加单据数量
@@ -149,7 +150,7 @@ namespace XinTuo.Accounts {
 
             //凭证明细
             SchemaBuilder.CreateTable("VoucherDetailRecord",
-                t=>t.ContentPartRecord()                                        //明细主键
+                t=>t.Column<int>("Id",c=>c.PrimaryKey().Identity())             //明细主键
                 .Column<int>("VoucherRecord_Id")                                //凭证主表关联
                 .Column<string>("Abstract",c=>c.WithLength(255))                //摘要
                 .Column<int>("AccountRecord_Id")                                //科目（关联科目表）
@@ -163,7 +164,7 @@ namespace XinTuo.Accounts {
 
             //凭证模板
             SchemaBuilder.CreateTable("VoucherDetailTemplateRecord",
-                t=>t.ContentPartRecord()
+                t=>t.Column<int>("Id",c=>c.PrimaryKey().Identity())
                 .Column<string>("Abstract", c => c.WithLength(255))                //摘要
                 .Column<string>("AccountCode", c => c.WithLength(100))             //科目代码
                 .Column<string>("AccountName", c => c.WithLength(100))             //科目名称（可生成扩展科目名称）
@@ -178,51 +179,67 @@ namespace XinTuo.Accounts {
 
         public int UpdateFrom1()
         {
+            //part和type只能用于基础数据定义表或全局功能
             ContentDefinitionManager.AlterPartDefinition(typeof(CompanyPart).Name, part => part.Attachable(false).WithDescription("用于注册公司信息"));
 
             ContentDefinitionManager.AlterPartDefinition(typeof(AuxiliaryPart).Name, part => part.Attachable().WithDescription("修改辅助核算项目"));
 
             ContentDefinitionManager.AlterPartDefinition(typeof(CertificateWordPart).Name, part => part.Attachable().WithDescription("编辑凭证字"));
 
-            ContentDefinitionManager.AlterPartDefinition(typeof(AccountPart).Name,part=>part.Attachable().WithDescription("科目维护"));
+            //业务数据的不能定义为part或type
+            //ContentDefinitionManager.AlterPartDefinition(typeof(AccountPart).Name,part=>part.Attachable().WithDescription("科目维护"));
 
             ContentDefinitionManager.AlterPartDefinition(typeof(AbstractPart).Name,part=>part.Attachable().WithDescription("历史摘要信息维护"));
 
-            ContentDefinitionManager.AlterPartDefinition(typeof(VoucherPart).Name,part=>part.Attachable(false).WithDescription("凭证录入"));
+            //ContentDefinitionManager.AlterPartDefinition(typeof(VoucherPart).Name,part=>part.Attachable(false).WithDescription("凭证录入"));
 
-            ContentDefinitionManager.AlterPartDefinition(typeof(VoucherDetailPart).Name,part=>part.Attachable().WithDescription("凭证明细表"));
+            //ContentDefinitionManager.AlterPartDefinition(typeof(VoucherDetailPart).Name,part=>part.Attachable().WithDescription("凭证明细表"));
 
-            ContentDefinitionManager.AlterPartDefinition(typeof(VoucherDetailTemplatePart).Name,part=>part.Attachable().WithDescription("凭证模板维护"));
+            //ContentDefinitionManager.AlterPartDefinition(typeof(VoucherDetailTemplatePart).Name,part=>part.Attachable().WithDescription("凭证模板维护"));
 
-
+            //加identity为了能使用导入导出模块
+            //加common为了加入新增和修改时间记录
             ContentDefinitionManager.AlterTypeDefinition("Company", type => type
                                                                     .WithPart(typeof(CompanyPart).Name)
                                                                     .WithPart(typeof(UserPart).Name)
                                                                     .WithPart(typeof(UserRolesPart).Name));
 
             ContentDefinitionManager.AlterTypeDefinition("Auxiliary", type => type
-                                                                    .WithPart(typeof(AuxiliaryPart).Name));
+                                                                    .WithPart(typeof(AuxiliaryPart).Name)
+                                                                    .WithPart(typeof(CommonPart).Name)
+                                                                    .WithIdentity());
 
-            ContentDefinitionManager.AlterTypeDefinition("Account", type => type
+            ContentDefinitionManager.AlterTypeDefinition("CertificateWord", type => type
                                                                      .WithPart(typeof(CertificateWordPart).Name)
-                                                                     .WithPart(typeof(AccountPart).Name)
-                                                                     .WithPart(typeof(AbstractPart).Name));
+                                                                     .WithPart(typeof(CommonPart).Name)
+                                                                     .WithIdentity());
 
-            ContentDefinitionManager.AlterTypeDefinition("Voucher", type => type
-                                                                     .WithPart(typeof(VoucherPart).Name)
-                                                                     .WithPart(typeof(VoucherDetailPart).Name)
-                                                                     .WithPart(typeof(VoucherDetailTemplatePart).Name));
+            ContentDefinitionManager.AlterTypeDefinition("Abstract",type=>type
+                                                                    .WithPart(typeof(AbstractPart).Name)
+                                                                    .WithPart(typeof(CommonPart).Name)
+                                                                    .WithIdentity());
+
+            //ContentDefinitionManager.AlterTypeDefinition("Account", type => type
+            //                                                         .WithPart(typeof(CertificateWordPart).Name)
+            //                                                         .WithPart(typeof(AccountPart).Name)
+            //                                                         .WithPart(typeof(AbstractPart).Name));
+
+            //ContentDefinitionManager.AlterTypeDefinition("Voucher", type => type
+            //                                                         .WithPart(typeof(VoucherPart).Name)
+            //                                                         .WithPart(typeof(VoucherDetailPart).Name)
+            //                                                         .WithPart(typeof(VoucherDetailTemplatePart).Name));
 
             return 2;
         }
 
         public int UpdateFrom2()
         {
-            
+            //角色模块必须开启Form模块
             _role.CreateRole("Accountant");
 
             _role.CreatePermissionForRole("Accountant", Permissions.CreateAccount.Name);
             _role.CreatePermissionForRole("Accountant", Permissions.CreateAuxiliary.Name);
+            _role.CreatePermissionForRole("Accountant", Permissions.CreateAuxiliaryType.Name);
 
             return 3;
         }

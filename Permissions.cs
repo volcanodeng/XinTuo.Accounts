@@ -29,7 +29,7 @@ namespace XinTuo.Accounts
             return new[] {
                 new PermissionStereotype {
                     Name="Accountant",
-                    Permissions=new[] { CreateAccount , CreateAuxiliary }
+                    Permissions=new[] { CreateAccount , CreateAuxiliary,CreateAuxiliaryType }
                 }
             };
         }

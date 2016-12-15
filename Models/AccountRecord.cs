@@ -6,8 +6,10 @@ using Orchard.ContentManagement.Records;
 
 namespace XinTuo.Accounts.Models
 {
-    public class AccountRecord : ContentPartRecord
+    public class AccountRecord 
     {
+        public virtual int Id { get; set; }
+
         public virtual string AccCode { get; set; }
 
         public virtual string ParentCode { get; set; }
