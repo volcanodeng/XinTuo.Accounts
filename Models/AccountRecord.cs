@@ -20,11 +20,15 @@ namespace XinTuo.Accounts.Models
 
         public virtual string Direction { get; set; }
 
-        public virtual string AuxIds { get; set; }
+        public virtual int IsAuxiliary { get; set; }
 
-        public virtual string AuxCodes { get; set; }
+        public virtual string AuxTypeIds { get; set; }
 
-        public virtual string AuxNames { get; set; }
+        //public virtual string AuxCodes { get; set; }
+
+        //public virtual string AuxNames { get; set; }
+
+        public virtual int IsQuantity { get; set; }
 
         public virtual string Unit { get; set; }
 

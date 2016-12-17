@@ -37,15 +37,17 @@ namespace XinTuo.Accounts.ViewModels
             get;set;
         }
 
-        public string AuxCodes
-        {
-            get;set;
-        }
+        public string AuxTypeIds { get; set; }
 
-        public string AuxNames
-        {
-            get;set;
-        }
+        //public string AuxCodes
+        //{
+        //    get;set;
+        //}
+
+        //public string AuxNames
+        //{
+        //    get;set;
+        //}
 
         public string Unit
         {

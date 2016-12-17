@@ -105,9 +105,11 @@ namespace XinTuo.Accounts {
                 .Column<int>("AccountCategoryRecord_Id")                            //科目类别（取第二级类别）
                 .Column<string>("AccName",c=>c.WithLength(50))                      //科目名称
                 .Column<string>("Direction",c=>c.WithLength(10))                    //余额方向
-                .Column<string>("AuxIds",c=>c.WithLength(100))                      //辅助核算id串（逗号分隔）
-                .Column<string>("AuxCodes",c=>c.WithLength(100))                    //辅助核算编号串（逗号分隔）
-                .Column<string>("AuxNames",c=>c.WithLength(150))                    //辅助核算名称串（逗号分隔）
+                .Column<int>("IsAuxiliary")                                         //是否启动辅助核算（0 不启用，1 启动）
+                .Column<string>("AuxTypeIds",c=>c.WithLength(100))                      //辅助核算类型id串（逗号分隔）
+                //.Column<string>("AuxCodes",c=>c.WithLength(100))                    //辅助核算编号串（逗号分隔）
+                //.Column<string>("AuxNames",c=>c.WithLength(150))                    //辅助核算名称串（逗号分隔）
+                .Column<int>("IsQuantity")                                          //是否启用数量核算(0 不启用，1 启用)
                 .Column<string>("Unit",c=>c.WithLength(10))                         //数量核算的计量单位
                 .Column<decimal>("InitialQuantity",c=>c.WithScale(2))               //期初余额数量
                 .Column<decimal>("InitialBalance",c=>c.WithScale(2))                //期初余额

@@ -178,7 +178,7 @@
     {
         //辅助核算
         var auxIds = $.map($("#auxItems > input:checked"),function(n){return $(n).val();}).join(",");
-        $("#AuxCodes").val(auxIds);
+        $("#AuxIds").val(auxIds);
 
         //余额方向
         $("#Direction").val( $("#dirGroup > input:checked").val());
