@@ -150,6 +150,7 @@
     <Compile Include="ApiConfig.cs" />
     <Compile Include="ApiRoutes.cs" />
     <Compile Include="AutoMapperProfiles\AccountProfile.cs" />
+    <Compile Include="AutoMapperProfiles\CheckboxResolver.cs" />
     <Compile Include="AutoMapperProfiles\CompanyProfile.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\Api\AccountApiController.cs" />

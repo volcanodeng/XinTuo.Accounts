@@ -12,6 +12,7 @@ using Orchard.Users.Models;
 using Orchard.Roles.Services;
 using Orchard.Roles.Models;
 using Orchard.Users.Events;
+using Orchard;
 
 
 namespace XinTuo.Accounts.Services
@@ -27,6 +28,7 @@ namespace XinTuo.Accounts.Services
         private readonly IRepository<UserRolesPartRecord> _userRole;
         private readonly IRoleService _role;
         private readonly IUserEventHandler _userEventHandler;
+        private readonly IWorkContextAccessor _context;
 
         public Company(IAuthenticationService authService,
             IRepository<CompanyUserRecord> companyUser,
@@ -34,6 +36,7 @@ namespace XinTuo.Accounts.Services
             IRepository<UserRolesPartRecord> userRolesRepository,
             IRoleService roleService,
             IContentManager contentManager,
+            IWorkContextAccessor context,
             IMapper mapper,
             IMembershipService membership,
             IUserEventHandler userEventHandler)
@@ -47,17 +50,25 @@ namespace XinTuo.Accounts.Services
             _userRole = userRolesRepository;
             _role = roleService;
             _userEventHandler = userEventHandler;
+            _context = context;
         }
 
         public CompanyPart GetCurrentCompany()
         {
-            IUser CurUser = _authService.GetAuthenticatedUser();
-            if (CurUser == null) return null;
+            var com = (CompanyPart)_context.GetContext().HttpContext.Session["MyCompanyId"];
+            if (com == null)
+            {
+                IUser CurUser = _authService.GetAuthenticatedUser();
+                if (CurUser == null) return null;
 
-            CompanyUserRecord cuRecord = _companyUser.Fetch(cu => cu.UserPartRecord.Id == CurUser.Id).FirstOrDefault();
-            if (cuRecord == null) return null;
+                CompanyUserRecord cuRecord = _companyUser.Fetch(cu => cu.UserPartRecord.Id == CurUser.Id).FirstOrDefault();
+                if (cuRecord == null) return null;
 
-            return _contentManager.Get<CompanyPart>(cuRecord.CompanyRecord.Id);
+                com = _contentManager.Get<CompanyPart>(cuRecord.CompanyRecord.Id);
+                _context.GetContext().HttpContext.Session["MyCompanyId"] = com;
+            }
+
+            return com;
         }
 
         public CompanyPart CreateCompany(VMCompany company)

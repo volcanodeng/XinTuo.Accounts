@@ -6,6 +6,7 @@ using Orchard.Security;
 using XinTuo.Accounts.ViewModels;
 using AutoMapper;
 using System;
+using System.Collections.Generic;
 
 namespace XinTuo.Accounts.Services
 {
@@ -36,6 +37,18 @@ namespace XinTuo.Accounts.Services
         public AccountRecord GetAccount(int id)
         {
             return _account.Fetch(c => c.Id == id).FirstOrDefault();
+        }
+
+        public List<AccountRecord> GetAccounts(int cateId)
+        {
+            var curCom = _company.GetCurrentCompany();
+            return _account.Fetch(a => a.CompanyRecord.Id == curCom.Id && (a.AccountCategoryRecord.Id == cateId || a.AccountCategoryRecord.ParentAcId==cateId)).ToList();
+        }
+
+        public List<VMAccount> GetVMAccounts(int cateId)
+        {
+            var accounts = GetAccounts(cateId);
+            return _mapper.Map<List<AccountRecord>, List<VMAccount>>(accounts);
         }
 
         public void SaveAccount(VMAccount account)

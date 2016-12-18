@@ -34,6 +34,12 @@ namespace XinTuo.Accounts.Controllers.Api
             return Ok(_accCategory.GetMainAccountCategory());
         }
 
+        [HttpGet]
+        public IHttpActionResult GetAccounts(int cateid)
+        {
+            return Ok(_account.GetVMAccounts(cateid));
+        }
+
         [HttpPost]
         [ActionName("Save")]
         [System.Web.Mvc.ValidateAntiForgeryToken]

@@ -12,6 +12,10 @@ namespace XinTuo.Accounts.Services
     {
         AccountRecord GetAccount(int id);
 
+        List<AccountRecord> GetAccounts(int cateId);
+
+        List<VMAccount> GetVMAccounts(int cateId);
+
         void SaveAccount(VMAccount account);
     }
 }

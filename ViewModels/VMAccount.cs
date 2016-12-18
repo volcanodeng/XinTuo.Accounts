@@ -27,6 +27,11 @@ namespace XinTuo.Accounts.ViewModels
             get;set;
         }
 
+        public string cateName
+        {
+            get;set;
+        }
+
         public string AccName
         {
             get;set;
@@ -37,17 +42,11 @@ namespace XinTuo.Accounts.ViewModels
             get;set;
         }
 
+        public string IsAuxiliary { get; set; }
+
         public string AuxTypeIds { get; set; }
 
-        //public string AuxCodes
-        //{
-        //    get;set;
-        //}
-
-        //public string AuxNames
-        //{
-        //    get;set;
-        //}
+        public string IsQuantity { get; set; }
 
         public string Unit
         {
