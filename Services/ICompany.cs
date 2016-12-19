@@ -14,6 +14,8 @@ namespace XinTuo.Accounts.Services
 
         CompanyPart CreateCompany(VMCompany company);
 
+        int GetCurrentCompanyId();
+
         void UpdateFiscalSystem(VMFiscalSystem fiscal);
     }
 }

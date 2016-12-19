@@ -24,6 +24,8 @@ namespace XinTuo.Accounts.Models
 
         public virtual string AuxTypeIds { get; set; }
 
+        public virtual string AuxTypeNames { get; set; }
+
         public virtual int IsQuantity { get; set; }
 
         public virtual string Unit { get; set; }

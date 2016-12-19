@@ -13,6 +13,8 @@ using Orchard.Roles.Services;
 using Orchard.Roles.Models;
 using Orchard.Users.Events;
 using Orchard;
+using Orchard.Caching.Services;
+using NHibernate;
 
 
 namespace XinTuo.Accounts.Services
@@ -29,6 +31,8 @@ namespace XinTuo.Accounts.Services
         private readonly IRoleService _role;
         private readonly IUserEventHandler _userEventHandler;
         private readonly IWorkContextAccessor _context;
+        private readonly ITransactionManager _trans;
+        private readonly ICacheService _cache;
 
         public Company(IAuthenticationService authService,
             IRepository<CompanyUserRecord> companyUser,
@@ -39,7 +43,9 @@ namespace XinTuo.Accounts.Services
             IWorkContextAccessor context,
             IMapper mapper,
             IMembershipService membership,
-            IUserEventHandler userEventHandler)
+            IUserEventHandler userEventHandler,
+            ITransactionManager trans,
+            ICacheService cache)
         {
             _authService = authService;
             _companyUser = companyUser;
@@ -51,24 +57,32 @@ namespace XinTuo.Accounts.Services
             _role = roleService;
             _userEventHandler = userEventHandler;
             _context = context;
+            _trans = trans;
+            _cache = cache;
         }
 
         public CompanyPart GetCurrentCompany()
         {
-            var com = (CompanyPart)_context.GetContext().HttpContext.Session["MyCompanyId"];
-            if (com == null)
+            return _contentManager.Get<CompanyPart>(this.GetCurrentCompanyId());
+        }
+
+        public int GetCurrentCompanyId()
+        {
+            var com = _context.GetContext().HttpContext.Session["MyCompanyId"];
+            if (com == null || Convert.ToInt32(com) <= 0)
             {
                 IUser CurUser = _authService.GetAuthenticatedUser();
-                if (CurUser == null) return null;
+                if (CurUser == null) throw new UnauthorizedAccessException();
 
                 CompanyUserRecord cuRecord = _companyUser.Fetch(cu => cu.UserPartRecord.Id == CurUser.Id).FirstOrDefault();
-                if (cuRecord == null) return null;
+                if (cuRecord == null || cuRecord.CompanyRecord == null) throw new ObjectNotFoundException(CurUser.Id, typeof(CompanyUserRecord));
 
-                com = _contentManager.Get<CompanyPart>(cuRecord.CompanyRecord.Id);
-                _context.GetContext().HttpContext.Session["MyCompanyId"] = com;
+
+                _context.GetContext().HttpContext.Session["MyCompanyId"] = cuRecord.CompanyRecord.Id;
+                com = cuRecord.CompanyRecord.Id;
             }
 
-            return com;
+            return Convert.ToInt32(com);
         }
 
         public CompanyPart CreateCompany(VMCompany company)
@@ -130,6 +144,17 @@ namespace XinTuo.Accounts.Services
             com.FiscalSystem = fiscal.Fiscal;
 
             _contentManager.Restore(com.ContentItem, VersionOptions.Latest);
+
+            ISQLQuery sqlQuery = _trans.GetSession().CreateSQLQuery("exec P_Account_Init @companyId=:comId,@creatorId=:userid");
+            sqlQuery.SetInt32("comId", com.Id);
+            sqlQuery.SetInt32("userid",_authService.GetAuthenticatedUser().Id);
+            var newAccounts = sqlQuery.List<AccountRecord>();
+
+            if(newAccounts.Count>0)
+            {
+                _cache.Put<IList<AccountRecord>>(Common.GetAccountsCacheName(com.Id), newAccounts);
+            }
+
         }
     }
 }

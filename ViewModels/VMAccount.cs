@@ -46,6 +46,8 @@ namespace XinTuo.Accounts.ViewModels
 
         public string AuxTypeIds { get; set; }
 
+        public string AuxTypeNames { get; set; }
+
         public string IsQuantity { get; set; }
 
         public string Unit

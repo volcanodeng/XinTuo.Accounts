@@ -26,7 +26,7 @@
 <body>
 
     <div class="easyui-layout" data-options="fit:true">
-        <div data-options="region:'north',split:false,border:false" style="height:80px;padding:10px;">
+        <div data-options="region:'north',split:false,border:false" style="height:80px;padding:10px;overflow:hidden;">
             @foreach (AccountCategoryRecord c in cates)
             {
                 <a href="javascript:void(0)" id="cate_@c.Id" class="easyui-linkbutton"
@@ -36,16 +36,16 @@
         </div>
         <div data-options="region:'center',border:false" style="padding:10px;">
             <table class="easyui-datagrid" id="accDatagrid"
-                   data-options="singleSelect:true,toolbar: '#accToolbar',fit:true,idField:'AccCode'">
+                   data-options="singleSelect:true,toolbar: '#accToolbar',fitColumns:true,idField:'accCode'">
                 <thead>
                     <tr>
-                        <th data-options="field:'accCode'">@T("编码")</th>
-                        <th data-options="field:'accName'">@T("名称")</th>
-                        <th data-options="field:'cateName'">@T("类别")</th>
-                        <th data-options="field:'direction'">@T("余额方向")</th>
-                        <th data-options="field:'auxNames'">@T("辅助核算")</th>
-                        <th data-options="field:'unit'">@T("数量单位")</th>
-                        <th data-options="field:'accState'">@T("状态")</th>
+                        <th data-options="field:'accCode',align:'center',width:50" >@T("编码")</th>
+                        <th data-options="field:'accName',align:'center',width:150" >@T("名称")</th>
+                        <th data-options="field:'cateName',align:'center',width:150" >@T("类别")</th>
+                        <th data-options="field:'direction',align:'center',width:50" >@T("余额方向")</th>
+                        <th data-options="field:'auxTypeNames',align:'center',width:50">@T("辅助核算")</th>
+                        <th data-options="field:'unit',align:'center',width:50">@T("数量单位")</th>
+                        <th data-options="field:'accState',formatter:formatterAccState,align:'center',width:150">@T("状态")</th>
                     </tr>
                 </thead>
             </table>
@@ -94,10 +94,11 @@
                 <div id="auxItems" style="display:inline-block;">
                     @foreach (AuxiliaryTypeRecord aux in auxTypes)
                     {
-                        <input type="checkbox" id="aux_@aux.Id"  value="@aux.Id" /><label for="aux_@aux.Id" style="display:inline;margin-left:5px;">@aux.AuxType</label>
+                        <input type="checkbox" id="aux_@aux.Id"  value="@aux.Id" aux="@aux.AuxType" /><label for="aux_@aux.Id" style="display:inline;margin-left:5px;">@aux.AuxType</label>
                     }
                 </div>
                 <input type="hidden" id="AuxTypeIds" name="AuxTypeIds" />
+                <input type="hidden" id="AuxTypeNames" name="AuxTypeNames" />
             </div>
 
             <div>
@@ -180,7 +181,9 @@
     {
         //辅助核算
         var auxIds = $.map($("#auxItems > input:checked"),function(n){return $(n).val();}).join(",");
+        var auxNames = $.map($("#auxItems > input:checked"),function(n){return $(n).attr("aux");}).join(",");
         $("#AuxTypeIds").val(auxIds);
+        $("#AuxTypeNames").val(auxNames);
 
         //余额方向
         $("#Direction").val( $("#dirGroup > input:checked").val());
@@ -226,6 +229,12 @@
         {
             $("#accDatagrid").datagrid("loadData", dgCache);
         }
+    }
+
+
+    function formatterAccState(value,row,index)
+    {
+        return value == 1?"已启用":"已禁用";
     }
     </script>
 

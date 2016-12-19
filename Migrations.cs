@@ -54,7 +54,7 @@ namespace XinTuo.Accounts {
                 );
             //所属公司的用户
             SchemaBuilder.CreateTable("CompanyUserRecord",
-                t => t.Column<int>("Id", c => c.PrimaryKey().Identity())
+                t => t.Column<long>("Id", c => c.PrimaryKey().Identity())
                 .Column<int>("CompanyRecord_Id")                                    //公司id
                 .Column<int>("UserPartRecord_Id")                                   //用户id(关联UserPart)
                 );
@@ -99,7 +99,7 @@ namespace XinTuo.Accounts {
 
             //会计科目
             SchemaBuilder.CreateTable("AccountRecord",
-                t=>t.Column<int>("Id",c=>c.PrimaryKey().Identity())                 //科目主键
+                t=>t.Column<long>("Id",c=>c.PrimaryKey().Identity())                 //科目主键
                 .Column<string>("AccCode",c=>c.WithLength(50))                      //科目编码
                 .Column<string>("ParentCode",c=>c.WithLength(50))                   //父编码
                 .Column<int>("AccountCategoryRecord_Id")                            //科目类别（取第二级类别）
@@ -107,6 +107,7 @@ namespace XinTuo.Accounts {
                 .Column<string>("Direction",c=>c.WithLength(10))                    //余额方向
                 .Column<int>("IsAuxiliary")                                         //是否启动辅助核算（0 不启用，1 启动）
                 .Column<string>("AuxTypeIds",c=>c.WithLength(100))                  //辅助核算类型id串（逗号分隔）
+                .Column<string>("AuxTypeNames",c=>c.WithLength(100))                //辅助核算名称串（逗号分隔）
                 .Column<int>("IsQuantity")                                          //是否启用数量核算(0 不启用，1 启用)
                 .Column<string>("Unit",c=>c.WithLength(10))                         //数量核算的计量单位
                 .Column<decimal>("InitialQuantity",c=>c.WithScale(2))               //期初余额数量
@@ -135,7 +136,7 @@ namespace XinTuo.Accounts {
 
             //凭证
             SchemaBuilder.CreateTable("VoucherRecord",
-                t=>t.Column<int>("Id",c=>c.PrimaryKey().Identity())             //凭证主键
+                t=>t.Column<long>("Id",c=>c.PrimaryKey().Identity())             //凭证主键
                 .Column<int>("CertificateWordRecord_Id")                        //凭证字
                 .Column<int>("CertWordSN",c=>c.WithDefault(1))                  //凭证字流水号
                 .Column<DateTime>("Date",c=>c.Nullable())                       //日期
@@ -150,8 +151,8 @@ namespace XinTuo.Accounts {
 
             //凭证明细
             SchemaBuilder.CreateTable("VoucherDetailRecord",
-                t=>t.Column<int>("Id",c=>c.PrimaryKey().Identity())             //明细主键
-                .Column<int>("VoucherRecord_Id")                                //凭证主表关联
+                t=>t.Column<long>("Id",c=>c.PrimaryKey().Identity())             //明细主键
+                .Column<long>("VoucherRecord_Id")                                //凭证主表关联
                 .Column<string>("Abstract",c=>c.WithLength(255))                //摘要
                 .Column<int>("AccountRecord_Id")                                //科目（关联科目表）
                 .Column<string>("AccountCode",c=>c.WithLength(100))             //科目代码
@@ -164,7 +165,7 @@ namespace XinTuo.Accounts {
 
             //凭证模板
             SchemaBuilder.CreateTable("VoucherDetailTemplateRecord",
-                t=>t.Column<int>("Id",c=>c.PrimaryKey().Identity())
+                t => t.Column<long>("Id", c => c.PrimaryKey().Identity())
                 .Column<string>("Abstract", c => c.WithLength(255))                //摘要
                 .Column<string>("AccountCode", c => c.WithLength(100))             //科目代码
                 .Column<string>("AccountName", c => c.WithLength(100))             //科目名称（可生成扩展科目名称）
@@ -172,6 +173,7 @@ namespace XinTuo.Accounts {
                 .Column<decimal>("Price", c => c.WithScale(2))                     //单价（辅助核算选择数量）
                 .Column<decimal>("Debit", c => c.WithScale(2))                     //借方金额
                 .Column<decimal>("Credit", c => c.WithScale(2))                    //贷方金额
+                .Column<int>("CompanyRecord_Id")
                 );
 
             return 1;
@@ -244,6 +246,12 @@ namespace XinTuo.Accounts {
             return 3;
         }
 
+        public int UpdateFrom3()
+        {
+            SchemaBuilder.AlterTable("AccountRecord", t => t.AddColumn<string>("AuxTypeNames",c=>c.WithLength(100)));
+
+            return 4;
+        }
         
     }
 }

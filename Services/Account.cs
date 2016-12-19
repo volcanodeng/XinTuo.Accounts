@@ -7,6 +7,7 @@ using XinTuo.Accounts.ViewModels;
 using AutoMapper;
 using System;
 using System.Collections.Generic;
+using Orchard.Caching.Services;
 
 namespace XinTuo.Accounts.Services
 {
@@ -18,13 +19,15 @@ namespace XinTuo.Accounts.Services
         private readonly IMapper _mapper;
         private readonly ICompany _company;
         private readonly IAuthenticationService _authService;
+        private readonly ICacheService _cache;
 
         public Account(IContentManager contentManager,
                        IRepository<AccountCategoryRecord> accCategory,
                        IRepository<AccountRecord> account,
                        IMapper mapper,
                        ICompany company,
-                       IAuthenticationService authService)
+                       IAuthenticationService authService,
+                       ICacheService cache)
         {
             _contentManager = contentManager;
             _accCategoryRepository = accCategory;
@@ -32,17 +35,31 @@ namespace XinTuo.Accounts.Services
             _mapper = mapper;
             _company = company;
             _authService = authService;
+            _cache = cache;
+        }
+
+        private List<AccountRecord> GetAccountsOfCompany()
+        {
+            int comId = _company.GetCurrentCompanyId();
+            List<AccountRecord> accounts = _cache.Get<List<AccountRecord>>(Common.GetAccountsCacheName(comId));
+
+            if (accounts == null || accounts.Count == 0)
+            {
+                accounts = _account.Fetch(a => a.CompanyRecord.Id == comId).ToList();
+
+                _cache.Put<List<AccountRecord>>(Common.GetAccountsCacheName(comId), accounts);
+            }
+            return accounts;
         }
 
         public AccountRecord GetAccount(int id)
         {
-            return _account.Fetch(c => c.Id == id).FirstOrDefault();
+            return this.GetAccountsOfCompany().Where(a => a.Id == id).FirstOrDefault();
         }
 
         public List<AccountRecord> GetAccounts(int cateId)
         {
-            var curCom = _company.GetCurrentCompany();
-            return _account.Fetch(a => a.CompanyRecord.Id == curCom.Id && (a.AccountCategoryRecord.Id == cateId || a.AccountCategoryRecord.ParentAcId==cateId)).ToList();
+            return this.GetAccountsOfCompany().Where(a => a.AccountCategoryRecord.Id == cateId || a.AccountCategoryRecord.ParentAcId == cateId).ToList();
         }
 
         public List<VMAccount> GetVMAccounts(int cateId)
@@ -62,9 +79,11 @@ namespace XinTuo.Accounts.Services
             newAccount.CreateTime = DateTime.Now;
             newAccount.Updater = _authService.GetAuthenticatedUser().Id;
             newAccount.UpdateTime = DateTime.Now;
+            newAccount.AccState = 1;
 
             _account.Create(newAccount);
 
+            _cache.Remove(Common.GetAccountsCacheName(_company.GetCurrentCompanyId()));
         }
 
     }
