@@ -145,6 +145,7 @@ namespace XinTuo.Accounts.Services
 
             _contentManager.Restore(com.ContentItem, VersionOptions.Latest);
 
+            //初始化公司的会计科目
             ISQLQuery sqlQuery = _trans.GetSession().CreateSQLQuery("exec P_Account_Init @companyId=:comId,@creatorId=:userid");
             sqlQuery.SetInt32("comId", com.Id);
             sqlQuery.SetInt32("userid",_authService.GetAuthenticatedUser().Id);
