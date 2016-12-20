@@ -168,6 +168,7 @@
     <Compile Include="Controllers\CompanyController.cs" />
     <Compile Include="Controllers\FiscalSystemController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="EventHandlers\UserEventHandler.cs" />
     <Compile Include="Handlers\AuxiliaryHandler.cs" />
     <Compile Include="Helpers\ApiResponse.cs" />
     <Compile Include="Handlers\CompanyHandler.cs" />

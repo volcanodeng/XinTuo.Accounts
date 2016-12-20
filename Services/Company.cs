@@ -72,16 +72,15 @@ namespace XinTuo.Accounts.Services
             if (com == null || Convert.ToInt32(com) <= 0)
             {
                 IUser CurUser = _authService.GetAuthenticatedUser();
-                if (CurUser == null) throw new UnauthorizedAccessException();
+                if (CurUser == null) return -1;
 
                 CompanyUserRecord cuRecord = _companyUser.Fetch(cu => cu.UserPartRecord.Id == CurUser.Id).FirstOrDefault();
-                if (cuRecord == null || cuRecord.CompanyRecord == null) throw new ObjectNotFoundException(CurUser.Id, typeof(CompanyUserRecord));
+                if (cuRecord == null || cuRecord.CompanyRecord == null) return -1;
 
 
                 _context.GetContext().HttpContext.Session["MyCompanyId"] = cuRecord.CompanyRecord.Id;
                 com = cuRecord.CompanyRecord.Id;
             }
-
             return Convert.ToInt32(com);
         }
 
@@ -112,6 +111,9 @@ namespace XinTuo.Accounts.Services
             _contentManager.Create(newCom);
 
             _companyUser.Create(new CompanyUserRecord() { CompanyRecord = newCompany.Record, UserPartRecord = newUser.Record });
+            UserContext uc = new UserContext();
+            uc.User = newUser;
+            _userEventHandler.Created(uc);
 
             var accountant = _role.GetRoleByName("Accountant");
             if (accountant != null) _userRole.Create(new UserRolesPartRecord() { UserId = newUser.Id, Role = accountant });

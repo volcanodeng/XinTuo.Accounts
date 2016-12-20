@@ -246,12 +246,7 @@ namespace XinTuo.Accounts {
             return 3;
         }
 
-        public int UpdateFrom3()
-        {
-            SchemaBuilder.AlterTable("AccountRecord", t => t.AddColumn<string>("AuxTypeNames",c=>c.WithLength(100)));
-
-            return 4;
-        }
+        
         
     }
 }
