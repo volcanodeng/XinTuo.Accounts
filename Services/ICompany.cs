@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using XinTuo.Accounts.Models;
+﻿using XinTuo.Accounts.Models;
 using XinTuo.Accounts.ViewModels;
 using Orchard;
 

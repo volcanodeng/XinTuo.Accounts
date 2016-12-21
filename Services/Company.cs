@@ -1,20 +1,20 @@
-﻿using System;
+﻿using AutoMapper;
+using NHibernate;
+using Orchard;
+using Orchard.Caching.Services;
+using Orchard.ContentManagement;
+using Orchard.Data;
+using Orchard.Roles.Models;
+using Orchard.Roles.Services;
+using Orchard.Security;
+using Orchard.Users.Events;
+using Orchard.Users.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using XinTuo.Accounts.Models;
 using XinTuo.Accounts.ViewModels;
-using Orchard.Data;
-using Orchard.Security;
-using Orchard.ContentManagement;
-using AutoMapper;
-using Orchard.Users.Models;
-using Orchard.Roles.Services;
-using Orchard.Roles.Models;
-using Orchard.Users.Events;
-using Orchard;
-using Orchard.Caching.Services;
-using NHibernate;
 
 
 namespace XinTuo.Accounts.Services
