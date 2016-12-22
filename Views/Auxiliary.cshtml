@@ -20,12 +20,13 @@
         #auxForm input {
             font-size: 14pt;
         }
+
     </style>
 </head>
 <body>
 
     <div class="easyui-layout" data-options="fit:true">
-        <div data-options="region:'north',split:false,border:false" style="height:40px;padding:10px;">
+        <div data-options="region:'north',split:false,border:false" style="height:40px;padding:10px;overflow:hidden;">
             @foreach (AuxiliaryTypeRecord aux in BaseAuxTypes)
         {
             <a href="javascript:void(0)" id="auxType_@aux.Id" class="easyui-linkbutton"
@@ -37,7 +38,7 @@
 
         <div data-options="region:'center',border:false" style="padding:10px;">
             <table class="easyui-datagrid" id="auxDatagrid"
-                   data-options="singleSelect:true,toolbar: '#auxToolbar',fit:true,idField:'auxId',onSelect:onDgSelect">
+                   data-options="singleSelect:true,toolbar: '#auxToolbar',fitColumns:true,idField:'auxId',onSelect:onDgSelect">
                 <thead>
                     <tr>
                         <th data-options="field:'auxCode',width:200,align:'center'">@T("编码")</th>
