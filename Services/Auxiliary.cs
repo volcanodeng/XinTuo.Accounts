@@ -91,6 +91,12 @@ namespace XinTuo.Accounts.Services
             return newAux;
         }
 
+        public void DeleteAuxiliary(int auxId)
+        {
+            var aux = _contentManager.Get<AuxiliaryPart>(auxId);
+            if (aux != null) _contentManager.Remove(aux.ContentItem);
+        }
+
         public IEnumerable<AuxiliaryPart> GetAuxiliary(int companyId,int auxTypeId)
         {
             return _contentManager.Query<AuxiliaryPart, AuxiliaryRecord>().Where(a=>a.CompanyRecord.Id== companyId && a.AuxiliaryTypeRecord.Id == auxTypeId).List();

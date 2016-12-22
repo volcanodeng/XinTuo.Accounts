@@ -134,6 +134,19 @@
         $("#auxForm").submit();
     }
 
+    function remove()
+    {
+        var selRow = $("#auxDatagrid").datagrid("getSelected");
+        $.post("/api/x/DelAux/", { auxId: selRow.auxId }, function (data) {
+            var typeid = $("#AuxTypeId").val();
+            $("#aux_dataCache").removeData("aux" + typeid);
+
+            if (formSuccessHandle(data)) {
+                TypeClick(typeid);
+            }
+        });
+    }
+
     function diaClose()
     {
         $("#auxeditDialog").dialog("close");

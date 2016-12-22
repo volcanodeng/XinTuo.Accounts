@@ -81,6 +81,21 @@ namespace XinTuo.Accounts.Controllers.Api
             return Ok(newAuxType.Id);
         }
 
+        [HttpGet,HttpPost]
+        [ActionName("DelAux")]
+        public IHttpActionResult DeleteAuxiliary([FromBody]VMAuxiliary aux)
+        {
+            if (!_orchard.Authorizer.Authorize(Permissions.DeleteAuxiliary))
+            {
+                var msg = new ApiResponse("未授权访问", System.Net.HttpStatusCode.Unauthorized);
+                throw new HttpResponseException(msg);
+            }
+
+            _aux.DeleteAuxiliary(aux.AuxId.Value);
+
+            return Ok(1);
+        }
+
         [HttpGet]
         [HttpPost]
         public IHttpActionResult GetAuxiliary(int auxTypeId)

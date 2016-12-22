@@ -242,6 +242,7 @@ namespace XinTuo.Accounts {
             _role.CreatePermissionForRole("Accountant", Permissions.CreateAccount.Name);
             _role.CreatePermissionForRole("Accountant", Permissions.CreateAuxiliary.Name);
             _role.CreatePermissionForRole("Accountant", Permissions.CreateAuxiliaryType.Name);
+            _role.CreatePermissionForRole("Accountant", Permissions.DeleteAuxiliary.Name);
 
             return 3;
         }
