@@ -10,3 +10,5 @@ drop table [dbo].[XinTuo_Accounts_AbstractRecord]
 drop table [dbo].[XinTuo_Accounts_VoucherDetailRecord]
 drop table [dbo].[XinTuo_Accounts_VoucherDetailTemplateRecord]
 drop table [dbo].[XinTuo_Accounts_VoucherRecord]
+
+delete from dbo.Orchard_Framework_DataMigrationRecord where [DataMigrationClass]='XinTuo.Accounts.Migrations'

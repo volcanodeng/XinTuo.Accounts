@@ -239,10 +239,9 @@ namespace XinTuo.Accounts {
             //角色模块必须开启Form模块
             _role.CreateRole("Accountant");
 
-            _role.CreatePermissionForRole("Accountant", Permissions.CreateAccount.Name);
-            _role.CreatePermissionForRole("Accountant", Permissions.CreateAuxiliary.Name);
-            _role.CreatePermissionForRole("Accountant", Permissions.CreateAuxiliaryType.Name);
-            _role.CreatePermissionForRole("Accountant", Permissions.DeleteAuxiliary.Name);
+            _role.CreatePermissionForRole("Accountant", Permissions.ModifyAccount.Name);
+            _role.CreatePermissionForRole("Accountant", Permissions.ModifyAuxiliary.Name);
+            _role.CreatePermissionForRole("Accountant", Permissions.ModifyAuxiliaryType.Name);
 
             return 3;
         }

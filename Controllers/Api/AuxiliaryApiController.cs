@@ -36,7 +36,7 @@ namespace XinTuo.Accounts.Controllers.Api
                 return BadRequest(err);
             }
 
-            if (!_orchard.Authorizer.Authorize(Permissions.CreateAuxiliary))
+            if (!_orchard.Authorizer.Authorize(Permissions.ModifyAuxiliary))
             {
                 var msg = new ApiResponse("未授权访问", System.Net.HttpStatusCode.Unauthorized);
                 throw new HttpResponseException(msg);
@@ -66,7 +66,7 @@ namespace XinTuo.Accounts.Controllers.Api
                 return BadRequest(err);
             }
 
-            if (!_orchard.Authorizer.Authorize(Permissions.CreateAuxiliary))
+            if (!_orchard.Authorizer.Authorize(Permissions.ModifyAuxiliary))
             {
                 var msg = new ApiResponse("未授权访问", System.Net.HttpStatusCode.Unauthorized);
                 throw new HttpResponseException(msg);
@@ -85,10 +85,21 @@ namespace XinTuo.Accounts.Controllers.Api
         [ActionName("DelAux")]
         public IHttpActionResult DeleteAuxiliary([FromBody]VMAuxiliary aux)
         {
-            if (!_orchard.Authorizer.Authorize(Permissions.DeleteAuxiliary))
+            string err;
+            if (!ModelValidHelper.ModelValid(ModelState, out err))
+            {
+                return BadRequest(err);
+            }
+
+            if (!_orchard.Authorizer.Authorize(Permissions.ModifyAuxiliary))
             {
                 var msg = new ApiResponse("未授权访问", System.Net.HttpStatusCode.Unauthorized);
                 throw new HttpResponseException(msg);
+            }
+
+            if(!aux.AuxId.HasValue)
+            {
+                return BadRequest("未指定记录编号");
             }
 
             _aux.DeleteAuxiliary(aux.AuxId.Value);

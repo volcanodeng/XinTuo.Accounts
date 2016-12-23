@@ -9,21 +9,18 @@ namespace XinTuo.Accounts
 {
     public class Permissions : IPermissionProvider
     {
-        public static readonly Permission CreateAccount = new Permission { Name= "CreateAccount", Description="创建新科目"};
-        public static readonly Permission CreateAuxiliary = new Permission { Name= "CreateAuxiliary", Description="创建新的辅助核算内容"};
-        public static readonly Permission CreateAuxiliaryType = new Permission { Name = "CreateAuxiliaryType", Description = "创建辅助核算类型" };
-
-        public static readonly Permission DeleteAuxiliary = new Permission {Name= "DeleteAuxiliary" ,Description="删除辅助核算"};
+        public static readonly Permission ModifyAccount = new Permission { Name= "ModifyAccount", Description="创建/修改新科目"};
+        public static readonly Permission ModifyAuxiliary = new Permission { Name= "ModifyAccount", Description="创建/修改新的辅助核算内容"};
+        public static readonly Permission ModifyAuxiliaryType = new Permission { Name = "ModifyAccount", Description = "创建/修改辅助核算类型" };
 
         public virtual Feature Feature { get; set; }
 
         public IEnumerable<Permission> GetPermissions()
         {
             return new[] {
-                CreateAccount,
-                CreateAuxiliary,
-                CreateAuxiliaryType,
-                DeleteAuxiliary
+                ModifyAccount,
+                ModifyAuxiliary,
+                ModifyAuxiliaryType
             };
         }
 
@@ -32,7 +29,7 @@ namespace XinTuo.Accounts
             return new[] {
                 new PermissionStereotype {
                     Name="Accountant",
-                    Permissions=new[] { CreateAccount , CreateAuxiliary,CreateAuxiliaryType,DeleteAuxiliary }
+                    Permissions=new[] { ModifyAccount , ModifyAuxiliary,ModifyAuxiliaryType }
                 }
             };
         }

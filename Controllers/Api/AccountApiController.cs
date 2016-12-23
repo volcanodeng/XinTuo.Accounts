@@ -51,7 +51,7 @@ namespace XinTuo.Accounts.Controllers.Api
                 return BadRequest(err);
             }
 
-            if(!_orchard.Authorizer.Authorize(Permissions.CreateAccount))
+            if(!_orchard.Authorizer.Authorize(Permissions.ModifyAccount))
             {
                 var msg = new ApiResponse("未授权访问", System.Net.HttpStatusCode.Unauthorized);
                 throw new HttpResponseException(msg);
