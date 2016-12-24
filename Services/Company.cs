@@ -151,12 +151,7 @@ namespace XinTuo.Accounts.Services
             ISQLQuery sqlQuery = _trans.GetSession().CreateSQLQuery("exec P_Account_Init @companyId=:comId,@creatorId=:userid");
             sqlQuery.SetInt32("comId", com.Id);
             sqlQuery.SetInt32("userid",_authService.GetAuthenticatedUser().Id);
-            var newAccounts = sqlQuery.List<AccountRecord>();
-
-            if(newAccounts.Count>0)
-            {
-                _cache.Put<IList<AccountRecord>>(Common.GetAccountsCacheName(com.Id), newAccounts);
-            }
+            int res = sqlQuery.ExecuteUpdate();
 
         }
     }
