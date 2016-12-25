@@ -1,10 +1,13 @@
 ﻿Name: XinTuo.Accounts
 AntiForgery: enabled
-Author: The Orchard Team
-Website: http://orchardproject.net
+Author: 邓庆
+Website: http://www.sintoacct.com
 Version: 1.0
-OrchardVersion: 1.0
-Description: Description for the module
+OrchardVersion: 1.10
+Description: 广西新拓会计服务有限公司云账模块
 Features:
     XinTuo.Accounts:
-        Description: Description for feature XinTuo.Accounts.
+        Name: 新拓云账
+        Description: 新拓云记账模块
+        Category: Account
+        Dependencies: Orchard.Caching, Orchard.Roles,Orchard.Users
