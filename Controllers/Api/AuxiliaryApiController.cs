@@ -1,12 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using System.Web.Http;
-using System.Net.Http;
+﻿using System.Web.Http;
 using XinTuo.Accounts.Services;
 using XinTuo.Accounts.ViewModels;
-using System.Text;
 using Orchard.Security;
 using Orchard;
 using Orchard.Logging;
@@ -81,28 +75,23 @@ namespace XinTuo.Accounts.Controllers.Api
             return Ok(newAuxType.Id);
         }
 
-        [HttpGet,HttpPost]
+        [HttpGet]
         [ActionName("DelAux")]
-        public IHttpActionResult DeleteAuxiliary([FromBody]VMAuxiliary aux)
+        public IHttpActionResult DeleteAuxiliary(int auxId)
         {
-            string err;
-            if (!ModelValidHelper.ModelValid(ModelState, out err))
-            {
-                return BadRequest(err);
-            }
-
+           
             if (!_orchard.Authorizer.Authorize(Permissions.ModifyAuxiliary))
             {
                 var msg = new ApiResponse("未授权访问", System.Net.HttpStatusCode.Unauthorized);
                 throw new HttpResponseException(msg);
             }
 
-            if(!aux.AuxId.HasValue)
+            if(auxId <= 0)
             {
-                return BadRequest("未指定记录编号");
+                return BadRequest("待删除记录无效");
             }
 
-            _aux.DeleteAuxiliary(aux.AuxId.Value);
+            _aux.DeleteAuxiliary(auxId);
 
             return Ok(1);
         }

@@ -16,7 +16,7 @@ namespace XinTuo.Accounts.Models
 
         public virtual bool IsDefault { get; set; }
 
-        public virtual CompanyRecord Company { get; set; }
+        public virtual CompanyRecord CompanyRecord { get; set; }
 
         public virtual int Creator { get; set; }
 

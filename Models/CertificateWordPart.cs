@@ -55,15 +55,15 @@ namespace XinTuo.Accounts.Models
                 Record.IsDefault = value;
             }
         }
-        public CompanyRecord Company
+        public CompanyRecord CompanyRecord
         {
             get
             {
-                return Record.Company;
+                return Record.CompanyRecord;
             }
             set
             {
-                Record.Company = value;
+                Record.CompanyRecord = value;
             }
         }
         public int Creator

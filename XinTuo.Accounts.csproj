@@ -162,6 +162,7 @@
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\Api\AccountApiController.cs" />
     <Compile Include="Controllers\Api\AuxiliaryApiController.cs" />
+    <Compile Include="Controllers\Api\CertificateWordApiController.cs" />
     <Compile Include="Controllers\Api\CompanyApiController.cs" />
     <Compile Include="Controllers\Api\ModelValidHelper.cs" />
     <Compile Include="Controllers\AuxiliaryController.cs" />
@@ -198,15 +199,18 @@
     <Compile Include="Services\Account.cs" />
     <Compile Include="Services\AccountCategory.cs" />
     <Compile Include="Services\Auxiliary.cs" />
+    <Compile Include="Services\CertificateWord.cs" />
     <Compile Include="Services\Common.cs" />
     <Compile Include="Services\Company.cs" />
     <Compile Include="Services\FastPropertyComparer.cs" />
     <Compile Include="Services\IAccountCategory.cs" />
     <Compile Include="Services\IAccount.cs" />
     <Compile Include="Services\IAuxiliary.cs" />
+    <Compile Include="Services\ICertificateWord.cs" />
     <Compile Include="Services\ICompany.cs" />
     <Compile Include="Services\IRegion.cs" />
     <Compile Include="Services\Region.cs" />
+    <Compile Include="ViewModels\VMCertWord.cs" />
     <Compile Include="ViewModels\VMFiscalSystem.cs" />
     <Compile Include="ViewModels\VMAccount.cs" />
     <Compile Include="ViewModels\VMAuxiliary.cs" />
