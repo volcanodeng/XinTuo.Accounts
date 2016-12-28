@@ -4,14 +4,19 @@ using System.Linq;
 using System.Web;
 using XinTuo.Accounts.Models;
 using XinTuo.Accounts.ViewModels;
+using Orchard;
 
 namespace XinTuo.Accounts.Services
 {
-    public interface ICertificateWord
+    public interface ICertificateWord : IDependency
     {
 
         List<VMCertWord> GetCertificateWordForCom();
 
         VMCertWord GetCertificateWordForCom(int cwId);
+
+        VMCertWord GetDefaultCertificateWordForCom();
+
+        CertificateWordPart SaveCertWord(VMCertWord cw);
     }
 }

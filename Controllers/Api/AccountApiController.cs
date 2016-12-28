@@ -12,12 +12,17 @@ namespace XinTuo.Accounts.Controllers.Api
         private readonly IAccount _account;
         private readonly IAccountCategory _accCategory;
         private readonly IOrchardServices _orchard;
+        private readonly ICertificateWord _certWord;
 
-        public AccountApiController(IAccount account,IAccountCategory accCategory,IOrchardServices orchard)
+        public AccountApiController(IAccount account,
+            IAccountCategory accCategory,
+            IOrchardServices orchard,
+            ICertificateWord certWord)
         {
             _account = account;
             _accCategory = accCategory;
             _orchard = orchard;
+            _certWord = certWord;
         }
 
         [HttpGet]
@@ -62,6 +67,10 @@ namespace XinTuo.Accounts.Controllers.Api
             return Ok(1);
         }
 
-        
+        [HttpGet]
+        public IHttpActionResult GetCertWords()
+        {
+            return Ok(_certWord.GetCertificateWordForCom());
+        }
     }
 }

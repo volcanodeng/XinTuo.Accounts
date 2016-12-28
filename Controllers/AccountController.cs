@@ -9,6 +9,7 @@ using Orchard.Localization;
 using System.Web.Mvc;
 using XinTuo.Accounts.Services;
 using XinTuo.Accounts.Models;
+using XinTuo.Accounts.ViewModels;
 
 namespace XinTuo.Accounts.Controllers
 {
@@ -19,7 +20,9 @@ namespace XinTuo.Accounts.Controllers
         private readonly IAuxiliary _auxiliary;
 
 
-        public AccountController(IOrchardServices orchard,IAccountCategory accCategory, IAuxiliary auxiliary)
+        public AccountController(IOrchardServices orchard,
+                                 IAccountCategory accCategory, 
+                                 IAuxiliary auxiliary)
         {
             _orchard = orchard;
             _accCategory = accCategory;
@@ -33,6 +36,11 @@ namespace XinTuo.Accounts.Controllers
             List<AuxiliaryTypeRecord> auxType = _auxiliary.GetBaseAuxType();
 
             return new ShapeResult(this,_orchard.New.Account(Category : cates, AuxiliaryType: auxType));
+        }
+
+        public ActionResult CertWord()
+        {
+            return new ShapeResult(this, _orchard.New.CertWord());
         }
 
         public Localizer T { get; set; }

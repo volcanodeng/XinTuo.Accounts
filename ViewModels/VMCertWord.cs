@@ -30,7 +30,7 @@ namespace XinTuo.Accounts.ViewModels
             get;set;
         }
 
-        public bool IsDefault
+        public string IsDefault
         {
             get;set;
         }

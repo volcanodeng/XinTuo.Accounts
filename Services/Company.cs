@@ -153,6 +153,14 @@ namespace XinTuo.Accounts.Services
             sqlQuery.SetInt32("userid",_authService.GetAuthenticatedUser().Id);
             int res = sqlQuery.ExecuteUpdate();
 
+            //初始化凭证字
+            VMCertWord cw = new VMCertWord();
+            cw.CertWord = "记";
+            cw.PrintTitle = "记账凭证";
+            cw.IsDefault = "on";
+            cw.SortIndex = 1;
+            //_certWord.SaveCertWord(cw);
+            
         }
     }
 }

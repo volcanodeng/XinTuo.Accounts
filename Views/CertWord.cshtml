@@ -1,0 +1,89 @@
+﻿
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    @Html.Partial("ResourcePartial")
+</head>
+<body>
+    <div>
+        <table class="easyui-datagrid" id="dgCertWord" title="凭证字"
+               data-options="singleSelect:true,toolbar: '#tbCertWord',fitColumns:true,idField:'id',onSelect:onDgSelect">
+            <thead>
+                <tr>
+                    <th data-options="field:'certWord',width:200,align:'center'">@T("凭证字")</th>
+                    <th data-options="field:'printTitle',width:200,align:'center'">@T("打印标题")</th>
+                    <th data-options="field:'isDefault',width:200,align:'center'">@T("是否默认")</th>
+                </tr>
+            </thead>
+        </table>
+
+        <div id="tbCertWord">
+            <a href="javascript:void(0)" class="easyui-linkbutton" data-options="plain:true" onclick="append()">新增</a>
+            <a href="javascript:void(0)" class="easyui-linkbutton" data-options="plain:true" onclick="edit()">编辑</a>
+            <a href="javascript:void(0)" class="easyui-linkbutton" data-options="plain:true" onclick="remove()">删除</a>
+        </div>
+    </div>
+
+    <div id="dlCertWord" class="easyui-dialog" title="编辑凭证字" style="width:450px;height:200px;font-size:14pt;" data-options="resizable:false,modal:true,closed: true">
+        <form id="formCertWord" method="post">
+            <div>
+                <input class="easyui-textbox" id="CertWord" name="CertWord" data-options="label:'@T("凭证字")',required:true" style="width:90%;height:32px">
+            </div>
+            <div>
+                <input class="easyui-textbox" id="PrintTitle" name="PrintTitle" data-options="label:'@T("打印标题")',required:true" style="width:90%;height:32px">
+            </div>
+            <div>
+                <input class="easyui-switchbutton" id="IsDefault" name="IsDefault">
+            </div>
+            <div style="float:right;">
+                <a href="javascript:void(0)" class="easyui-linkbutton" onclick="save()" style="width:80px">保存</a>
+                <a href="javascript:void(0)" class="easyui-linkbutton" onclick="diaClose()" style="width:80px">关闭</a>
+            </div>
+            <input type="hidden" id="Id" name="Id" />
+            <input type="hidden" id="__RequestVerificationToken" name="__RequestVerificationToken" value="@Html.AntiForgeryTokenValueOrchard()" />
+        </form>
+    </div>
+
+    <div id="cacheCertWord"></div>
+
+    <script type="text/javascript">
+        $(function () {
+            init();
+        });
+
+        function init()
+        {
+            $("#formCertWord").form({
+                url: "/api/a/GetCertWords/",
+                onSubmit: formOnSubmit,
+                success: formSuccess
+            });
+        }
+
+        function formOnSubmit() {
+            return $(this).form('validate');
+        }
+
+        function formSuccess(data) {
+            $("#cacheCertWord").removeData("CertWordList");
+
+            if (formSuccessHandle(data)) {
+                $("#dlCertWord").dialog("close");
+            }
+        }
+
+        function onDgSelect(index, row) {
+            $("#formCertWord").form("load", {
+                CertWord: row.certWord,
+                PrintTitle: row.printTitle,
+                Id: row.id
+            });
+        }
+
+    </script>
+
+</body>
+</html>

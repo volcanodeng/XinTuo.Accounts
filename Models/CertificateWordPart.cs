@@ -44,7 +44,7 @@ namespace XinTuo.Accounts.Models
             }
         }
 
-        public bool IsDefault
+        public int IsDefault
         {
             get
             {

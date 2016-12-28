@@ -241,6 +241,7 @@
     <Content Include="Views\ResourcePartial.cshtml" />
     <Content Include="Views\Voucher.cshtml" />
     <Content Include="Views\FiscalSystem.cshtml" />
+    <Content Include="Views\CertWord.cshtml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

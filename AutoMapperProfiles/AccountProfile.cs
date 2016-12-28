@@ -24,6 +24,12 @@ namespace XinTuo.Accounts.AutoMapperProfiles
 
             CreateMap<VMAuxiliary, AuxiliaryPart>();
             CreateMap<AuxiliaryPart, VMAuxiliary>().ForMember(dest=>dest.AuxId,opt=>opt.MapFrom(src=>src.Id));
+
+
+            CreateMap<VMCertWord, CertificateWordPart>()
+                .ForMember(dest => dest.IsDefault, opt => opt.ResolveUsing<CheckboxResolver, string>(src => src.IsDefault));
+            CreateMap<CertificateWordPart, VMCertWord>()
+                .ForMember(dest => dest.IsDefault, opt => opt.ResolveUsing<ToCheckboxResolver, int>(src => src.IsDefault));
         }
 
     }

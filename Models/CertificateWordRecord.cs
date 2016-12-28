@@ -14,7 +14,7 @@ namespace XinTuo.Accounts.Models
 
         public virtual int SortIndex { get; set; }
 
-        public virtual bool IsDefault { get; set; }
+        public virtual int IsDefault { get; set; }
 
         public virtual CompanyRecord CompanyRecord { get; set; }
 

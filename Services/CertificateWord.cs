@@ -7,6 +7,7 @@ using Orchard.ContentManagement;
 using XinTuo.Accounts.Models;
 using XinTuo.Accounts.ViewModels;
 using AutoMapper;
+using Orchard.Security;
 
 namespace XinTuo.Accounts.Services
 {
@@ -15,14 +16,17 @@ namespace XinTuo.Accounts.Services
         private readonly IContentManager _contentManager;
         private readonly ICompany _company;
         private readonly IMapper _mapper;
+        private readonly IAuthenticationService _authService;
 
         public CertificateWord(IContentManager contentManager, 
                                ICompany company,
-                               IMapper mapper)
+                               IMapper mapper,
+                               IAuthenticationService authService)
         {
             _contentManager = contentManager;
             _company = company;
             _mapper = mapper;
+            _authService = authService;
         }
 
         private IEnumerable<CertificateWordPart> GetCertificateWord(int companyId)
@@ -43,6 +47,44 @@ namespace XinTuo.Accounts.Services
             List<VMCertWord> cwList = GetCertificateWordForCom();
 
             return cwList.Where(c => c.Id == cwId).FirstOrDefault();
+        }
+
+        public VMCertWord GetDefaultCertificateWordForCom()
+        {
+            List<VMCertWord> cwList = GetCertificateWordForCom();
+
+            return cwList.Where(c => c.IsDefault == "on").FirstOrDefault();
+        }
+
+        public CertificateWordPart SaveCertWord(VMCertWord cw)
+        {
+            CertificateWordPart newCertWord = null;
+
+            if (cw.Id <= 0)
+            {
+                newCertWord = _contentManager.New<CertificateWordPart>("CertificateWord");
+
+                newCertWord = _mapper.Map<VMCertWord, CertificateWordPart>(cw, newCertWord);
+
+                CompanyPart com = _company.GetCurrentCompany();
+                if (com != null) newCertWord.CompanyRecord = com.Record;
+
+                IUser user = _authService.GetAuthenticatedUser();
+                if (user != null) newCertWord.Creator = user.Id;
+
+                _contentManager.Create(newCertWord);
+            }
+            else
+            {
+                newCertWord = _contentManager.Get<CertificateWordPart>(cw.Id);
+                if(newCertWord != null)
+                {
+                    newCertWord = _mapper.Map<VMCertWord, CertificateWordPart>(cw,newCertWord);
+                    _contentManager.Restore(newCertWord.ContentItem, VersionOptions.Latest);
+                }
+            }
+
+            return newCertWord;
         }
     }
 }

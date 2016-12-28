@@ -84,7 +84,7 @@ namespace XinTuo.Accounts {
                 .Column<string>("CertWord",c=>c.WithLength(50))                     //凭证字
                 .Column<string>("PrintTitle",c=>c.WithLength(50))                   //打印标题
                 .Column<int>("SortIndex",c=>c.WithDefault(1))                       //排序索引
-                .Column<bool>("IsDefault",c=>c.WithDefault(false))                  //是否默认凭证字
+                .Column<int>("IsDefault",c=>c.WithDefault(false))                  //是否默认凭证字
                 .Column<int>("CompanyRecord_Id")                                   //所属公司
                 .Column<int>("Creator")                                             //创建人
                 .Column<DateTime>("CreateTime", c => c.WithDefault(DateTime.Now))   //创建时间
