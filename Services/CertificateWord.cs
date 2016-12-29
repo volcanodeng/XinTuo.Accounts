@@ -72,6 +72,8 @@ namespace XinTuo.Accounts.Services
                 IUser user = _authService.GetAuthenticatedUser();
                 if (user != null) newCertWord.Creator = user.Id;
 
+                newCertWord.CreateTime = DateTime.Now;
+
                 _contentManager.Create(newCertWord);
             }
             else

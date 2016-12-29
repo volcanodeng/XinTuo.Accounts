@@ -8,13 +8,14 @@ namespace XinTuo.Accounts.Controllers.Api
     {
         private readonly ICompany _company;
         private readonly IRegion _region;
-
+        private readonly IFiscalSystem _fiscal;
         
 
-        public CompanyApiController(ICompany company,IRegion region)
+        public CompanyApiController(ICompany company,IRegion region,IFiscalSystem fiscal)
         {
             _company = company;
             _region = region;
+            _fiscal = fiscal;
         }
 
         [HttpGet]
@@ -48,6 +49,7 @@ namespace XinTuo.Accounts.Controllers.Api
             return Ok(comPart.Id);
         }
 
+        [System.Web.Mvc.ValidateAntiForgeryToken]
         public IHttpActionResult SaveFiscal([FromBody]VMFiscalSystem fiscal)
         {
             string err;
@@ -62,7 +64,7 @@ namespace XinTuo.Accounts.Controllers.Api
                 throw new HttpResponseException(msg);
             }
 
-            _company.UpdateFiscalSystem(fiscal);
+            _fiscal.UpdateFiscalSystem(fiscal);
 
             return Ok(1);
         }

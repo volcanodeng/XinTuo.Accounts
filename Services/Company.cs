@@ -1,5 +1,4 @@
 ﻿using AutoMapper;
-using NHibernate;
 using Orchard;
 using Orchard.Caching.Services;
 using Orchard.ContentManagement;
@@ -10,9 +9,7 @@ using Orchard.Security;
 using Orchard.Users.Events;
 using Orchard.Users.Models;
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Web;
 using XinTuo.Accounts.Models;
 using XinTuo.Accounts.ViewModels;
 
@@ -31,8 +28,7 @@ namespace XinTuo.Accounts.Services
         private readonly IRoleService _role;
         private readonly IUserEventHandler _userEventHandler;
         private readonly IWorkContextAccessor _context;
-        private readonly ITransactionManager _trans;
-        private readonly ICacheService _cache;
+ 
 
         public Company(IAuthenticationService authService,
             IRepository<CompanyUserRecord> companyUser,
@@ -43,9 +39,7 @@ namespace XinTuo.Accounts.Services
             IWorkContextAccessor context,
             IMapper mapper,
             IMembershipService membership,
-            IUserEventHandler userEventHandler,
-            ITransactionManager trans,
-            ICacheService cache)
+            IUserEventHandler userEventHandler)
         {
             _authService = authService;
             _companyUser = companyUser;
@@ -57,8 +51,7 @@ namespace XinTuo.Accounts.Services
             _role = roleService;
             _userEventHandler = userEventHandler;
             _context = context;
-            _trans = trans;
-            _cache = cache;
+            
         }
 
         public CompanyPart GetCurrentCompany()
@@ -131,36 +124,6 @@ namespace XinTuo.Accounts.Services
             return newCompany;
         }
 
-        public void UpdateFiscalSystem(VMFiscalSystem fiscal)
-        {
-            CompanyPart com = GetCurrentCompany();
-
-            //一个公司只能设置一次会计制度
-            if(com.StartYear.HasValue && !string.IsNullOrEmpty(com.FiscalSystem))
-            {
-                return;
-            }
-
-            com.StartYear = fiscal.Year;
-            com.StartPeriod = fiscal.Period;
-            com.FiscalSystem = fiscal.Fiscal;
-
-            _contentManager.Restore(com.ContentItem, VersionOptions.Latest);
-
-            //初始化公司的会计科目
-            ISQLQuery sqlQuery = _trans.GetSession().CreateSQLQuery("exec P_Account_Init @companyId=:comId,@creatorId=:userid");
-            sqlQuery.SetInt32("comId", com.Id);
-            sqlQuery.SetInt32("userid",_authService.GetAuthenticatedUser().Id);
-            int res = sqlQuery.ExecuteUpdate();
-
-            //初始化凭证字
-            VMCertWord cw = new VMCertWord();
-            cw.CertWord = "记";
-            cw.PrintTitle = "记账凭证";
-            cw.IsDefault = "on";
-            cw.SortIndex = 1;
-            //_certWord.SaveCertWord(cw);
-            
-        }
+        
     }
 }

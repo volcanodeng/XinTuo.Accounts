@@ -171,6 +171,7 @@
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="EventHandlers\UserEventHandler.cs" />
     <Compile Include="Handlers\AuxiliaryHandler.cs" />
+    <Compile Include="Handlers\CerttificateWordHandler.cs" />
     <Compile Include="Helpers\ApiResponse.cs" />
     <Compile Include="Handlers\CompanyHandler.cs" />
     <Compile Include="Migrations.cs" />
@@ -203,11 +204,13 @@
     <Compile Include="Services\Common.cs" />
     <Compile Include="Services\Company.cs" />
     <Compile Include="Services\FastPropertyComparer.cs" />
+    <Compile Include="Services\FiscalSystem.cs" />
     <Compile Include="Services\IAccountCategory.cs" />
     <Compile Include="Services\IAccount.cs" />
     <Compile Include="Services\IAuxiliary.cs" />
     <Compile Include="Services\ICertificateWord.cs" />
     <Compile Include="Services\ICompany.cs" />
+    <Compile Include="Services\IFiscalSystem.cs" />
     <Compile Include="Services\IRegion.cs" />
     <Compile Include="Services\Region.cs" />
     <Compile Include="ViewModels\VMCertWord.cs" />
