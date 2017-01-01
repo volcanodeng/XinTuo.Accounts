@@ -20,12 +20,12 @@
 <body>
     <div>
         <table class="easyui-datagrid" id="dgCertWord" title="凭证字"
-               data-options="singleSelect:true,toolbar: '#tbCertWord',fitColumns:true,idField:'id',onSelect:onDgSelect">
+               data-options="singleSelect:true,toolbar: '#tbCertWord',fitColumns:true,idField:'id',onSelect:onDgSelect,onLoadSuccess:dgLoadSuccess">
             <thead>
                 <tr>
                     <th data-options="field:'certWord',width:200,align:'center'">@T("凭证字")</th>
                     <th data-options="field:'printTitle',width:200,align:'center'">@T("打印标题")</th>
-                    <th data-options="field:'isDefault',width:200,align:'center'">@T("是否默认")</th>
+                    <th data-options="field:'isDefault',width:200,align:'center',formatter:fmtIsDefault">@T("是否默认")</th>
                 </tr>
             </thead>
         </table>
@@ -52,7 +52,7 @@
                 <a href="javascript:void(0)" class="easyui-linkbutton" onclick="save()" style="width:80px">保存</a>
                 <a href="javascript:void(0)" class="easyui-linkbutton" onclick="diaClose()" style="width:80px">关闭</a>
             </div>
-            <input type="hidden" id="Id" name="Id" />
+            <input type="hidden" id="Id" name="Id" value="0" />
             <input type="hidden" id="__RequestVerificationToken" name="__RequestVerificationToken" value="@Html.AntiForgeryTokenValueOrchard()" />
         </form>
     </div>
@@ -67,7 +67,7 @@
         function init()
         {
             $("#formCertWord").form({
-                url: "/api/w/GetCertWords/",
+                url: "/api/w/SaveCertWord/",
                 onSubmit: formOnSubmit,
                 success: formSuccess
             });
@@ -120,9 +120,37 @@
             $("#dlCertWord").dialog("open");
         }
 
+        function edit()
+        {
+            var selRow = $("#dgCertWord").datagrid("getSelected");
+            if(selRow != null)
+            {
+                $("#dlCertWord").dialog("open");
+            }
+            else
+            {
+                $.messager.alert('编辑凭证字', '请在列表中选择要编辑的凭证字！', 'warning');
+            }
+        }
+
+        function save()
+        {
+            $("#formCertWord").submit();
+        }
+
         function diaClose()
         {
             $("#dlCertWord").dialog("close");
+        }
+
+        function fmtIsDefault(value, row, index)
+        {
+            return '<input class="easyui-switchbutton"  >';
+        }
+
+        function dgLoadSuccess(data)
+        {
+            $.parser.parse();
         }
 
     </script>

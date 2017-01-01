@@ -6,6 +6,7 @@ using System.Web.Http;
 using XinTuo.Accounts.Services;
 using XinTuo.Accounts.ViewModels;
 using Orchard;
+using Orchard.Logging;
 
 namespace XinTuo.Accounts.Controllers.Api
 {
@@ -42,6 +43,33 @@ namespace XinTuo.Accounts.Controllers.Api
             }
 
             return Ok(_certWord.GetCertificateWordForCom(cwId));
+        }
+
+        [HttpPost,ActionName("SaveCertWord")]
+        [System.Web.Mvc.ValidateAntiForgeryToken]
+        public IHttpActionResult SaveCerttificateWord([FromBody] VMCertWord certWord)
+        {
+            string err;
+            if (!ModelValidHelper.ModelValid(ModelState, out err))
+            {
+                return BadRequest(err);
+            }
+
+            if (!_orchard.Authorizer.Authorize(Permissions.ModifyAccount))
+            {
+                var msg = new ApiResponse("未授权访问", System.Net.HttpStatusCode.Unauthorized);
+                throw new HttpResponseException(msg);
+            }
+
+            var newCertWord = _certWord.SaveCertWord(certWord);
+            if (newCertWord == null)
+            {
+                var msg = new ApiResponse("找不到要处理的数据", System.Net.HttpStatusCode.NoContent);
+                msg.Logger.Warning("记录不存在。data:{0}", Newtonsoft.Json.JsonConvert.SerializeObject(certWord.PrintTitle));
+                throw new HttpResponseException(msg);
+            }
+
+            return Ok(newCertWord.Id);
         }
     }
 }

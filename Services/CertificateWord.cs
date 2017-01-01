@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Web;
-using Orchard.Data;
 using Orchard.ContentManagement;
 using XinTuo.Accounts.Models;
 using XinTuo.Accounts.ViewModels;
@@ -34,6 +32,19 @@ namespace XinTuo.Accounts.Services
             return _contentManager.Query<CertificateWordPart, CertificateWordRecord>().Where(c=>c.CompanyRecord.Id == companyId).List();
         }
 
+        private void ClearDefaultCertWord(int comId)
+        {
+            var cws = GetCertificateWord(comId);
+            var defCertWords = cws.Where(cw => cw.IsDefault == 1).ToList();
+
+            foreach(CertificateWordPart cwp in defCertWords)
+            {
+                cwp.IsDefault = 0;
+                _contentManager.Restore(cwp.ContentItem, VersionOptions.Latest);
+            }
+
+        }
+
         public List<VMCertWord> GetCertificateWordForCom()
         {
             int comId = _company.GetCurrentCompanyId();
@@ -59,6 +70,11 @@ namespace XinTuo.Accounts.Services
         public CertificateWordPart SaveCertWord(VMCertWord cw)
         {
             CertificateWordPart newCertWord = null;
+
+            if(cw.IsDefault=="on")
+            {
+                this.ClearDefaultCertWord(_company.GetCurrentCompanyId());
+            }
 
             if (cw.Id <= 0)
             {
