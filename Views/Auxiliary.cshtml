@@ -137,14 +137,20 @@
     function remove()
     {
         var selRow = $("#auxDatagrid").datagrid("getSelected");
-        $.get("/api/x/DelAux/", { auxId: selRow.auxId }, function (data) {
-            var typeid = $("#AuxTypeId").val();
-            $("#aux_dataCache").removeData("aux" + typeid);
+        if (selRow != null) {
+            $.get("/api/x/DelAux/", { auxId: selRow.auxId, __RequestVerificationToken: '@Html.AntiForgeryTokenValueOrchard()' }, function (data) {
+                var typeid = $("#AuxTypeId").val();
+                $("#aux_dataCache").removeData("aux" + typeid);
 
-            if (formSuccessHandle(data)) {
-                TypeClick(typeid);
-            }
-        });
+                if (formSuccessHandle(data)) {
+                    TypeClick(typeid);
+                }
+            });
+        }
+        else
+        {
+            $.messager.alert('删除', '请选择要删除的记录', 'info');
+        }
     }
 
     function diaClose()

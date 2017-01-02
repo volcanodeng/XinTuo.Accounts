@@ -18,5 +18,9 @@ namespace XinTuo.Accounts.Services
         VMCertWord GetDefaultCertificateWordForCom();
 
         CertificateWordPart SaveCertWord(VMCertWord cw);
+
+        void DeleteCertWord(int cwId);
+
+        void SetDefault(int cwId);
     }
 }

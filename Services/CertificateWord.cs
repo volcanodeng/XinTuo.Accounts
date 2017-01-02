@@ -104,5 +104,19 @@ namespace XinTuo.Accounts.Services
 
             return newCertWord;
         }
+
+        public void DeleteCertWord(int cwId)
+        {
+            var delCw = _contentManager.Get<CertificateWordPart>(cwId);
+            if (delCw != null) _contentManager.Remove(delCw.ContentItem);
+        }
+
+        public void SetDefault(int cwId)
+        {
+            this.ClearDefaultCertWord(_company.GetCurrentCompanyId());
+            var defCw = _contentManager.Get<CertificateWordPart>(cwId);
+            defCw.IsDefault = 1;
+            _contentManager.Restore(defCw.ContentItem,VersionOptions.Latest);
+        }
     }
 }

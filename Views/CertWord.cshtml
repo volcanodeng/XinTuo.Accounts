@@ -81,6 +81,7 @@
 
         function formSuccess(data) {
             $("#cacheCertWord").removeData("CertWordList");
+            loadData();
 
             if (formSuccessHandle(data)) {
                 $("#dlCertWord").dialog("close");
@@ -97,7 +98,7 @@
 
         function loadData()
         {
-            var dgCache = $("#aux_dataCache").data("CertWordList");
+            var dgCache = $("#cacheCertWord").data("CertWordList");
 
             if (dgCache == undefined) {
                 $.get("/api/w/GetComCertWord", function (data) {
@@ -145,12 +146,45 @@
 
         function fmtIsDefault(value, row, index)
         {
-            return '<input class="easyui-switchbutton"  >';
+            var chk = (value == "on" ? "checked" : "");
+            return '<input class="easyui-switchbutton" data-options="onText:\'是\',offText:\'否\',onChange:setDefault" ' + chk + ' cwid="' + row.id + '" >';
         }
 
         function dgLoadSuccess(data)
         {
             $.parser.parse();
+        }
+
+        function remove() {
+            var selRow = $("#dgCertWord").datagrid("getSelected");
+            if (selRow != null) {
+                $.get("/api/w/DelCertWord/", { cwId: selRow.id, __RequestVerificationToken: '@Html.AntiForgeryTokenValueOrchard()' }, function (data) {
+                    $("#cacheCertWord").removeData("CertWordList");
+
+                    if (formSuccessHandle(data)) {
+                        loadData();
+                    }
+                });
+            }
+            else {
+                $.messager.alert('删除', '请选择要删除的记录', 'info');
+            }
+        }
+
+        function setDefault(chk) {
+            var cwid = $(this).attr("cwid");
+            if (cwid != null) {
+                $.get("/api/w/SetDefault/", { cwId: cwid, __RequestVerificationToken: '@Html.AntiForgeryTokenValueOrchard()' }, function (data) {
+                    $("#cacheCertWord").removeData("CertWordList");
+
+                    if (formSuccessHandle(data)) {
+                        loadData();
+                    }
+                });
+            }
+            else {
+                $.messager.alert('删除', '请选择要删除的记录', 'info');
+            }
         }
 
     </script>

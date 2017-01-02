@@ -77,6 +77,7 @@ namespace XinTuo.Accounts.Controllers.Api
 
         [HttpGet]
         [ActionName("DelAux")]
+        [System.Web.Mvc.ValidateAntiForgeryToken]
         public IHttpActionResult DeleteAuxiliary(int auxId)
         {
            

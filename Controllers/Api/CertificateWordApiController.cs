@@ -71,5 +71,45 @@ namespace XinTuo.Accounts.Controllers.Api
 
             return Ok(newCertWord.Id);
         }
+
+        [HttpGet,ActionName("DelCertWord")]
+        [System.Web.Mvc.ValidateAntiForgeryToken]
+        public IHttpActionResult DeleteCertificateWord(int cwId)
+        {
+            if (!_orchard.Authorizer.Authorize(Permissions.ModifyAccount))
+            {
+                var msg = new ApiResponse("未授权访问", System.Net.HttpStatusCode.Unauthorized);
+                throw new HttpResponseException(msg);
+            }
+
+            if (cwId <= 0)
+            {
+                return BadRequest("待删除记录无效");
+            }
+
+            _certWord.DeleteCertWord(cwId);
+
+            return Ok(1);
+        }
+
+        [HttpGet, ActionName("SetDefault")]
+        [System.Web.Mvc.ValidateAntiForgeryToken]
+        public IHttpActionResult SetDefault(int cwId)
+        {
+            if (!_orchard.Authorizer.Authorize(Permissions.ModifyAccount))
+            {
+                var msg = new ApiResponse("未授权访问", System.Net.HttpStatusCode.Unauthorized);
+                throw new HttpResponseException(msg);
+            }
+
+            if (cwId <= 0)
+            {
+                return BadRequest("记录无效");
+            }
+
+            _certWord.SetDefault(cwId);
+
+            return Ok(1);
+        }
     }
 }
