@@ -36,8 +36,8 @@
             }
         </div>
         <div data-options="region:'center',border:false" style="padding:10px;">
-            <table class="easyui-datagrid" id="accDatagrid"
-                   data-options="singleSelect:true,toolbar: '#accToolbar',fitColumns:true,idField:'accCode'">
+            <table class="easyui-datagrid" id="accDatagrid" 
+                   data-options="singleSelect:true,toolbar: '#accToolbar',fitColumns:true,idField:'accCode',pagination:true">
                 <thead>
                     <tr>
                         <th data-options="field:'accCode',align:'center',width:50" >@T("编码")</th>
@@ -230,6 +230,8 @@
         {
             $("#accDatagrid").datagrid("loadData", dgCache);
         }
+
+        $("#accDatagrid").datagrid("doLayout");
     }
 
 
