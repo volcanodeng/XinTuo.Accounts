@@ -59,7 +59,7 @@ namespace XinTuo.Accounts.Services
 
         public List<AccountRecord> GetAccounts(int cateId)
         {
-            return this.GetAccountsOfCompany().Where(a => a.AccountCategoryRecord.Id == cateId || a.AccountCategoryRecord.ParentAcId == cateId).ToList();
+            return this.GetAccountsOfCompany().Where(a => a.AccountCategoryRecord.Id == cateId || a.AccountCategoryRecord.ParentAcId == cateId).OrderBy(a=>a.AccCode).ToList();
         }
 
         public List<VMAccount> GetVMAccounts(int cateId)

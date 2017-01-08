@@ -52,9 +52,9 @@ begin
 			  ,[AccState]
 			  ,@companyId
 			  ,@creatorId
-			  ,[CreateTime]
-			  ,[Updater]
-			  ,[UpdateTime]
+			  ,GETDATE()
+			  ,@creatorId
+			  ,GETDATE()
 			  ,[AuxTypeNames]
 		  FROM [XinTuo_Accounts_AccountRecord]
 		  where [CompanyRecord_Id] is null and [CreateTime] is null;

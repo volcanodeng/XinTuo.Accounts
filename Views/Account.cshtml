@@ -22,27 +22,32 @@
             font-size: 14pt;
         }
 
+        .datagrid-header-row td {
+            text-align:center;
+            font-weight:bold;
+        }
+
     </style>
 </head>
 <body>
 
     <div class="easyui-layout" data-options="fit:true">
-        <div data-options="region:'north',split:false,border:false" style="height:80px;padding:10px;overflow:hidden;">
+        <div data-options="region:'north',split:false,border:false" style="padding:10px;overflow:hidden;">
             @foreach (AccountCategoryRecord c in cates)
             {
                 <a href="javascript:void(0)" id="cate_@c.Id" class="easyui-linkbutton"
-                   data-options="iconCls:'icon-large-picture',size:'large',iconAlign:'top',toggle:true,group:'g1'"
+                   data-options="iconCls:'icon-large-picture',size:'large',iconAlign:'left',toggle:true,group:'g1'"
                    onclick="cateOnClick(@c.Id)" style="width:80px;">@c.CateName</a>
             }
         </div>
         <div data-options="region:'center',border:false" style="padding:10px;">
-            <table class="easyui-datagrid" id="accDatagrid" style="height:600px"
-                   data-options="singleSelect:true,toolbar: '#accToolbar',fitColumns:true,idField:'accCode',pagination:true">
+            <table class="easyui-datagrid" id="accDatagrid" 
+                   data-options="singleSelect:true,toolbar: '#accToolbar',fitColumns:true,idField:'accCode',pagination:true,fit:true,pageList:[10,50,100],pageSize:100,onSelect:onDgSelect,onDblClickRow:onDgDblClickRow">
                 <thead>
                     <tr>
-                        <th data-options="field:'accCode',align:'center',width:50" >@T("编码")</th>
-                        <th data-options="field:'accName',align:'center',width:150" >@T("名称")</th>
-                        <th data-options="field:'cateName',align:'center',width:150" >@T("类别")</th>
+                        <th data-options="field:'accCode',width:80,formatter:formatterAccCode" >@T("编码")</th>
+                        <th data-options="field:'accName',width:150,formatter:formatterAccCode" >@T("名称")</th>
+                        <th data-options="field:'cateName',align:'center',width:100" >@T("类别")</th>
                         <th data-options="field:'direction',align:'center',width:50" >@T("余额方向")</th>
                         <th data-options="field:'auxTypeNames',align:'center',width:150">@T("辅助核算")</th>
                         <th data-options="field:'unit',align:'center',width:150">@T("数量单位")</th>
@@ -161,8 +166,8 @@
         });
         $("#qtyUnit").hide();
         //默认类别
-        $("#cate_1").click();
-
+        $("#cate_1").linkbutton("select");
+        cateOnClick(1);
     }
 
     function append()
@@ -231,13 +236,42 @@
             $("#accDatagrid").datagrid("loadData", dgCache);
         }
 
-        $("#accDatagrid").datagrid("doLayout");
     }
 
 
     function formatterAccState(value,row,index)
     {
         return value == 1?"已启用":"已禁用";
+    }
+
+    function formatterAccCode(value,row,index)
+    {
+        if(row.accCode.length > 4)
+        {
+            return "&nbsp;&nbsp;&nbsp;&nbsp;"+value;
+        }
+
+        return value;
+    }
+
+    function onDgSelect(index, row)
+    {
+        $("#acctForm").form("load", {
+            AccCode: row.accCode,
+            AccName: row.accName,
+            ParentCode: row.parentCode==null?"没有上级科目":row.parentCode,
+            CateId: row.cateId
+        });
+    }
+
+    function onDgDblClickRow(index,row)
+    {
+        $("#editDialog").dialog('open');
+    }
+
+    function edit()
+    {
+        $("#editDialog").dialog('open');
     }
     </script>
 

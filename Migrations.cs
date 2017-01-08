@@ -59,6 +59,8 @@ namespace XinTuo.Accounts {
                 .Column<int>("UserPartRecord_Id")                                   //用户id(关联UserPart)
                 );
 
+#warning 建账套表
+
             //辅助核算类型
             SchemaBuilder.CreateTable("AuxiliaryTypeRecord",
                 t=>t.Column<int>("Id",c=>c.PrimaryKey().Identity())
