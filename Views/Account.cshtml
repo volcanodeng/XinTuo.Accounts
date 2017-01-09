@@ -180,7 +180,7 @@
 
     function editOnBeforeOpen()
     {
-        $("#CateId").combobox('reload', '/api/a/GetSubAccCate?cid=' + $("#acctTopCate").val());
+        $("#CateId").combobox('reload', '/api/a/GetSubAccCate?cid=' + $("#dataCache").data("AccCate"));
     }
 
     function save()
@@ -194,6 +194,9 @@
         //余额方向
         $("#Direction").val( $("#dirGroup > input:checked").val());
 
+        //科目类型
+        $("#acctTopCate",this.context).val($("#dataCache").data("AccCate"));
+
         $("#acctForm").submit();
     }
 
@@ -202,7 +205,7 @@
     }
 
     function formSuccess(data) {
-        var cateId = $("#acctTopCate").val();
+        var cateId = $("#dataCache").data("AccCate");
         $("#dataCache").removeData("account" + cateId);
 
         if(formSuccessHandle(data))
@@ -220,8 +223,7 @@
 
     function cateOnClick(cateId)
     {
-        $("#acctTopCate").val(cateId);
-
+        $("#dataCache").data("AccCate",cateId);
         var dgCache = $("#dataCache").data("account"+cateId);
 
         if(dgCache == undefined)
@@ -259,19 +261,31 @@
         $("#acctForm").form("load", {
             AccCode: row.accCode,
             AccName: row.accName,
-            ParentCode: row.parentCode==null?"没有上级科目":row.parentCode,
+            ParentCode: row.parentCode==null?"没有上级科目":row.parentCode+" "+getParentAcct(row.parentCode),
             CateId: row.cateId
         });
     }
 
     function onDgDblClickRow(index,row)
     {
-        $("#editDialog").dialog('open');
+        edit();
     }
 
     function edit()
     {
+        $("#ParentCode").textbox("disable");
         $("#editDialog").dialog('open');
+    }
+
+    function getParentAcct(parCode)
+    {
+        var cateId = $("#dataCache").data("AccCate");
+
+        var dgCache = $("#dataCache").data("account"+cateId);
+
+        var pAcc  =$.grep(dgCache,function(n,i){return n.accCode==parCode});
+
+        return (pAcc==null || pAcc.length==0)?"":pAcc[0].accName;
     }
     </script>
 
