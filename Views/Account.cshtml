@@ -100,7 +100,7 @@
                 <div id="auxItems" style="display:inline-block;">
                     @foreach (AuxiliaryTypeRecord aux in auxTypes)
                     {
-                        <input type="checkbox" id="aux_@aux.Id"  value="@aux.Id" aux="@aux.AuxType" /><label for="aux_@aux.Id" style="display:inline;margin-left:5px;">@aux.AuxType</label>
+                        <input type="checkbox" id="aux_@aux.Id" auxval="@aux.Id"  aux="@aux.AuxType" /><label for="aux_@aux.Id" style="display:inline;margin-left:5px;">@aux.AuxType</label>
                     }
                 </div>
                 <input type="hidden" id="AuxTypeIds" name="AuxTypeIds" />
@@ -217,6 +217,8 @@
 
     function cancel()
     {
+        $("#auxItems").hide();
+        $("#qtyUnit").hide();
         $('#acctForm').form('clear');
         $("#editDialog").dialog('close');
     }
@@ -258,12 +260,30 @@
 
     function onDgSelect(index, row)
     {
+        var token = "@Html.AntiForgeryTokenValueOrchard()";
         $("#acctForm").form("load", {
             AccCode: row.accCode,
             AccName: row.accName,
             ParentCode: row.parentCode==null?"没有上级科目":row.parentCode+" "+getParentAcct(row.parentCode),
-            CateId: row.cateId
+            dir:row.direction,
+            Direction:row.direction,
+            IsAuxiliary: row.isAuxiliary,
+            AuxTypeIds: row.auxTypeIds,
+            AuxTypeNames: row.auxTypeNames,
+            IsQuantity: row.isQuantity,
+            Unit:row.unit,
+            CateId: row.cateId,
+            AccId: row.accId,
+            __RequestVerificationToken: token
         });
+
+        if (row.isAuxiliary == "on") $("#auxItems").show();
+        if (row.isQuantity == "on") $("#qtyUnit").show();
+
+        if (row.auxTypeIds != null && row.auxTypeIds.length > 1) {
+            var auxIds = row.auxTypeIds.split(",");
+            $.each(auxIds, function (i, n) { $("#auxItems input[auxval='" + n + "']").attr("checked", true); });
+        }
     }
 
     function onDgDblClickRow(index,row)

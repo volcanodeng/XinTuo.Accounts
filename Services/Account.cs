@@ -8,6 +8,7 @@ using AutoMapper;
 using System;
 using System.Collections.Generic;
 using Orchard.Caching.Services;
+using NHibernate;
 
 namespace XinTuo.Accounts.Services
 {
@@ -70,18 +71,37 @@ namespace XinTuo.Accounts.Services
 
         public void SaveAccount(VMAccount account)
         {
-            AccountRecord newAccount = new AccountRecord();
+            if (account.AccId <= 0)
+            {
+                AccountRecord newAccount = new AccountRecord();
 
-            newAccount = _mapper.Map<VMAccount,AccountRecord>(account,newAccount);
-            newAccount.AccountCategoryRecord = _accCategoryRepository.Get(account.CateId);
-            newAccount.CompanyRecord = _company.GetCurrentCompany().Record;
-            newAccount.Creator = _authService.GetAuthenticatedUser().Id;
-            newAccount.CreateTime = DateTime.Now;
-            newAccount.Updater = _authService.GetAuthenticatedUser().Id;
-            newAccount.UpdateTime = DateTime.Now;
-            newAccount.AccState = 1;
+                newAccount = _mapper.Map<VMAccount, AccountRecord>(account, newAccount);
+                newAccount.AccountCategoryRecord = _accCategoryRepository.Get(account.CateId);
+                newAccount.CompanyRecord = _company.GetCurrentCompany().Record;
+                newAccount.Creator = _authService.GetAuthenticatedUser().Id;
+                newAccount.CreateTime = DateTime.Now;
+                newAccount.Updater = _authService.GetAuthenticatedUser().Id;
+                newAccount.UpdateTime = DateTime.Now;
+                newAccount.AccState = 1;
 
-            _account.Create(newAccount);
+                _account.Create(newAccount);
+            }
+            else
+            {
+                AccountRecord acc = _account.Get(account.AccId);
+                if(acc != null)
+                {
+                    acc.AccCode = account.AccCode;
+                    acc.AccName = account.AccName;
+                    acc.Direction = account.Direction;
+                    acc.IsAuxiliary = (!string.IsNullOrEmpty(account.IsAuxiliary) && account.IsAuxiliary.ToLower() == "on") ? 1 : 0;
+                    acc.AuxTypeIds = account.AuxTypeIds;
+                    acc.AuxTypeNames = account.AuxTypeNames;
+                    acc.IsQuantity = (!string.IsNullOrEmpty(account.IsQuantity) && account.IsQuantity.ToLower() == "on") ? 1 : 0;
+                    acc.Unit = account.Unit;
+                }
+                _account.Update(acc);
+            }
 
             _cache.Remove(Common.GetAccountsCacheName(_company.GetCurrentCompanyId()));
         }
