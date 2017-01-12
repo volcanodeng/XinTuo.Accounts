@@ -100,7 +100,7 @@
                 <div id="auxItems" style="display:inline-block;">
                     @foreach (AuxiliaryTypeRecord aux in auxTypes)
                     {
-                        <input type="checkbox" id="aux_@aux.Id" auxval="@aux.Id"  aux="@aux.AuxType" /><label for="aux_@aux.Id" style="display:inline;margin-left:5px;">@aux.AuxType</label>
+                        <input type="checkbox" id="aux_@aux.Id" name="aux_@aux.Id" auxval="@aux.Id"  aux="@aux.AuxType" /><label for="aux_@aux.Id" style="display:inline;margin-left:5px;">@aux.AuxType</label>
                     }
                 </div>
                 <input type="hidden" id="AuxTypeIds" name="AuxTypeIds" />
@@ -281,8 +281,12 @@
         if (row.isQuantity == "on") $("#qtyUnit").show();
 
         if (row.auxTypeIds != null && row.auxTypeIds.length > 1) {
-            var auxIds = row.auxTypeIds.split(",");
-            $.each(auxIds, function (i, n) { $("#auxItems input[auxval='" + n + "']").attr("checked", true); });
+            $.each(row.auxTypeIds.split(","),
+                function (i, n) {
+                    var auxData = {};
+                    auxData["aux_" + n] = "on";
+                    $("#acctForm").form("load", auxData);
+                });
         }
     }
 

@@ -2,11 +2,13 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using System.ComponentModel.DataAnnotations;
 
 namespace XinTuo.Accounts.ViewModels
 {
     public class VMAccount
     {
+        [Display(Name ="")]
         public int AccId
         {
             get;set;
