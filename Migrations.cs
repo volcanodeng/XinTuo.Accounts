@@ -59,7 +59,7 @@ namespace XinTuo.Accounts {
                 .Column<int>("UserPartRecord_Id")                                   //用户id(关联UserPart)
                 );
 
-#warning 建账套表
+#warning 建账套表不再使用公司作为财务隔离依据
 
             //辅助核算类型
             SchemaBuilder.CreateTable("AuxiliaryTypeRecord",
