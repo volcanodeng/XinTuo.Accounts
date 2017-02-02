@@ -67,7 +67,7 @@
 
     <div id="dataCache"></div>
 
-    <div id="editDialog" class="easyui-dialog" title="编辑科目" style="width:450px;height:600px;font-size:14pt;" data-options="resizable:false,modal:true,closed: true,onBeforeOpen:editOnBeforeOpen">
+    <div id="editDialog" class="easyui-dialog" title="编辑科目" style="width:450px;height:600px;font-size:14pt;" data-options="resizable:false,modal:true,closed: true">
         <form id="acctForm" method="post">
 
             <div>
@@ -83,7 +83,7 @@
             </div>
 
             <div>
-                <input class="easyui-combobox" id="CateId" name="CateId" data-options="label:'@T("科目类别")',required:true,valueField:'id',textField:'cateName',method: 'GET',editable:false" style="width:90%;height:32px">
+                <input class="easyui-combobox" id="CateId" name="CateId" data-options="label:'@T("科目类别")',required:true,valueField:'id',textField:'cateName',method: 'GET',editable:false,onLoadSuccess:cateIdOnLoadSuccess" style="width:90%;height:32px">
             </div>
 
             <div>
@@ -178,16 +178,16 @@
         $("#editDialog").dialog('open');
     }
 
-    function editOnBeforeOpen()
-    {
-        $("#CateId").combobox('reload', '/api/a/GetSubAccCate?cid=' + $("#dataCache").data("AccCate"));
-    }
+    //function editOnBeforeOpen()
+    //{
+    //    $("#CateId").combobox('reload', '/api/a/GetSubAccCate?cid=' + $("#dataCache").data("AccCate"));
+    //}
 
     function save()
     {
         //辅助核算
-        var auxIds = $.map($("#auxItems > input:checked"),function(n){return $(n).val();}).join(",");
-        var auxNames = $.map($("#auxItems > input:checked"),function(n){return $(n).attr("aux");}).join(",");
+        var auxIds = $.map($("#auxItems > input:checked"), function (n) { return $(n).attr("auxval"); }).join(",");
+        var auxNames = $.map($("#auxItems > input:checked"), function (n) { return $(n).attr("aux"); }).join(",");
         $("#AuxTypeIds").val(auxIds);
         $("#AuxTypeNames").val(auxNames);
 
@@ -277,6 +277,8 @@
             __RequestVerificationToken: token
         });
 
+        loadCateId();
+
         if (row.isAuxiliary == "on") $("#auxItems").show();
         if (row.isQuantity == "on") $("#qtyUnit").show();
 
@@ -297,6 +299,8 @@
 
     function edit()
     {
+        var row = $("#accDatagrid").datagrid("getSelected");
+        onDgSelect(0,row);
         $("#ParentCode").textbox("disable");
         $("#editDialog").dialog('open');
     }
@@ -310,6 +314,30 @@
         var pAcc  =$.grep(dgCache,function(n,i){return n.accCode==parCode});
 
         return (pAcc==null || pAcc.length==0)?"":pAcc[0].accName;
+    }
+
+    function cateIdOnLoadSuccess()
+    {
+        var subCate = $("#CateId").combobox('getData');
+        var cateId = $("#dataCache").data("AccCate");
+
+        $("#dataCache").removeData("subcate" + cateId);
+        $("#dataCache").data("subcate" + cateId, subCate);
+    }
+
+    function loadCateId()
+    {
+        var cateId = $("#dataCache").data("AccCate");
+        var subCate = $("#dataCache").data("subcate" + cateId);
+
+        if (subCate)
+        {
+            $("#CateId").combobox('loadData', subCate);
+        }
+        else
+        {
+            $("#CateId").combobox('reload', '/api/a/GetSubAccCate?cid=' + $("#dataCache").data("AccCate"));
+        }
     }
     </script>
 

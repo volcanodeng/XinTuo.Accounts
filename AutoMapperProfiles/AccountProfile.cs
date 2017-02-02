@@ -18,6 +18,7 @@ namespace XinTuo.Accounts.AutoMapperProfiles
                 .ForMember(dest => dest.IsQuantity, opt => opt.ResolveUsing<CheckboxResolver, string>(src => src.IsQuantity));
             CreateMap<AccountRecord, VMAccount>()
                 .ForMember(dest=>dest.AccId,opt=>opt.MapFrom(src=>src.Id))
+                .ForMember(dest=>dest.CateId,opt=>opt.MapFrom(src=>src.AccountCategoryRecord.Id))
                 .ForMember(dest=>dest.IsQuantity,opt=>opt.ResolveUsing<ToCheckboxResolver,int>(src=>src.IsQuantity))
                 .ForMember(dest => dest.IsAuxiliary, opt => opt.ResolveUsing<ToCheckboxResolver, int>(src => src.IsAuxiliary))
                 .ForMember(dest=>dest.cateName,opt=>opt.MapFrom(src=>src.AccountCategoryRecord.CateName));
