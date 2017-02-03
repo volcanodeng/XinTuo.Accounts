@@ -106,5 +106,18 @@ namespace XinTuo.Accounts.Services
             _cache.Remove(Common.GetAccountsCacheName(_company.GetCurrentCompanyId()));
         }
 
+        public void DeleteAccount(int accId)
+        {
+            AccountRecord accRec = _account.Get(accId);
+            if(accRec !=  null)
+            {
+                _account.Delete(accRec);
+            }
+            else
+            {
+                throw new ArgumentNullException("找不到要删除的科目：" + accId);
+            }
+        }
+
     }
 }

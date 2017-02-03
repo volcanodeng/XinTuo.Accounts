@@ -42,7 +42,7 @@
         </div>
         <div data-options="region:'center',border:false" style="padding:10px;">
             <table class="easyui-datagrid" id="accDatagrid" 
-                   data-options="singleSelect:true,toolbar: '#accToolbar',fitColumns:true,idField:'accCode',pagination:true,fit:true,pageList:[10,50,100],pageSize:100,onSelect:onDgSelect,onDblClickRow:onDgDblClickRow">
+                   data-options="singleSelect:true,toolbar: '#accToolbar',fitColumns:true,idField:'accId',pagination:true,fit:true,pageList:[10,50,100],pageSize:100,onSelect:onDgSelect,onDblClickRow:onDgDblClickRow">
                 <thead>
                     <tr>
                         <th data-options="field:'accCode',width:80,formatter:formatterAccCode" >@T("编码")</th>
@@ -338,6 +338,25 @@
         {
             $("#CateId").combobox('reload', '/api/a/GetSubAccCate?cid=' + $("#dataCache").data("AccCate"));
         }
+    }
+
+    function remove()
+    {
+        var row = $("#accDatagrid").datagrid("getSelected");
+
+        if(!row)
+        {
+            $.messager.alert('删除','请选择要删除的科目！','warning');
+            return;
+        }
+
+        $.messager.confirm('删除', '您确定要删除该科目吗？删除后不能再恢复。', function (r) {
+            if (r) {
+                $.post("/api/a/Delete", { accId: row.accId }, function (data) {
+                    formSuccessHandle(data);
+                }).fail(function () { $.messager.alert("操作失败", "删除科目操作失败", "warning"); });
+            }
+        });
     }
     </script>
 

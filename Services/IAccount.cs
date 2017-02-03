@@ -17,5 +17,7 @@ namespace XinTuo.Accounts.Services
         List<VMAccount> GetVMAccounts(int cateId);
 
         void SaveAccount(VMAccount account);
+
+        void DeleteAccount(int accId);
     }
 }

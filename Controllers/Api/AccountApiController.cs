@@ -3,6 +3,7 @@ using XinTuo.Accounts.Services;
 using XinTuo.Accounts.ViewModels;
 using Orchard;
 using Orchard.Localization;
+using System;
 
 
 namespace XinTuo.Accounts.Controllers.Api
@@ -71,6 +72,21 @@ namespace XinTuo.Accounts.Controllers.Api
         public IHttpActionResult GetCertWords()
         {
             return Ok(_certWord.GetCertificateWordForCom());
+        }
+
+        [HttpPost,ActionName("Delete")]
+        [System.Web.Mvc.ValidateAntiForgeryToken]
+        public IHttpActionResult DeleteAccount([FromBody]int accId)
+        {
+            if (!_orchard.Authorizer.Authorize(Permissions.ModifyAccount))
+            {
+                var msg = new ApiResponse("未授权访问", System.Net.HttpStatusCode.Unauthorized);
+                throw new HttpResponseException(msg);
+            }
+
+            _account.DeleteAccount(accId);
+            
+            return Ok(1);
         }
     }
 }
