@@ -76,7 +76,7 @@ namespace XinTuo.Accounts.Controllers.Api
 
         [HttpPost,ActionName("Delete")]
         [System.Web.Mvc.ValidateAntiForgeryToken]
-        public IHttpActionResult DeleteAccount([FromBody]int accId)
+        public IHttpActionResult DeleteAccount([FromUri]int accId)
         {
             if (!_orchard.Authorizer.Authorize(Permissions.ModifyAccount))
             {

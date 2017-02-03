@@ -67,7 +67,7 @@
 
     <div id="dataCache"></div>
 
-    <div id="editDialog" class="easyui-dialog" title="编辑科目" style="width:450px;height:600px;font-size:14pt;" data-options="resizable:false,modal:true,closed: true">
+    <div id="editDialog" class="easyui-dialog" title="编辑科目" style="width:450px;height:600px;font-size:14pt;" data-options="resizable:false,modal:true,closed: true,onClose:editOnClose">
         <form id="acctForm" method="post">
 
             <div>
@@ -178,11 +178,6 @@
         $("#editDialog").dialog('open');
     }
 
-    //function editOnBeforeOpen()
-    //{
-    //    $("#CateId").combobox('reload', '/api/a/GetSubAccCate?cid=' + $("#dataCache").data("AccCate"));
-    //}
-
     function save()
     {
         //辅助核算
@@ -217,10 +212,13 @@
 
     function cancel()
     {
+        $("#editDialog").dialog('close');
+    }
+    function editOnClose()
+    {
         $("#auxItems").hide();
         $("#qtyUnit").hide();
         $('#acctForm').form('clear');
-        $("#editDialog").dialog('close');
     }
 
     function cateOnClick(cateId)
@@ -352,8 +350,8 @@
 
         $.messager.confirm('删除', '您确定要删除该科目吗？删除后不能再恢复。', function (r) {
             if (r) {
-                $.post("/api/a/Delete", { accId: row.accId }, function (data) {
-                    formSuccessHandle(data);
+                $.post("/api/a/Delete?accId="+row.accId, null, function (data) {
+                    formSuccess(data);
                 }).fail(function () { $.messager.alert("操作失败", "删除科目操作失败", "warning"); });
             }
         });

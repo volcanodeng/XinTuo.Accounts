@@ -53,6 +53,12 @@ namespace XinTuo.Accounts.Services
             return accounts;
         }
 
+        private void ClearAccountsCache()
+        {
+            int comId = _company.GetCurrentCompanyId();
+            _cache.Remove(Common.GetAccountsCacheName(comId));
+        }
+
         public AccountRecord GetAccount(int id)
         {
             return this.GetAccountsOfCompany().Where(a => a.Id == id).FirstOrDefault();
@@ -103,7 +109,7 @@ namespace XinTuo.Accounts.Services
                 _account.Update(acc);
             }
 
-            _cache.Remove(Common.GetAccountsCacheName(_company.GetCurrentCompanyId()));
+            this.ClearAccountsCache();
         }
 
         public void DeleteAccount(int accId)
@@ -112,6 +118,8 @@ namespace XinTuo.Accounts.Services
             if(accRec !=  null)
             {
                 _account.Delete(accRec);
+
+                this.ClearAccountsCache();
             }
             else
             {
