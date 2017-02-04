@@ -38,6 +38,13 @@ namespace XinTuo.Accounts.Controllers
             return new ShapeResult(this,_orchard.New.Account(Category : cates, AuxiliaryType: auxType));
         }
 
+        public ActionResult InitialBalance()
+        {
+            List<AccountCategoryRecord> cates = _accCategory.GetMainAccountCategory();
+
+            return new ShapeResult(this, _orchard.New.InitialBalance(Category: cates));
+        }
+
         public ActionResult CertWord()
         {
             return new ShapeResult(this, _orchard.New.CertWord());

@@ -1,0 +1,157 @@
+﻿
+@using XinTuo.Accounts.Models;
+@{
+    List<AccountCategoryRecord> cates = Model.Category;
+}
+
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    @Html.Partial("ResourcePartial")
+
+    <style type="text/css">
+        .datagrid-header-row td div {
+            text-align: center !important;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="easyui-layout" data-options="fit:true">
+        <div data-options="region:'north',split:false,border:false" style="padding:10px;overflow:hidden;">
+            @foreach (AccountCategoryRecord c in cates)
+            {
+                <a href="javascript:void(0)" id="cate_@c.Id" class="easyui-linkbutton"
+                   data-options="iconCls:'icon-large-picture',size:'large',iconAlign:'left',toggle:true,group:'g1'"
+                   onclick="cateOnClick(@c.Id)" style="width:80px;">@c.CateName</a>
+            }
+        </div>
+        <div data-options="region:'center',border:false" style="padding:10px;">
+            <table class="easyui-datagrid" id="dgBalance"
+                   data-options="singleSelect:true,toolbar: '#tbBalance',fitColumns:true,idField:'accId',pagination:true,fit:true,pageList:[10,50,100],pageSize:100,onSelect:onDgSelect">
+                <thead>
+                    <tr>
+                        <th data-options="field:'accCode',width:80,formatter:formatterAccCode">@T("编码")</th>
+                        <th data-options="field:'accName',width:150,formatter:formatterAccCode">@T("名称")</th>
+                        <th data-options="field:'direction',align:'center',width:50">@T("余额方向")</th>
+                        <th data-options="field:'initialBalance',align:'right',width:150,editor:{type:'numberbox',options:{precision:2}}">@T("期初余额")</th>
+                        <th data-options="field:'YtdDebit',align:'right',width:150,editor:{type:'numberbox',options:{precision:2}}">@T("本年累计借方")</th>
+                        <th data-options="field:'YtdCredit',align:'right',width:150,editor:{type:'numberbox',options:{precision:2}}">@T("本年累计贷方")</th>
+                        <th data-options="field:'YtdBeginBalance',align:'right',width:150">@T("年初余额")</th>
+                    </tr>
+                </thead>
+            </table>
+
+            <div id="tbBalance">
+                <a href="javascript:void(0)" class="easyui-linkbutton" data-options="plain:true" onclick="save()">保存</a>
+                <a href="javascript:void(0)" class="easyui-linkbutton" data-options="plain:true" onclick="balance()">试算平衡</a>
+               
+            </div>
+        </div>
+    </div>
+
+    <div id="dataCache"></div>
+
+
+
+    <script type="text/javascript">
+
+
+    $(function () {
+        init();
+    });
+
+    function init()
+    {
+        
+        //默认类别
+        $("#cate_1").linkbutton("select");
+        cateOnClick(1);
+    }
+
+    
+
+    function save()
+    {
+        //辅助核算
+        var auxIds = $.map($("#auxItems > input:checked"), function (n) { return $(n).attr("auxval"); }).join(",");
+        var auxNames = $.map($("#auxItems > input:checked"), function (n) { return $(n).attr("aux"); }).join(",");
+        $("#AuxTypeIds").val(auxIds);
+        $("#AuxTypeNames").val(auxNames);
+
+        //余额方向
+        $("#Direction").val( $("#dirGroup > input:checked").val());
+
+        //科目类型
+        $("#acctTopCate",this.context).val($("#dataCache").data("AccCate"));
+
+        $("#acctForm").submit();
+    }
+
+   
+
+    function cateOnClick(cateId)
+    {
+        $("#dataCache").data("AccCate",cateId);
+        var dgCache = $("#dataCache").data("account"+cateId);
+
+        if(dgCache == undefined)
+        {
+            $.get("/api/a/GetAccounts/",{cateid : cateId},function(data){
+                $("#accDatagrid").datagrid("loadData", data);
+                $("#dataCache").data("account" + cateId, data);
+            });
+        }
+        else
+        {
+            $("#accDatagrid").datagrid("loadData", dgCache);
+        }
+
+    }
+
+
+    function formatterAccState(value,row,index)
+    {
+        return value == 1?"已启用":"已禁用";
+    }
+
+    function formatterAccCode(value,row,index)
+    {
+        if(row.accCode.length > 4)
+        {
+            return "&nbsp;&nbsp;&nbsp;&nbsp;"+value;
+        }
+
+        return value;
+    }
+
+    function onDgSelect(index, row)
+    {
+        var token = "@Html.AntiForgeryTokenValueOrchard()";
+        
+
+        
+
+        
+    }
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    </script>
+
+
+</body>
+</html>
