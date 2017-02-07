@@ -32,7 +32,7 @@
         </div>
         <div data-options="region:'center',border:false" style="padding:10px;">
             <table class="easyui-datagrid" id="dgBalance"
-                   data-options="singleSelect:true,toolbar: '#tbBalance',fitColumns:true,idField:'accId',pagination:true,fit:true,pageList:[10,50,100],pageSize:100,onSelect:onDgSelect">
+                   data-options="singleSelect:true,toolbar: '#tbBalance',fitColumns:true,idField:'accId',pagination:true,fit:true,pageList:[10,50,100],pageSize:100,onClickCell: onClickCell">
                 <thead>
                     <tr>
                         <th data-options="field:'accCode',width:80,formatter:formatterAccCode">@T("编码")</th>
@@ -67,32 +67,21 @@
 
     function init()
     {
-        
+        easyuiVar.dg = $("#dgBalance");
+
         //默认类别
         $("#cate_1").linkbutton("select");
         cateOnClick(1);
     }
 
-    
+
 
     function save()
     {
-        //辅助核算
-        var auxIds = $.map($("#auxItems > input:checked"), function (n) { return $(n).attr("auxval"); }).join(",");
-        var auxNames = $.map($("#auxItems > input:checked"), function (n) { return $(n).attr("aux"); }).join(",");
-        $("#AuxTypeIds").val(auxIds);
-        $("#AuxTypeNames").val(auxNames);
-
-        //余额方向
-        $("#Direction").val( $("#dirGroup > input:checked").val());
-
-        //科目类型
-        $("#acctTopCate",this.context).val($("#dataCache").data("AccCate"));
-
-        $("#acctForm").submit();
+        var token = "@Html.AntiForgeryTokenValueOrchard()";
     }
 
-   
+
 
     function cateOnClick(cateId)
     {
@@ -102,22 +91,17 @@
         if(dgCache == undefined)
         {
             $.get("/api/a/GetAccounts/",{cateid : cateId},function(data){
-                $("#accDatagrid").datagrid("loadData", data);
+                $("#dgBalance").datagrid("loadData", data);
                 $("#dataCache").data("account" + cateId, data);
             });
         }
         else
         {
-            $("#accDatagrid").datagrid("loadData", dgCache);
+            $("#dgBalance").datagrid("loadData", dgCache);
         }
 
     }
 
-
-    function formatterAccState(value,row,index)
-    {
-        return value == 1?"已启用":"已禁用";
-    }
 
     function formatterAccCode(value,row,index)
     {
@@ -129,27 +113,26 @@
         return value;
     }
 
-    function onDgSelect(index, row)
-    {
-        var token = "@Html.AntiForgeryTokenValueOrchard()";
-        
-
-        
-
-        
+    function append() {
+        if (endEditing()) {
+            easyuiVar.dg.datagrid('appendRow', { pdid: 0, quantity: 0 });
+            easyuiVar.editIndex = easyuiVar.dg.datagrid('getRows').length - 1;
+            easyuiVar.dg.datagrid('selectRow', easyuiVar.editIndex)
+                    .datagrid('beginEdit', easyuiVar.editIndex);
+        }
     }
 
-    
+    function removeit() {
+        if (endEditing()) {
+            var selRow = easyuiVar.dg.datagrid("getSelected");
+            if (selRow) {
+                easyuiVar.dg.datagrid('deleteRow', easyuiVar.dg.datagrid("getRowIndex", selRow));
+                easyuiVar.editIndex = undefined;
 
-    
-
-    
-
-    
-
-    
-
-    
+            }
+        }
+    }
+  
     </script>
 
 
