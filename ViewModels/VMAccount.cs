@@ -103,4 +103,12 @@ namespace XinTuo.Accounts.ViewModels
         }
 
     }
+
+    public class VMAccountsWrap
+    {
+        public VMAccount[] Accounts
+        {
+            get;set;
+        }
+    }
 }

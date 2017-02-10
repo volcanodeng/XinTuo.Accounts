@@ -42,7 +42,7 @@ namespace XinTuo.Accounts.Controllers
         {
             List<AccountCategoryRecord> cates = _accCategory.GetMainAccountCategory();
 
-            return new ShapeResult(this, _orchard.New.InitialBalance(Category: cates));
+            return new ShapeResult(this, _orchard.New.InitialBalance(Category: cates, HasQuantity:0));
         }
 
         public ActionResult CertWord()

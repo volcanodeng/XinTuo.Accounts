@@ -72,7 +72,7 @@ namespace XinTuo.Accounts.Controllers.Api
         [HttpPost]
         [ActionName("SaveInitData")]
         [System.Web.Mvc.ValidateAntiForgeryToken]
-        public IHttpActionResult SaveAccounts([FromBody]List<VMAccount> accounts)
+        public IHttpActionResult SaveAccounts(VMAccountsWrap accounts)
         {
             string err;
             if (!ModelValidHelper.ModelValid(ModelState, out err))
@@ -86,7 +86,7 @@ namespace XinTuo.Accounts.Controllers.Api
                 throw new HttpResponseException(msg);
             }
 
-            _account.SaveAccountInitData(accounts.ToArray());
+            _account.SaveAccountInitData(accounts.Accounts);
 
             return Ok(1);
         }
