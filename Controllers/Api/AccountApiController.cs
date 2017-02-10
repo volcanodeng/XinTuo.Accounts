@@ -4,6 +4,7 @@ using XinTuo.Accounts.ViewModels;
 using Orchard;
 using Orchard.Localization;
 using System;
+using System.Collections.Generic;
 
 
 namespace XinTuo.Accounts.Controllers.Api
@@ -64,6 +65,28 @@ namespace XinTuo.Accounts.Controllers.Api
             }
 
             _account.SaveAccount(account);
+
+            return Ok(1);
+        }
+
+        [HttpPost]
+        [ActionName("SaveInitData")]
+        [System.Web.Mvc.ValidateAntiForgeryToken]
+        public IHttpActionResult SaveAccounts([FromBody]List<VMAccount> accounts)
+        {
+            string err;
+            if (!ModelValidHelper.ModelValid(ModelState, out err))
+            {
+                return BadRequest(err);
+            }
+
+            if (!_orchard.Authorizer.Authorize(Permissions.ModifyAccount))
+            {
+                var msg = new ApiResponse("未授权访问", System.Net.HttpStatusCode.Unauthorized);
+                throw new HttpResponseException(msg);
+            }
+
+            _account.SaveAccountInitData(accounts.ToArray());
 
             return Ok(1);
         }

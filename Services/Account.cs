@@ -112,6 +112,29 @@ namespace XinTuo.Accounts.Services
             this.ClearAccountsCache();
         }
 
+        public void SaveAccountInitData(VMAccount[] accounts)
+        {
+            foreach (VMAccount acc in accounts)
+            {
+                if (acc.AccId > 0)
+                {
+                    AccountRecord a = _account.Get(acc.AccId);
+                    a.InitialQuantity = acc.InitialQuantity;
+                    a.InitialBalance = acc.InitialBalance;
+                    a.YtdDebitQuantity = acc.YtdDebitQuantity;
+                    a.YtdDebit = acc.YtdDebit;
+                    a.YtdCreditQuantity = acc.YtdCreditQuantity;
+                    a.YtdCredit = acc.YtdCredit;
+                    a.YtdBeginBalanceQuantity = acc.YtdBeginBalanceQuantity;
+                    a.YtdBeginBalance = acc.YtdBeginBalance;
+
+                    _account.Update(a);
+                }
+            }
+
+            this.ClearAccountsCache();
+        }
+
         public void DeleteAccount(int accId)
         {
             AccountRecord accRec = _account.Get(accId);

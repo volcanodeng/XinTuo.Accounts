@@ -18,6 +18,8 @@ namespace XinTuo.Accounts.Services
 
         void SaveAccount(VMAccount account);
 
+        void SaveAccountInitData(VMAccount[] accounts);
+
         void DeleteAccount(int accId);
     }
 }
