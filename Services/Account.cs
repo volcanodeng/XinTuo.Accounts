@@ -75,6 +75,13 @@ namespace XinTuo.Accounts.Services
             return _mapper.Map<List<AccountRecord>, List<VMAccount>>(accounts);
         }
 
+        public bool HasQuantity(int cateId)
+        {
+            var accounts = this.GetAccounts(cateId);
+
+            return accounts.Any(a => a.IsQuantity == 1);
+        }
+
         public void SaveAccount(VMAccount account)
         {
             if (account.AccId <= 0)

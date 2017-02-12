@@ -2,7 +2,7 @@
 @using XinTuo.Accounts.Models;
 @{
     List<AccountCategoryRecord> cates = Model.Category;
-    int hasQuantity = Model.HasQuantity;
+    bool hasQuantity = Model.HasQuantity;
 }
 
 
@@ -30,13 +30,13 @@
         <div data-options="region:'north',split:false,border:false" style="padding:10px;overflow:hidden;">
             @foreach (AccountCategoryRecord c in cates)
             {
-                <a href="javascript:void(0)" id="cate_@c.Id" class="easyui-linkbutton"
+                <a href="javascript:void(0)" id="cate_@c.Id" class="easyui-linkbutton cate"
                    data-options="iconCls:'icon-large-picture',size:'large',iconAlign:'left',toggle:true,group:'g1'"
                    onclick="cateOnClick(@c.Id)" style="width:80px;">@c.CateName</a>
             }
         </div>
         <div data-options="region:'center',border:false" style="padding:10px;">
-            @if (hasQuantity != 1)
+            @if (hasQuantity)
             {
             <table class="easyui-datagrid" id="dgBalance"
                    data-options="singleSelect:true,toolbar: '#tbBalance',fitColumns:true,idField:'accId',pagination:true,fit:true,pageList:[10,50,100],pageSize:100,onClickCell: onClickCell">
@@ -105,8 +105,8 @@
         easyuiVar.dg = $("#dgBalance");
 
         //默认类别
-        $("#cate_1").linkbutton("select");
-        cateOnClick(1);
+        $(".cate:first").linkbutton("select");
+        $(".cate:first").click();
     }
 
 

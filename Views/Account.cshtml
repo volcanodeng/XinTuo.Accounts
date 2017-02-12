@@ -35,7 +35,7 @@
         <div data-options="region:'north',split:false,border:false" style="padding:10px;overflow:hidden;">
             @foreach (AccountCategoryRecord c in cates)
             {
-                <a href="javascript:void(0)" id="cate_@c.Id" class="easyui-linkbutton"
+                <a href="javascript:void(0)" id="cate_@c.Id" class="easyui-linkbutton cate"
                    data-options="iconCls:'icon-large-picture',size:'large',iconAlign:'left',toggle:true,group:'g1'"
                    onclick="cateOnClick(@c.Id)" style="width:80px;">@c.CateName</a>
             }
@@ -166,8 +166,9 @@
         });
         $("#qtyUnit").hide();
         //默认类别
-        $("#cate_1").linkbutton("select");
-        cateOnClick(1);
+        $(".cate:first").linkbutton("select");
+        $(".cate:first").click();
+        
     }
 
     function append()

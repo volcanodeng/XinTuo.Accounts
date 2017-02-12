@@ -18,15 +18,18 @@ namespace XinTuo.Accounts.Controllers
         private readonly IOrchardServices _orchard;
         private readonly IAccountCategory _accCategory;
         private readonly IAuxiliary _auxiliary;
+        private readonly IAccount _account;
 
 
         public AccountController(IOrchardServices orchard,
                                  IAccountCategory accCategory, 
-                                 IAuxiliary auxiliary)
+                                 IAuxiliary auxiliary,
+                                 IAccount account)
         {
             _orchard = orchard;
             _accCategory = accCategory;
             _auxiliary = auxiliary;
+            _account = account;
         }
 
 
@@ -41,8 +44,9 @@ namespace XinTuo.Accounts.Controllers
         public ActionResult InitialBalance()
         {
             List<AccountCategoryRecord> cates = _accCategory.GetMainAccountCategory();
+            var firstCate = cates.FirstOrDefault();
 
-            return new ShapeResult(this, _orchard.New.InitialBalance(Category: cates, HasQuantity:0));
+            return new ShapeResult(this, _orchard.New.InitialBalance(Category: cates, HasQuantity: _account.HasQuantity(firstCate.Id)));
         }
 
         public ActionResult CertWord()

@@ -16,6 +16,8 @@ namespace XinTuo.Accounts.Services
 
         List<VMAccount> GetVMAccounts(int cateId);
 
+        bool HasQuantity(int cateId);
+
         void SaveAccount(VMAccount account);
 
         void SaveAccountInitData(VMAccount[] accounts);
