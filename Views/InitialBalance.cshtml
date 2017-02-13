@@ -2,7 +2,7 @@
 @using XinTuo.Accounts.Models;
 @{
     List<AccountCategoryRecord> cates = Model.Category;
-    bool hasQuantity = Model.HasQuantity;
+    string qCate = Model.QuantityCategory;
 }
 
 
@@ -36,53 +36,58 @@
             }
         </div>
         <div data-options="region:'center',border:false" style="padding:10px;">
-            @if (hasQuantity)
-            {
-            <table class="easyui-datagrid" id="dgBalance"
-                   data-options="singleSelect:true,toolbar: '#tbBalance',fitColumns:true,idField:'accId',pagination:true,fit:true,pageList:[10,50,100],pageSize:100,onClickCell: onClickCell">
-                <thead>
-                    <tr>
-                        <th data-options="field:'accCode',width:80,formatter:formatterAccCode">@T("编码")</th>
-                        <th data-options="field:'accName',width:150,formatter:formatterAccCode">@T("名称")</th>
-                        <th data-options="field:'direction',align:'center',width:50">@T("余额方向")</th>
-                        <th data-options="field:'initialBalance',align:'right',width:150,editor:{type:'numberbox',options:{precision:2,formatter:formatterNumber}}">@T("期初余额")</th>
-                        <th data-options="field:'ytdDebit',align:'right',width:150,editor:{type:'numberbox',options:{precision:2,formatter:formatterNumber}}">@T("本年累计借方")</th>
-                        <th data-options="field:'ytdCredit',align:'right',width:150,editor:{type:'numberbox',options:{precision:2,formatter:formatterNumber}}">@T("本年累计贷方")</th>
-                        <th data-options="field:'ytdBeginBalance',align:'right',width:150,formatter:formatterNumber">@T("年初余额")</th>
-                    </tr>
-                </thead>
-            </table>
-            }else{ 
-            <table class="easyui-datagrid" id="dgBalance"
-                   data-options="singleSelect:true,toolbar: '#tbBalance',fitColumns:true,idField:'accId',pagination:true,fit:true,pageList:[10,50,100],pageSize:100,onClickCell: onClickCell">
-                <thead>
-                    <tr>
-                        <th rowspan="2" data-options="field:'accCode',width:80,formatter:formatterAccCode">@T("编码")</th>
-                        <th rowspan="2" data-options="field:'accName',width:150,formatter:formatterAccCode">@T("名称")</th>
-                        <th rowspan="2" data-options="field:'direction',align:'center',width:50">@T("余额方向")</th>
-                        <th colspan="2">@T("期初余额")</th>
-                        <th colspan="2">@T("本年累计借方")</th>
-                        <th colspan="2">@T("本年累计贷方")</th>
-                        <th colspan="2">@T("年初余额")</th>
-                    </tr>
-                    <tr>
-                        
-                        <th data-options="field:'initialQuantity',align:'right',width:150,editor:{type:'numberbox',options:{precision:10,formatter:formatterNumber}}">@T("数量")</th>
-                        <th data-options="field:'initialBalance',align:'right',width:150,editor:{type:'numberbox',options:{precision:2,formatter:formatterNumber}}">@T("金额")</th>
-                        <th data-options="field:'ytdDebitQuantity',align:'right',width:150,editor:{type:'numberbox',options:{precision:10,formatter:formatterNumber}}">@T("数量")</th>
-                        <th data-options="field:'ytdDebit',align:'right',width:150,editor:{type:'numberbox',options:{precision:2,formatter:formatterNumber}}">@T("金额")</th>
-                        <th data-options="field:'ytdCreditQuantity',align:'right',width:150,editor:{type:'numberbox',options:{precision:10,formatter:formatterNumber}}">@T("数量")</th>
-                        <th data-options="field:'ytdCredit',align:'right',width:150,editor:{type:'numberbox',options:{precision:2,formatter:formatterNumber}}">@T("金额")</th>
-                        <th data-options="field:'ytdBeginBalanceQuantity',align:'right',width:150,editor:{type:'numberbox',options:{precision:10,formatter:formatterNumber}}">@T("数量")</th>
-                        <th data-options="field:'ytdBeginBalance',align:'right',width:150,formatter:formatterNumber">@T("金额")</th>
-                    </tr>
-                </thead>
-            </table>
-            }
+            <div class="easyui-panel" id="divBalance" data-options="fit:true,border:false">
+                <table class="easyui-datagrid" id="dgBalance"
+                       data-options="singleSelect:true,toolbar: '#tbBalance',fitColumns:true,idField:'accId',pagination:true,fit:true,pageList:[10,50,100],pageSize:100,onClickCell: onClickCell">
+                    <thead>
+                        <tr>
+                            <th data-options="field:'accCode',width:80,formatter:formatterAccCode">@T("编码")</th>
+                            <th data-options="field:'accName',width:150,formatter:formatterAccCode">@T("名称")</th>
+                            <th data-options="field:'direction',align:'center',width:50">@T("余额方向")</th>
+                            <th data-options="field:'initialBalance',align:'right',width:150,editor:{type:'numberbox',options:{precision:2,formatter:formatterNumber}}">@T("期初余额")</th>
+                            <th data-options="field:'ytdDebit',align:'right',width:150,editor:{type:'numberbox',options:{precision:2,formatter:formatterNumber}}">@T("本年累计借方")</th>
+                            <th data-options="field:'ytdCredit',align:'right',width:150,editor:{type:'numberbox',options:{precision:2,formatter:formatterNumber}}">@T("本年累计贷方")</th>
+                            <th data-options="field:'ytdBeginBalance',align:'right',width:150,formatter:formatterNumber">@T("年初余额")</th>
+                        </tr>
+                    </thead>
+                </table>
+            </div>
+            <div class="easyui-panel" id="divBalanceQ" data-options="fit:true,border:false">
+                <table class="easyui-datagrid" id="dgBalanceQ"
+                       data-options="singleSelect:true,toolbar: '#tbBalanceQ',fitColumns:true,idField:'accId',pagination:true,fit:true,pageList:[10,50,100],pageSize:100,onClickCell: onClickCell">
+                    <thead>
+                        <tr>
+                            <th rowspan="2" data-options="field:'accCode',width:80,formatter:formatterAccCode">@T("编码")</th>
+                            <th rowspan="2" data-options="field:'accName',width:150,formatter:formatterAccCode">@T("名称")</th>
+                            <th rowspan="2" data-options="field:'direction',align:'center',width:50">@T("余额方向")</th>
+                            <th colspan="2">@T("期初余额")</th>
+                            <th colspan="2">@T("本年累计借方")</th>
+                            <th colspan="2">@T("本年累计贷方")</th>
+                            <th colspan="2">@T("年初余额")</th>
+                        </tr>
+                        <tr>
+
+                            <th data-options="field:'initialQuantity',align:'right',width:150,editor:{type:'numberbox',options:{precision:10,formatter:formatterNumber}}">@T("数量")</th>
+                            <th data-options="field:'initialBalance',align:'right',width:150,editor:{type:'numberbox',options:{precision:2,formatter:formatterNumber}}">@T("金额")</th>
+                            <th data-options="field:'ytdDebitQuantity',align:'right',width:150,editor:{type:'numberbox',options:{precision:10,formatter:formatterNumber}}">@T("数量")</th>
+                            <th data-options="field:'ytdDebit',align:'right',width:150,editor:{type:'numberbox',options:{precision:2,formatter:formatterNumber}}">@T("金额")</th>
+                            <th data-options="field:'ytdCreditQuantity',align:'right',width:150,editor:{type:'numberbox',options:{precision:10,formatter:formatterNumber}}">@T("数量")</th>
+                            <th data-options="field:'ytdCredit',align:'right',width:150,editor:{type:'numberbox',options:{precision:2,formatter:formatterNumber}}">@T("金额")</th>
+                            <th data-options="field:'ytdBeginBalanceQuantity',align:'right',width:150,editor:{type:'numberbox',options:{precision:10,formatter:formatterNumber}}">@T("数量")</th>
+                            <th data-options="field:'ytdBeginBalance',align:'right',width:150,formatter:formatterNumber">@T("金额")</th>
+                        </tr>
+                    </thead>
+                </table>
+            </div>
             <div id="tbBalance">
                 <a href="javascript:void(0)" class="easyui-linkbutton" data-options="plain:true" onclick="save()">保存</a>
                 <a href="javascript:void(0)" class="easyui-linkbutton" data-options="plain:true" onclick="balance()">试算平衡</a>
                
+            </div>
+            <div id="tbBalanceQ">
+                <a href="javascript:void(0)" class="easyui-linkbutton" data-options="plain:true" onclick="save()">保存</a>
+                <a href="javascript:void(0)" class="easyui-linkbutton" data-options="plain:true" onclick="balance()">试算平衡</a>
+
             </div>
         </div>
     </div>
@@ -96,17 +101,24 @@
         var addItemData = {};
         var af_token = "@Html.AntiForgeryTokenValueOrchard()";
 
+        var qCate = ","+"@qCate"+",";
+
     $(function () {
         init();
     });
 
     function init()
     {
-        easyuiVar.dg = $("#dgBalance");
 
         //默认类别
         $(".cate:first").linkbutton("select");
         $(".cate:first").click();
+    }
+
+    function resetDg()
+    {
+        $("#divBalanceQ").hide();
+        $("#divBalance").hide();
     }
 
 
@@ -115,7 +127,7 @@
     {
         if (endEditing()) {
             var changeDatas = [];
-            var change = $("#dgBalance").datagrid("getChanges");
+            var change = easyuiVar.dg.datagrid("getChanges");
             $.each(change, function (i, row) {
                 changeDatas.push({
                     AccId: row.accId,
@@ -146,19 +158,33 @@
 
     function cateOnClick(cateId)
     {
+        resetDg();
+        var isQuan = qCate.indexOf("," + cateId + ",") > -1;
+        easyuiVar.dg = isQuan ? $("#dgBalanceQ") : $("#dgBalance");
+        if (isQuan)
+        {
+            $("#divBalanceQ").show();
+            $("#divBalance").hide();
+        }
+        else
+        {
+            $("#divBalanceQ").hide();
+            $("#divBalance").show();
+        }
+
         $("#dataCache").data("AccCate",cateId);
         var dgCache = $("#dataCache").data("account"+cateId);
 
         if(dgCache == undefined)
         {
             $.get("/api/a/GetAccounts/",{cateid : cateId},function(data){
-                $("#dgBalance").datagrid("loadData", data);
+                easyuiVar.dg.datagrid("loadData", data);
                 $("#dataCache").data("account" + cateId, data);
             });
         }
         else
         {
-            $("#dgBalance").datagrid("loadData", dgCache);
+            easyuiVar.dg.datagrid("loadData", dgCache);
         }
 
     }

@@ -44,9 +44,9 @@ namespace XinTuo.Accounts.Controllers
         public ActionResult InitialBalance()
         {
             List<AccountCategoryRecord> cates = _accCategory.GetMainAccountCategory();
-            var firstCate = cates.FirstOrDefault();
+            var qCate = _account.QuantityCategory();
 
-            return new ShapeResult(this, _orchard.New.InitialBalance(Category: cates, HasQuantity: _account.HasQuantity(firstCate.Id)));
+            return new ShapeResult(this, _orchard.New.InitialBalance(Category: cates, QuantityCategory: string.Join(",", qCate)));
         }
 
         public ActionResult CertWord()

@@ -21,6 +21,7 @@ namespace XinTuo.Accounts.Services
         private readonly ICompany _company;
         private readonly IAuthenticationService _authService;
         private readonly ICacheService _cache;
+        private readonly IAccountCategory _accCate;
 
         public Account(IContentManager contentManager,
                        IRepository<AccountCategoryRecord> accCategory,
@@ -28,7 +29,8 @@ namespace XinTuo.Accounts.Services
                        IMapper mapper,
                        ICompany company,
                        IAuthenticationService authService,
-                       ICacheService cache)
+                       ICacheService cache,
+                       IAccountCategory accCate)
         {
             _contentManager = contentManager;
             _accCategoryRepository = accCategory;
@@ -37,6 +39,7 @@ namespace XinTuo.Accounts.Services
             _company = company;
             _authService = authService;
             _cache = cache;
+            _accCate = accCate;
         }
 
         private List<AccountRecord> GetAccountsOfCompany()
@@ -75,11 +78,15 @@ namespace XinTuo.Accounts.Services
             return _mapper.Map<List<AccountRecord>, List<VMAccount>>(accounts);
         }
 
-        public bool HasQuantity(int cateId)
+        public List<int> QuantityCategory()
         {
-            var accounts = this.GetAccounts(cateId);
-
-            return accounts.Any(a => a.IsQuantity == 1);
+            List<AccountCategoryRecord> cates = _accCate.GetMainAccountCategory();
+            List<int> qCate = new List<int>();
+            foreach(AccountCategoryRecord c in cates)
+            {
+                if (this.GetAccounts(c.Id).Any(a => a.IsQuantity == 1)) qCate.Add(c.Id);
+            }
+            return qCate;
         }
 
         public void SaveAccount(VMAccount account)
@@ -132,8 +139,9 @@ namespace XinTuo.Accounts.Services
                     a.YtdDebit = acc.YtdDebit;
                     a.YtdCreditQuantity = acc.YtdCreditQuantity;
                     a.YtdCredit = acc.YtdCredit;
-                    a.YtdBeginBalanceQuantity = acc.YtdBeginBalanceQuantity;
-                    a.YtdBeginBalance = acc.YtdBeginBalance;
+                    a.YtdBeginBalanceQuantity = a.InitialQuantity - a.YtdDebitQuantity + a.YtdCreditQuantity;
+                    a.YtdBeginBalance = a.InitialBalance - a.YtdDebit + a.YtdCredit;
+
 
                     _account.Update(a);
                 }
