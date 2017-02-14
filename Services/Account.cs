@@ -75,7 +75,21 @@ namespace XinTuo.Accounts.Services
         public List<VMAccount> GetVMAccounts(int cateId)
         {
             var accounts = GetAccounts(cateId);
-            return _mapper.Map<List<AccountRecord>, List<VMAccount>>(accounts);
+            List<VMAccount> vmAccounts = _mapper.Map<List<AccountRecord>, List<VMAccount>>(accounts);
+
+            foreach (VMAccount a in vmAccounts)
+            {
+                if (a.IsAuxiliary == "on" || vmAccounts.Any(acc => acc.ParentCode == a.AccCode))
+                {
+                    a.HasChildren = true;
+                }
+                else
+                {
+                    a.HasChildren = false;
+                }
+            }
+
+            return vmAccounts;
         }
 
         public List<int> QuantityCategory()

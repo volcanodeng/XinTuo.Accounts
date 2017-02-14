@@ -102,6 +102,8 @@ namespace XinTuo.Accounts.ViewModels
             get;set;
         }
 
+        public bool HasChildren { get; set; }
+
     }
 
     public class VMAccountsWrap
