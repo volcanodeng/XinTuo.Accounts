@@ -212,6 +212,7 @@
     <Compile Include="Services\IFiscalSystem.cs" />
     <Compile Include="Services\IRegion.cs" />
     <Compile Include="Services\Region.cs" />
+    <Compile Include="ViewModels\VMAccountAuxItem.cs" />
     <Compile Include="ViewModels\VMCertWord.cs" />
     <Compile Include="ViewModels\VMFiscalSystem.cs" />
     <Compile Include="ViewModels\VMAccount.cs" />

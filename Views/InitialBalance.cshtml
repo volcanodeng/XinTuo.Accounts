@@ -14,6 +14,14 @@
     @Html.Partial("ResourcePartial")
 
     <style type="text/css">
+        #auxForm div {
+            padding: 10px;
+        }
+
+        #auxForm input {
+            font-size: 14pt;
+        }
+
         .datagrid-header-row td
         {
             vertical-align:middle;
@@ -95,16 +103,32 @@
 
     <div id="dataCache"></div>
 
-    <div id="addDetail" class="easyui-dialog" title="增加明细" style="width:400px;height:400px;"
+    <div id="addDetail" class="easyui-dialog" title="增加明细" style="width:400px;height:500px;"
          data-options="resizable:false,modal:true,closed:true">
-        Dialog Content.
+        <div class="easyui-panel" data-options="fit:true,border:false">
+            
+                <div>
+                    <input class="easyui-textbox" id="AccName" name="AccName" data-options="label:'@T("科目名称")',disabled:true" style="width:90%;height:32px">
+                </div>
+                <div>辅助核算:</div>
+                <div><input class="easyui-combobox" id="auxCustom" name="auxCustom" data-options="label:'@T("客户")',valueField:'auxId',textField:'auxName',url:'/api/x/GetAuxiliary?auxTypeId=1',editable:false" style="width:90%;height:32px"></div>
+                <div><input class="easyui-combobox" id="auxSuppliers" name="auxSuppliers" data-options="label:'@T("供应商")',valueField:'auxId',textField:'auxName',url:'/api/x/GetAuxiliary?auxTypeId=2',editable:false" style="width:90%;height:32px"></div>
+                <div><input class="easyui-combobox" id="auxEmployee" name="auxEmployee" data-options="label:'@T("职员")',valueField:'auxId',textField:'auxName',url:'/api/x/GetAuxiliary?auxTypeId=3',editable:false" style="width:90%;height:32px"></div>
+                <div><input class="easyui-combobox" id="auxProject" name="auxProject" data-options="label:'@T("项目")',valueField:'auxId',textField:'auxName',url:'/api/x/GetAuxiliary?auxTypeId=4',editable:false" style="width:90%;height:32px"></div>
+                <div><input class="easyui-combobox" id="auxSector" name="auxSector" data-options="label:'@T("部门")',valueField:'auxId',textField:'auxName',url:'/api/x/GetAuxiliary?auxTypeId=5',editable:false" style="width:90%;height:32px"></div>
+                <div><input class="easyui-combobox" id="auxInventory" name="auxInventory" data-options="label:'@T("存货")',valueField:'auxId',textField:'auxName',url:'/api/x/GetAuxiliary?auxTypeId=6',editable:false" style="width:90%;height:32px"></div>
+                <div style="float:right;">
+                    <a id="btnYes" href="#" class="easyui-linkbutton" onclick="addAuxItem()" data-options="width:80">确定</a>
+                    <a id="btnNo" href="#" class="easyui-linkbutton" onclick="closeAuxItem()" data-options="width:80">取消</a>
+                </div>
+            
+        </div>
     </div>
 
 
 
     <script type="text/javascript">
 
-        var addItemData = {};
         var af_token = "@Html.AntiForgeryTokenValueOrchard()";
 
         var qCate = ","+"@qCate"+",";
@@ -126,8 +150,6 @@
         $("#divBalanceQ").hide();
         $("#divBalance").hide();
     }
-
-
 
     function save()
     {
@@ -159,8 +181,6 @@
             });
         }
     }
-
-
 
     function cateOnClick(cateId)
     {
@@ -251,9 +271,13 @@
         }
     }
 
-    function fieldSettingFun(index,dg)
+    function addAuxItem()
     {
-
+        $.post("");
+    }
+    function closeAuxItem()
+    {
+        $("#addDetail").dialog("close");
     }
 
     </script>

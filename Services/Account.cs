@@ -62,6 +62,27 @@ namespace XinTuo.Accounts.Services
             _cache.Remove(Common.GetAccountsCacheName(comId));
         }
 
+        private void SynParentAccount(AccountRecord account)
+        {
+            List<AccountRecord> accounts = _account.Fetch(a => a.CompanyRecord.Id == _company.GetCurrentCompanyId()).ToList(); ;
+            AccountRecord parent = accounts.Where(a => a.AccCode == account.ParentCode).FirstOrDefault();
+            List<AccountRecord> childAccs = accounts.Where(a => a.ParentCode == account.ParentCode).ToList();
+
+            if(parent != null)
+            {
+                parent.InitialBalance = childAccs.Sum(a => a.InitialBalance);
+                parent.InitialQuantity = childAccs.Sum(a => a.InitialQuantity);
+                parent.YtdDebit = childAccs.Sum(a => a.YtdDebit);
+                parent.YtdDebitQuantity = childAccs.Sum(a => a.YtdDebitQuantity);
+                parent.YtdCredit = childAccs.Sum(a => a.YtdCredit);
+                parent.YtdCreditQuantity = childAccs.Sum(a => a.YtdCreditQuantity);
+                parent.YtdBeginBalance = childAccs.Sum(a=>a.YtdBeginBalance);
+                parent.YtdBeginBalanceQuantity = childAccs.Sum(a=>a.YtdBeginBalanceQuantity);
+
+                _account.Update(parent);
+            }
+        }
+
         public AccountRecord GetAccount(int id)
         {
             return this.GetAccountsOfCompany().Where(a => a.Id == id).FirstOrDefault();
@@ -158,6 +179,8 @@ namespace XinTuo.Accounts.Services
 
 
                     _account.Update(a);
+
+                    this.SynParentAccount(a);
                 }
             }
 
@@ -177,6 +200,11 @@ namespace XinTuo.Accounts.Services
             {
                 throw new ArgumentNullException("找不到要删除的科目：" + accId);
             }
+        }
+
+        public void AddAuxItem(VMAccountAuxItem auxItem)
+        {
+
         }
 
     }
