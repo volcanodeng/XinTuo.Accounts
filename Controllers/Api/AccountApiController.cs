@@ -111,5 +111,26 @@ namespace XinTuo.Accounts.Controllers.Api
             
             return Ok(1);
         }
+
+        [HttpPost, ActionName("AddAuxItem")]
+        [System.Web.Mvc.ValidateAntiForgeryToken]
+        public IHttpActionResult AddAuxItem(VMAccountAuxItem auxItem)
+        {
+            string err;
+            if (!ModelValidHelper.ModelValid(ModelState, out err))
+            {
+                return BadRequest(err);
+            }
+
+            if (!_orchard.Authorizer.Authorize(Permissions.ModifyAccount))
+            {
+                var msg = new ApiResponse("未授权访问", System.Net.HttpStatusCode.Unauthorized);
+                throw new HttpResponseException(msg);
+            }
+
+            _account.AddAuxItem(auxItem);
+
+            return Ok(1);
+        }
     }
 }

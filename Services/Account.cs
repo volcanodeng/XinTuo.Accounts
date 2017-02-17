@@ -22,6 +22,7 @@ namespace XinTuo.Accounts.Services
         private readonly IAuthenticationService _authService;
         private readonly ICacheService _cache;
         private readonly IAccountCategory _accCate;
+        private readonly IAuxiliary _auxiliary;
 
         public Account(IContentManager contentManager,
                        IRepository<AccountCategoryRecord> accCategory,
@@ -30,7 +31,8 @@ namespace XinTuo.Accounts.Services
                        ICompany company,
                        IAuthenticationService authService,
                        ICacheService cache,
-                       IAccountCategory accCate)
+                       IAccountCategory accCate,
+                       IAuxiliary auxiliary)
         {
             _contentManager = contentManager;
             _accCategoryRepository = accCategory;
@@ -40,6 +42,7 @@ namespace XinTuo.Accounts.Services
             _authService = authService;
             _cache = cache;
             _accCate = accCate;
+            _auxiliary = auxiliary;
         }
 
         private List<AccountRecord> GetAccountsOfCompany()
@@ -204,7 +207,92 @@ namespace XinTuo.Accounts.Services
 
         public void AddAuxItem(VMAccountAuxItem auxItem)
         {
+            AccountRecord curAcct = this.GetAccount(auxItem.AccId);
 
+            if(curAcct != null)
+            {
+                AccountRecord newAuxItem = new AccountRecord();
+
+                newAuxItem.Direction = curAcct.Direction;
+                newAuxItem.ParentCode = curAcct.AccCode;
+                newAuxItem.IsAuxiliary = 0;
+                newAuxItem.IsQuantity = 0;
+                newAuxItem.AccountCategoryRecord = curAcct.AccountCategoryRecord;
+                newAuxItem.CompanyRecord = _company.GetCurrentCompany().Record;
+                newAuxItem.Creator = _authService.GetAuthenticatedUser().Id;
+                newAuxItem.CreateTime = DateTime.Now;
+                newAuxItem.Updater = _authService.GetAuthenticatedUser().Id;
+                newAuxItem.UpdateTime = DateTime.Now;
+                newAuxItem.AccState = 1;
+
+                newAuxItem.AccCode = curAcct.AccCode;
+                newAuxItem.AccName = curAcct.AccName;
+
+                VMAuxiliary aux = null;
+                if (auxItem.Custom.HasValue)
+                {
+                    aux = _auxiliary.GetAuxiliary(auxItem.Custom.Value);
+                    if(aux != null)
+                    {
+                        newAuxItem.AccCode += "_" + aux.AuxCode;
+                        newAuxItem.AccName += "_" + aux.AuxName;
+                    }
+                }
+
+                if (auxItem.Suppliers.HasValue)
+                {
+                    aux = _auxiliary.GetAuxiliary(auxItem.Suppliers.Value);
+                    if (aux != null)
+                    {
+                        newAuxItem.AccCode += "_" + aux.AuxCode;
+                        newAuxItem.AccName += "_" + aux.AuxName;
+                    }
+                }
+
+                if (auxItem.Employee.HasValue)
+                {
+                    aux = _auxiliary.GetAuxiliary(auxItem.Employee.Value);
+                    if (aux != null)
+                    {
+                        newAuxItem.AccCode += "_" + aux.AuxCode;
+                        newAuxItem.AccName += "_" + aux.AuxName;
+                    }
+                }
+
+                if (auxItem.Project.HasValue)
+                {
+                    aux = _auxiliary.GetAuxiliary(auxItem.Project.Value);
+                    if (aux != null)
+                    {
+                        newAuxItem.AccCode += "_" + aux.AuxCode;
+                        newAuxItem.AccName += "_" + aux.AuxName;
+                    }
+                }
+
+                if (auxItem.Sector.HasValue)
+                {
+                    aux = _auxiliary.GetAuxiliary(auxItem.Sector.Value);
+                    if (aux != null)
+                    {
+                        newAuxItem.AccCode += "_" + aux.AuxCode;
+                        newAuxItem.AccName += "_" + aux.AuxName;
+                    }
+                }
+
+                if (auxItem.Inventory.HasValue)
+                {
+                    aux = _auxiliary.GetAuxiliary(auxItem.Inventory.Value);
+                    if (aux != null)
+                    {
+                        newAuxItem.AccCode += "_" + aux.AuxCode;
+                        newAuxItem.AccName += "_" + aux.AuxName;
+                    }
+                }
+
+                _account.Create(newAuxItem);
+            }
+
+            this.ClearAccountsCache();
         }
 
     }

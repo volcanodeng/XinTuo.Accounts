@@ -15,8 +15,10 @@ namespace XinTuo.Accounts.Services
 
         void DeleteAuxiliary(int auxId);
 
-        IEnumerable<AuxiliaryPart> GetAuxiliary(int companyId, int auxTypeId);
+        IEnumerable<AuxiliaryPart> GetAuxiliaries(int companyId, int auxTypeId);
 
         List<VMAuxiliary> GetAuxiliaryForCom(int auxTypeId);
+
+        VMAuxiliary GetAuxiliary(int auxId);
     }
 }

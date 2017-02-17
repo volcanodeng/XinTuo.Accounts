@@ -14,11 +14,11 @@
     @Html.Partial("ResourcePartial")
 
     <style type="text/css">
-        #auxForm div {
+        #auxPanel div {
             padding: 10px;
         }
 
-        #auxForm input {
+        #auxPanel input {
             font-size: 14pt;
         }
 
@@ -105,7 +105,7 @@
 
     <div id="addDetail" class="easyui-dialog" title="增加明细" style="width:400px;height:500px;"
          data-options="resizable:false,modal:true,closed:true">
-        <div class="easyui-panel" data-options="fit:true,border:false">
+        <div class="easyui-panel" id="auxPanel" data-options="fit:true,border:false">
             
                 <div>
                     <input class="easyui-textbox" id="AccName" name="AccName" data-options="label:'@T("科目名称")',disabled:true" style="width:90%;height:32px">
@@ -235,7 +235,7 @@
             {
                 value = '<p style="display: inline-block;margin: 0;padding: 0;">' + value + '</p>';
             }
-            value = value + '<a  title="增加明细" href="javascript:addDetail();" style="font-size:16pt;float:right;">+</a>';
+            value = value + '<a  title="增加明细" href="javascript:addDetail(' + row.accId + ',\'' + row.accCode + "  " + row.accName + '\');" style="font-size:16pt;float:right;">+</a>';
         }
 
         return value;
@@ -253,8 +253,10 @@
         }
     }
 
-    function addDetail()
+    function addDetail(accId,accName)
     {
+        $("#AccName").textbox("setText",accName);
+
         $("#addDetail").dialog("open");
     }
 
@@ -278,6 +280,7 @@
     function closeAuxItem()
     {
         $("#addDetail").dialog("close");
+        $("#AccName").textbox("clear");
     }
 
     </script>

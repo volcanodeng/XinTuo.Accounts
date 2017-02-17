@@ -97,7 +97,7 @@ namespace XinTuo.Accounts.Services
             if (aux != null) _contentManager.Remove(aux.ContentItem);
         }
 
-        public IEnumerable<AuxiliaryPart> GetAuxiliary(int companyId,int auxTypeId)
+        public IEnumerable<AuxiliaryPart> GetAuxiliaries(int companyId,int auxTypeId)
         {
             return _contentManager.Query<AuxiliaryPart, AuxiliaryRecord>().Where(a=>a.CompanyRecord.Id== companyId && a.AuxiliaryTypeRecord.Id == auxTypeId).List();
         }
@@ -105,9 +105,15 @@ namespace XinTuo.Accounts.Services
         public List<VMAuxiliary> GetAuxiliaryForCom(int auxTypeId)
         {
             var curCom = _company.GetCurrentCompany();
-            var auxList = GetAuxiliary(curCom.Id, auxTypeId).ToList();
+            var auxList = GetAuxiliaries(curCom.Id, auxTypeId).ToList();
 
             return _mapper.Map<List<AuxiliaryPart>, List<VMAuxiliary>>(auxList);
+        }
+
+        public VMAuxiliary GetAuxiliary(int auxId)
+        {
+            IEnumerable<AuxiliaryPart> auxs = _contentManager.Query<AuxiliaryPart, AuxiliaryRecord>().Where(a => a.CompanyRecord.Id == _company.GetCurrentCompanyId() && a.Id == auxId).List();
+            return _mapper.Map<AuxiliaryPart, VMAuxiliary>(auxs.FirstOrDefault());
         }
 
     }
