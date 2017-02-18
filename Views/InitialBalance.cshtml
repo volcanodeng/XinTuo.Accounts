@@ -14,11 +14,11 @@
     @Html.Partial("ResourcePartial")
 
     <style type="text/css">
-        #auxPanel div {
+        #auxForm div {
             padding: 10px;
         }
 
-        #auxPanel input {
+        #auxForm input {
             font-size: 14pt;
         }
 
@@ -50,7 +50,7 @@
                        data-options="singleSelect:true,toolbar: '#tbBalance',fitColumns:true,idField:'accId',pagination:true,fit:true,pageList:[10,50,100],pageSize:100,onClickCell: onClickCellExt">
                     <thead>
                         <tr>
-                            <th data-options="field:'accCode',width:80,formatter:formatterAccCode">@T("编码")</th>
+                            <th data-options="field:'accCode',width:150,formatter:formatterAccCode">@T("编码")</th>
                             <th data-options="field:'accName',width:150,formatter:formatterAccName">@T("名称")</th>
                             <th data-options="field:'direction',align:'center',width:50">@T("余额方向")</th>
                             <th data-options="field:'initialBalance',align:'right',width:150,editor:{type:'numberbox',options:{precision:2,formatter:formatterNumber}}">@T("期初余额")</th>
@@ -66,7 +66,7 @@
                        data-options="singleSelect:true,toolbar: '#tbBalanceQ',fitColumns:true,idField:'accId',pagination:true,fit:true,pageList:[10,50,100],pageSize:100,onClickCell: onClickCellExt">
                     <thead>
                         <tr>
-                            <th rowspan="2" data-options="field:'accCode',width:80,formatter:formatterAccCode">@T("编码")</th>
+                            <th rowspan="2" data-options="field:'accCode',width:150,formatter:formatterAccCode">@T("编码")</th>
                             <th rowspan="2" data-options="field:'accName',width:150,formatter:formatterAccName">@T("名称")</th>
                             <th rowspan="2" data-options="field:'direction',align:'center',width:50">@T("余额方向")</th>
                             <th colspan="2">@T("期初余额")</th>
@@ -106,22 +106,24 @@
     <div id="addDetail" class="easyui-dialog" title="增加明细" style="width:400px;height:500px;"
          data-options="resizable:false,modal:true,closed:true">
         <div class="easyui-panel" id="auxPanel" data-options="fit:true,border:false">
-            
+            <form id="auxForm" method="post">
                 <div>
                     <input class="easyui-textbox" id="AccName" name="AccName" data-options="label:'@T("科目名称")',disabled:true" style="width:90%;height:32px">
+                    <input type="hidden" id="accId" name="accId"/>
+                    <input type="hidden" id="__RequestVerificationToken" name="__RequestVerificationToken"/>
                 </div>
                 <div>辅助核算:</div>
-                <div><input class="easyui-combobox" id="auxCustom" name="auxCustom" data-options="label:'@T("客户")',valueField:'auxId',textField:'auxName',url:'/api/x/GetAuxiliary?auxTypeId=1',editable:false" style="width:90%;height:32px"></div>
-                <div><input class="easyui-combobox" id="auxSuppliers" name="auxSuppliers" data-options="label:'@T("供应商")',valueField:'auxId',textField:'auxName',url:'/api/x/GetAuxiliary?auxTypeId=2',editable:false" style="width:90%;height:32px"></div>
-                <div><input class="easyui-combobox" id="auxEmployee" name="auxEmployee" data-options="label:'@T("职员")',valueField:'auxId',textField:'auxName',url:'/api/x/GetAuxiliary?auxTypeId=3',editable:false" style="width:90%;height:32px"></div>
-                <div><input class="easyui-combobox" id="auxProject" name="auxProject" data-options="label:'@T("项目")',valueField:'auxId',textField:'auxName',url:'/api/x/GetAuxiliary?auxTypeId=4',editable:false" style="width:90%;height:32px"></div>
-                <div><input class="easyui-combobox" id="auxSector" name="auxSector" data-options="label:'@T("部门")',valueField:'auxId',textField:'auxName',url:'/api/x/GetAuxiliary?auxTypeId=5',editable:false" style="width:90%;height:32px"></div>
-                <div><input class="easyui-combobox" id="auxInventory" name="auxInventory" data-options="label:'@T("存货")',valueField:'auxId',textField:'auxName',url:'/api/x/GetAuxiliary?auxTypeId=6',editable:false" style="width:90%;height:32px"></div>
+                <div><input class="easyui-combobox" id="auxCustom" name="custom" data-options="label:'@T("客户")',valueField:'auxId',textField:'auxName',url:'/api/x/GetAuxiliary?auxTypeId=1',editable:false" style="width:90%;height:32px"></div>
+                <div><input class="easyui-combobox" id="auxSuppliers" name="suppliers" data-options="label:'@T("供应商")',valueField:'auxId',textField:'auxName',url:'/api/x/GetAuxiliary?auxTypeId=2',editable:false" style="width:90%;height:32px"></div>
+                <div><input class="easyui-combobox" id="auxEmployee" name="employee" data-options="label:'@T("职员")',valueField:'auxId',textField:'auxName',url:'/api/x/GetAuxiliary?auxTypeId=3',editable:false" style="width:90%;height:32px"></div>
+                <div><input class="easyui-combobox" id="auxProject" name="project" data-options="label:'@T("项目")',valueField:'auxId',textField:'auxName',url:'/api/x/GetAuxiliary?auxTypeId=4',editable:false" style="width:90%;height:32px"></div>
+                <div><input class="easyui-combobox" id="auxSector" name="sector" data-options="label:'@T("部门")',valueField:'auxId',textField:'auxName',url:'/api/x/GetAuxiliary?auxTypeId=5',editable:false" style="width:90%;height:32px"></div>
+                <div><input class="easyui-combobox" id="auxInventory" name="inventory" data-options="label:'@T("存货")',valueField:'auxId',textField:'auxName',url:'/api/x/GetAuxiliary?auxTypeId=6',editable:false" style="width:90%;height:32px"></div>
                 <div style="float:right;">
                     <a id="btnYes" href="#" class="easyui-linkbutton" onclick="addAuxItem()" data-options="width:80">确定</a>
                     <a id="btnNo" href="#" class="easyui-linkbutton" onclick="closeAuxItem()" data-options="width:80">取消</a>
                 </div>
-            
+            </form>
         </div>
     </div>
 
@@ -139,6 +141,11 @@
 
     function init()
     {
+        $("#auxForm").form({
+            url: "/api/a/AddAuxItem/",
+            onSubmit: formOnSubmit,
+            success: formSuccess
+        });
 
         //默认类别
         $(".cate:first").linkbutton("select");
@@ -217,10 +224,11 @@
 
     function formatterAccCode(value,row,index)
     {
-        if(row.accCode.length > 4)
+        if (row.accCode.length > 4)
         {
             return '<p style="text-indent:12px;margin: 0;padding: 0;">' + value + '</p>';
         }
+        
 
         return value;
     }
@@ -255,7 +263,11 @@
 
     function addDetail(accId,accName)
     {
-        $("#AccName").textbox("setText",accName);
+        $("#auxForm").form("clear");
+        $("#accId").val(accId);
+        $("#__RequestVerificationToken").val(af_token);
+        $("#AccName").textbox("setText", accName);
+        
 
         $("#addDetail").dialog("open");
     }
@@ -275,7 +287,23 @@
 
     function addAuxItem()
     {
-        $.post("");
+        
+        $("#auxForm").submit();
+    }
+
+    function formOnSubmit() {
+        return $(this).form('validate');
+    }
+
+    function formSuccess(data) {
+        if (formSuccessHandle(data)) {
+            var cateId = $("#dataCache").data("AccCate");
+            $("#dataCache").removeData("account" + cateId);
+
+            cateOnClick(cateId);
+
+            closeAuxItem();
+        }
     }
     function closeAuxItem()
     {
