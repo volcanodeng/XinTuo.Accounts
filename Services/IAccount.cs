@@ -25,5 +25,12 @@ namespace XinTuo.Accounts.Services
         void DeleteAccount(int accId);
 
         void AddAuxItem(VMAccountAuxItem auxItem);
+
+        #region 校验
+
+        string VAddAuxItem(VMAccountAuxItem auxItem);
+
+        string VDeleteAuxItem(VMAccountAuxItem auxItem);
+        #endregion
     }
 }

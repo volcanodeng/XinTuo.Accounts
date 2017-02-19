@@ -128,7 +128,40 @@ namespace XinTuo.Accounts.Controllers.Api
                 throw new HttpResponseException(msg);
             }
 
+            string validMsg = _account.VAddAuxItem(auxItem);
+            if(!string.IsNullOrEmpty(validMsg))
+            {
+                throw new HttpResponseException(new ApiResponse(validMsg, System.Net.HttpStatusCode.Forbidden));
+            }
+
             _account.AddAuxItem(auxItem);
+
+            return Ok(1);
+        }
+
+        [HttpPost, ActionName("DelAuxItem")]
+        [System.Web.Mvc.ValidateAntiForgeryToken]
+        public IHttpActionResult DelAuxItem(VMAccountAuxItem auxItem)
+        {
+            string err;
+            if (!ModelValidHelper.ModelValid(ModelState, out err))
+            {
+                return BadRequest(err);
+            }
+
+            if (!_orchard.Authorizer.Authorize(Permissions.ModifyAccount))
+            {
+                var msg = new ApiResponse("未授权访问", System.Net.HttpStatusCode.Unauthorized);
+                throw new HttpResponseException(msg);
+            }
+
+            string validMsg = _account.VDeleteAuxItem(auxItem);
+            if (!string.IsNullOrEmpty(validMsg))
+            {
+                throw new HttpResponseException(new ApiResponse(validMsg, System.Net.HttpStatusCode.Forbidden));
+            }
+
+            _account.DeleteAccount(auxItem.AccId);
 
             return Ok(1);
         }

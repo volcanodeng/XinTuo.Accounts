@@ -295,5 +295,54 @@ namespace XinTuo.Accounts.Services
             this.ClearAccountsCache();
         }
 
+        public void DeleteAuxItem(int accId)
+        {
+            AccountRecord acct = this.GetAccount(accId);
+            if (acct != null)
+            {
+                _account.Delete(acct);
+
+                this.ClearAccountsCache();
+            }
+        }
+
+        #region 校验
+        public string VAddAuxItem(VMAccountAuxItem auxItem)
+        {
+            if (auxItem.AccId <= 0)
+            {
+                return "数据无效";
+            }
+
+            if(!auxItem.Custom.HasValue && 
+               !auxItem.Employee.HasValue && 
+               !auxItem.Inventory.HasValue &&
+               !auxItem.Project.HasValue && 
+               !auxItem.Sector.HasValue &&
+               !auxItem.Suppliers.HasValue)
+            {
+                return "未指定辅助核算内容";
+            }
+
+            return null;
+        }
+
+        public string VDeleteAuxItem(VMAccountAuxItem auxItem)
+        {
+            if(auxItem.AccId<=0)
+            {
+                return "数据无效";
+            }
+
+            var acct = this.GetAccount(auxItem.AccId);
+            if(acct == null)
+            {
+                return "找不到要删除的记录";
+            }
+
+            return null;
+        }
+        #endregion
+
     }
 }

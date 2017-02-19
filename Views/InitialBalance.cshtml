@@ -237,13 +237,17 @@
         if (row.accCode.length > 4) {
             value = '<p style="text-indent:12px;display: inline-block;margin: 0;padding: 0;">' + value + '</p>';
         }
+        else
+        {
+            value = '<p style="display: inline-block;margin: 0;padding: 0;">' + value + '</p>';
+        }
 
         if (row.isAuxiliary == "on") {
-            if (value.indexOf("inline-block") == -1)
-            {
-                value = '<p style="display: inline-block;margin: 0;padding: 0;">' + value + '</p>';
-            }
             value = value + '<a  title="增加明细" href="javascript:addDetail(' + row.accId + ',\'' + row.accCode + "  " + row.accName + '\');" style="font-size:16pt;float:right;">+</a>';
+        }
+        else if(row.accName.indexOf("_")>-1)
+        {
+            value = value + '<a  title="删除明细" href="javascript:delDetail(' + row.accId + ');" style="font-size:14pt;float:right;">X</a>';
         }
 
         return value;
@@ -281,7 +285,7 @@
         }
         else
         {
-            easyuiVar.editIndex = undefined;
+            endEditing();
         }
     }
 
@@ -309,6 +313,20 @@
     {
         $("#addDetail").dialog("close");
         $("#AccName").textbox("clear");
+    }
+
+    function delDetail(accId)
+    {
+        $.post("/api/a/DelAuxItem/", { accId: accId }, function (data) {
+            if (formSuccessHandle(data)) {
+                var cateId = $("#dataCache").data("AccCate");
+                $("#dataCache").removeData("account" + cateId);
+
+                cateOnClick(cateId);
+
+                closeAuxItem();
+            }
+        });
     }
 
     </script>
