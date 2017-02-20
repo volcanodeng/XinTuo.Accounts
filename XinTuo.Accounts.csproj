@@ -168,6 +168,7 @@
     <Compile Include="Controllers\CompanyController.cs" />
     <Compile Include="Controllers\FiscalSystemController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\VoucherController.cs" />
     <Compile Include="EventHandlers\UserEventHandler.cs" />
     <Compile Include="Handlers\AuxiliaryHandler.cs" />
     <Compile Include="Handlers\CerttificateWordHandler.cs" />
@@ -187,15 +188,11 @@
     <Compile Include="Models\CompanyRecord.cs" />
     <Compile Include="Models\CompanyUserRecord.cs" />
     <Compile Include="Models\RegionRecord.cs" />
-    <Compile Include="Models\VoucherDetailPart.cs" />
     <Compile Include="Models\VoucherDetailRecord.cs" />
     <Compile Include="Models\VoucherDetailTemplatePart.cs" />
     <Compile Include="Models\VoucherDetailTemplateRecord.cs" />
-    <Compile Include="Models\VoucherPart.cs" />
     <Compile Include="Models\VoucherRecord.cs" />
-    <Compile Include="MvcRoutes.cs" />
     <Compile Include="Permissions.cs" />
-    <Compile Include="ResourceManifest.cs" />
     <Compile Include="Services\Account.cs" />
     <Compile Include="Services\AccountCategory.cs" />
     <Compile Include="Services\Auxiliary.cs" />
@@ -220,6 +217,7 @@
     <Compile Include="ViewModels\VMAuxiliaryType.cs" />
     <Compile Include="ViewModels\VMCompany.cs" />
     <Compile Include="ViewModels\VMUser.cs" />
+    <Compile Include="ViewModels\VMVoucher.cs" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>

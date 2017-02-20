@@ -49,6 +49,16 @@ namespace XinTuo.Accounts
                         controller="CertificateWordApi",
                         id=RouteParameter.Optional
                     }
+                },
+                new HttpRouteDescriptor {
+                    Name="Voucher Api",
+                    Priority=0,
+                    RouteTemplate = "api/v/{action}/{id}",
+                    Defaults=new {
+                        area="XinTuo.Accounts",
+                        controller="VoucherApi",
+                        id=RouteParameter.Optional
+                    }
                 }
             };
         }

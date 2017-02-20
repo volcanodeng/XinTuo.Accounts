@@ -6,7 +6,7 @@ using Orchard.ContentManagement.Records;
 
 namespace XinTuo.Accounts.Models
 {
-    public class VoucherDetailRecord : ContentPartRecord
+    public class VoucherDetailRecord 
     {
         public virtual VoucherRecord Voucher { get; set; }
 
