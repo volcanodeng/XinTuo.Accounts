@@ -1,14 +1,14 @@
-﻿using System.Linq;
-using XinTuo.Accounts.Models;
-using Orchard.Data;
+﻿using AutoMapper;
+using NHibernate;
+using Orchard.Caching.Services;
 using Orchard.ContentManagement;
+using Orchard.Data;
 using Orchard.Security;
-using XinTuo.Accounts.ViewModels;
-using AutoMapper;
 using System;
 using System.Collections.Generic;
-using Orchard.Caching.Services;
-using NHibernate;
+using System.Linq;
+using XinTuo.Accounts.Models;
+using XinTuo.Accounts.ViewModels;
 
 namespace XinTuo.Accounts.Services
 {

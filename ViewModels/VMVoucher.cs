@@ -30,6 +30,20 @@ namespace XinTuo.Accounts.ViewModels
 
     public class VMVoucherDetail
     {
+        public string Abstract { get; set; }
 
+        public int AccountId { get; set; }
+
+        public string AccountName { get; set; }
+
+        public string AccountCode { get; set; }
+
+        public decimal Quantity { get; set; }
+
+        public decimal Price { get; set; }
+
+        public decimal Debit { get; set; }
+
+        public decimal Credit { get; set; }
     }
 }

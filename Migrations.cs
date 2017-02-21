@@ -142,6 +142,7 @@ namespace XinTuo.Accounts {
                 .Column<int>("CertificateWordRecord_Id")                        //凭证字
                 .Column<int>("CertWordSN",c=>c.WithDefault(1))                  //凭证字流水号
                 .Column<DateTime>("Date",c=>c.Nullable())                       //日期
+                .Column<int>("PaymentTerms")                                    //账期（当前凭证所在年份）
                 .Column<int>("InvoiceCount",c=>c.WithDefault(0))                //附加单据数量
                 .Column<int>("State",c=>c.WithDefault(1))                       //状态：1 正常 2 已审 -1 作废
                 .Column<int>("CompanyRecord_Id")                                //凭证所属公司

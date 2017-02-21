@@ -158,6 +158,7 @@
     <Compile Include="AutoMapperProfiles\AccountProfile.cs" />
     <Compile Include="AutoMapperProfiles\CheckboxResolver.cs" />
     <Compile Include="AutoMapperProfiles\CompanyProfile.cs" />
+    <Compile Include="AutoMapperProfiles\VoucherProfile.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\Api\AccountApiController.cs" />
     <Compile Include="Controllers\Api\AuxiliaryApiController.cs" />
@@ -209,6 +210,7 @@
     <Compile Include="Services\IFiscalSystem.cs" />
     <Compile Include="Services\IRegion.cs" />
     <Compile Include="Services\Region.cs" />
+    <Compile Include="Services\Voucher.cs" />
     <Compile Include="ViewModels\VMAccountAuxItem.cs" />
     <Compile Include="ViewModels\VMCertWord.cs" />
     <Compile Include="ViewModels\VMFiscalSystem.cs" />

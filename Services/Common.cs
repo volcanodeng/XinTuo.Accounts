@@ -12,5 +12,10 @@ namespace XinTuo.Accounts.Services
             return string.Format("AccountsOfCompany{0}", comId);
         }
 
+        public static string GetVoucherCacheName(int comId)
+        {
+            return string.Format("VoucherOfCompany{0}", comId);
+        }
+
     }
 }
