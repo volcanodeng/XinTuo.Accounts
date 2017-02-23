@@ -28,8 +28,10 @@ namespace XinTuo.Accounts.Models
 
         public virtual DateTime CreateTime { get; set; }
 
-        public virtual int Review { get; set; }
+        public virtual int? Review { get; set; }
 
-        public virtual DateTime ReviewTime { get; set; }
+        public virtual DateTime? ReviewTime { get; set; }
+
+        public virtual ICollection<VoucherDetailRecord> VoucherDetailRecords { get; set; }
     }
 }

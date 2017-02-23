@@ -7,6 +7,8 @@ namespace XinTuo.Accounts.ViewModels
 {
     public class VMVoucher
     {
+        public int VId { get; set; }
+
         public int CertWordSN { get; set; }
 
         public string CertWord { get; set; }

@@ -15,7 +15,11 @@ namespace XinTuo.Accounts.Services
 
         VMCertWord GetCertificateWordForCom(int cwId);
 
+        VMCertWord GetCertificateWordForCom(string certWord);
+
         VMCertWord GetDefaultCertificateWordForCom();
+
+        CertificateWordPart GetCertWordPartForCom(string certWord);
 
         CertificateWordPart SaveCertWord(VMCertWord cw);
 

@@ -148,8 +148,8 @@ namespace XinTuo.Accounts {
                 .Column<int>("CompanyRecord_Id")                                //凭证所属公司
                 .Column<int>("Creator")                                         //经办人
                 .Column<DateTime>("CreateTime")                                 //创建时间
-                .Column<int>("Review")                                          //审核人
-                .Column<DateTime>("ReviewTime")                                 //审核时间
+                .Column<int>("Review",c=>c.Nullable())                                          //审核人
+                .Column<DateTime>("ReviewTime",c=>c.Nullable())                                 //审核时间
                 );
 
             //凭证明细

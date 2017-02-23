@@ -8,11 +8,11 @@ namespace XinTuo.Accounts.Models
 {
     public class VoucherDetailRecord 
     {
-        public virtual VoucherRecord Voucher { get; set; }
+        public virtual VoucherRecord VoucherRecord { get; set; }
 
         public virtual string Abstract { get; set; }
 
-        public virtual AccountRecord Account { get; set; }
+        public virtual AccountRecord AccountRecord { get; set; }
 
         public virtual string AccountCode { get; set; }
 

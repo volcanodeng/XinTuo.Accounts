@@ -60,11 +60,26 @@ namespace XinTuo.Accounts.Services
             return cwList.Where(c => c.Id == cwId).FirstOrDefault();
         }
 
+        public VMCertWord GetCertificateWordForCom(string certWord)
+        {
+            List<VMCertWord> cwList = GetCertificateWordForCom();
+
+            return cwList.Where(c => c.CertWord == certWord).FirstOrDefault();
+        }
+
         public VMCertWord GetDefaultCertificateWordForCom()
         {
             List<VMCertWord> cwList = GetCertificateWordForCom();
 
             return cwList.Where(c => c.IsDefault == "on").FirstOrDefault();
+        }
+
+        public CertificateWordPart GetCertWordPartForCom(string certWord)
+        {
+            int comId = _company.GetCurrentCompanyId();
+            var cwList = GetCertificateWord(comId).ToList();
+
+            return cwList.Where(cw => cw.CertWord == certWord).FirstOrDefault();
         }
 
         public CertificateWordPart SaveCertWord(VMCertWord cw)
