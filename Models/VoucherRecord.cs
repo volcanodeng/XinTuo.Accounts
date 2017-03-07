@@ -32,6 +32,6 @@ namespace XinTuo.Accounts.Models
 
         public virtual DateTime? ReviewTime { get; set; }
 
-        public virtual ICollection<VoucherDetailRecord> VoucherDetailRecords { get; set; }
+        //public virtual ICollection<VoucherDetailRecord> VoucherDetailRecords { get; set; }
     }
 }
